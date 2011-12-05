@@ -1,0 +1,9 @@
+{
+    "name": "alien-local-filesystem-links", 
+    "license": "MPL 1.1/GPL 2.0/LGPL 2.1", 
+    "author": "austrALIENsun", 
+    "version": "0.63", 
+    "fullName": "Local Filesystem Links",
+    "id": "jid1-JAzC7z53jemo5Q", 
+    "description": "This addon is primarily about calling the Windows Explorer on the Windows operating system.\n- It adds an entry 'Show in Windows Explorer' to the page context menu that works on selected text.\n- An automatic file link recognition replaces the original hyperlink with a script call that opens the Windows Explorer."
+}

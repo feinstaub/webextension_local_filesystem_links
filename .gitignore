@@ -1,0 +1,11 @@
+
+translator.xpi
+ttt/
+$p1/
+/local-filesystem-links.xpi
+/.komodotools/
+/.settings/
+alien-lfl.xpi
+alien-local-filesystem-links.xpi
+alien-*.xpi
+alien-local-filesystem-links-0.63/
