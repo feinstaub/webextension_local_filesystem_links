@@ -53,7 +53,34 @@
         return str.substring(0, prefix.length) === prefix;
       }      
     </script>
-  </head>
+    
+    <style type="text/css">
+        .myButtonLink {
+                margin-left: 3px;
+                margin-bottom: -3px;
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                background: url('folder-2.png') bottom;
+        }
+        .myButtonLink:hover {
+              margin-bottom: -4px;
+                background: url('folder-go.png') bottom;
+        }      
+        
+        .myButtonLink2 {
+                margin-left: 3px;
+                display: inline-block;
+                width: 24px;
+                height: 24px;
+                background: url('folder-grey.png') bottom;
+        }
+        .myButtonLink2:hover {
+                background: url('folder-green.png') bottom;
+        }              
+    </style>
+    
+  </head>  
 
   <body>
     <form>
@@ -65,9 +92,10 @@
 
     <p>No Frills is not possible in Confluence</p>
 
-    <p><a href="file://C:/Windows" class="external-link" rel="nofollow">C-Link with /</a></p>
+    <!-- http://kyleschaeffer.com/best-practices/pure-css-image-hover/ -->
+    <p><a href="file://C:/Windows" class="external-link" rel="nofollow">C-Link with /</a> [<a class="myButtonLink" href="#LinkURL"></a>]</p>
     
-    <p><a href="file://C:\\Windows\\Downloaded Program Files" class="external-link" rel="nofollow">C-Link with \ (file:// as is)</a></p>
+    <p><a href="file://C:\\Windows\\Downloaded Program Files" class="external-link" rel="nofollow">C-Link with \ (file:// as is)</a><a class="myButtonLink2" href="#LinkURL"></a></p>
     
     <p><a href="C:\\Windows\\Downloaded Program Files" class="external-link" rel="nofollow">C-Link with \ (as is)</a></p>
 
