@@ -7,7 +7,7 @@
       var timer_is_on=0;
       
       jsPatEval();
-
+      
       function timedCount() {
         var elem;
         if (elem === undefined) {
@@ -113,9 +113,13 @@
         }              
     </style>
     
-  </head>  
+  </head>
 
   <body>
+    <div style="display: none">
+      <p id="_t">THIS IS THE TEMPLATE</p>
+      <a id="_t2"> [new]</a>
+    </div>
     <form>
       <input type="button" value="Start count!" onclick="doTimer()"/>
       <input type="text" id="txt"/>
@@ -152,6 +156,17 @@
     <p>C:\Windows</p>
 
     <p>"C:\Windows"</p>
+    
+    <p id="_here">After this the stuff should be inserted: </p>
 
   </body>
+  
+  <script type="text/javascript">
+      (function jQueryEval() {
+        //$('#_template.p').insertAfter('a');
+        $('#_t').insertAfter('#_here');
+        $('a').after(" [<a href='hallo'>hallo</a>]")
+        // $('#_t2').insertAfter('a');
+      }())    
+  </script>
 </html>

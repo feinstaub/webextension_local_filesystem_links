@@ -3,16 +3,24 @@
  */
 "use strict"
 
-self.on('message', function onMessage(commandString) {
-  if (commandString === "scan") {
+// maps an integer id (loop counter) to the found href
+var hrefMap = {};
+
+self.on('message', function onMessage(message) {
+  if (message.event === "scan") {
     console.debug("scan hyperlinks");
     scanAndModifyHyperlinks();
-  } else {
+  }
+  else if (message.event === "href_mod") {
+    // console.debug("........." + message.data);
+    modifyHyperlink(message.data); // message.data == i
+  }
+  else {
     console.warn("unknown command");
   }
 });
 
-//
+// TODO: rename
 function scanAndModifyHyperlinks() {
   console.debug("scanAndModifyHyperlinks");
   let data = $("a");
@@ -26,33 +34,28 @@ function scanAndModifyHyperlinks() {
     if (hrefAttr != undefined) {
       hrefs.push(data[i]); 
     }
-  };
+  }
 
   console.debug(hrefs.length);
   // console.debug(hrefs);
   
-  let lflHrefs = [];
-  
   for (var i in hrefs) {
-    //console.debug(getAllProperties(hrefs[i]));
-    if (looksLikeLocalFileLink(hrefs[i].href)) {
-      lflHrefs.push(hrefs[i]);
-    }
+    // tell the main.js that we encountered a href and also pass the
+    // href string
+    hrefMap[i] = hrefs[i];
+    var obj = { href: hrefs[i].href, i: i };
+    self.port.emit('href_found', obj);
   }
-  
-  // console.debug(lflHrefs);
-  let lflHrefsLength = lflHrefs.length;
-  
-  for (var i = 0; i < lflHrefsLength; i += 1) {
-    console.debug(i);
-    var origHref = lflHrefs[i].href;
-    if (strStartsWith(origHref, "file:///")) {
-      console.debug(origHref);
-      lflHrefs[i].addEventListener("click", hrefClickCallback);
-      lflHrefs[i].href = "#" + origHref;
-      lflHrefs[i].origHref = origHref; // set new attribute!
-    }
-  }  
+}
+
+// @param i index of the map
+function modifyHyperlink(i) {
+  console.debug(i);
+  var domHref = hrefMap[i];
+  var origHref = domHref.href;
+  domHref.addEventListener("click", hrefClickCallback);
+  domHref.href = "#" + origHref;
+  domHref.origHref = origHref; // set new attribute for later! (TODO: rename if used)
 }
 
 function hrefClickCallback(mouseEvent) {
