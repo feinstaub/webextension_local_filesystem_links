@@ -5,6 +5,8 @@
       var c=0;
       var t;
       var timer_is_on=0;
+      
+      jsPatEval();
 
       function timedCount() {
         var elem;
@@ -51,7 +53,38 @@
       
       function strStartsWith(str, prefix) {
         return str.substring(0, prefix.length) === prefix;
-      }      
+      }
+
+      function jsPatEval() {
+        var dog = { 
+          name: "Benji",
+          getName: function() {
+            return this.name;
+          }
+        };
+        
+        console.log(dog.getName());
+        
+        var test = 5;
+        
+        function hoistMe() {
+          console.log(typeof foo);
+          console.log(typeof bar);
+          console.log(test); // hoisting crazyness
+          
+          function foo() {
+            //
+          }
+          
+          var bar = function() {
+            //
+          };
+          
+          var test = 1; // overwrites higher scope test but has no value in console.log(test) !!!
+        }
+        
+        hoistMe();
+      }
     </script>
     
     <style type="text/css">
