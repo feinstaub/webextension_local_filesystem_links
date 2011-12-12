@@ -1,16 +1,6 @@
-/* 
-    Document   : style
-    Created on : 12.12.2011, 10:59:52
-    Author     : mitsch
-    Description:
-        Purpose of the stylesheet follows.
-*/
-
-/* 
-   TODO customize this sample style
-   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
-*/
-
+/*
+ * License: www.mozilla.org/MPL/
+ */
 .myButtonLink {
         margin-left: 3px;
         margin-bottom: -3px;

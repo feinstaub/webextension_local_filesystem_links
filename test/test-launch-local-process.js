@@ -47,7 +47,7 @@ exports.test_runProcess = function(test) {
   let windir = localProcess.getEnvironmentVariable("WINDIR");
   let explorerPath = windir + "\\explorer.exe";
   let explorerFile = localProcess.getILocalFileFromPath(explorerPath);
-  // let explorerFile = localProcess.getILocalFileFromPath("C:\\Users\\mitsch\\Documents\\test.cmd");
+  // let explorerFile = localProcess.getILocalFileFromPath("C:\\Users\\alien\\Documents\\test.cmd");
   
   // start explorer and select itself
   // let args = [ "/select," + explorerPath ]; // ok
