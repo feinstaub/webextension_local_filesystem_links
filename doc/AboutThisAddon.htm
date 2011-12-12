@@ -1,0 +1,40 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  </head>
+  <body>
+    <h1>Local Filesystem Links</h1>
+    
+    <p>a Firefox extension by austrALIENsun.</p>
+    
+    <p>addon name: alien-local-filesystem-links</p> 
+    
+    <h2>Summary</h2>
+    This Firefox extension deals with calling the Windows Explorer on the Windows operating system.
+    
+    <h2>Details</h2>
+    
+    <h3>Page context menu entry</h3>
+    
+    <p>The extension adds an entry 'Open with Windows Explorer' to the page context menu that works on selected text.</p>
+    <p>Step by Step</p>
+    <ul>
+      <li>Select a text portion that contains the path to a local file or folder (e. g. C:\Windows).</li>
+      <li>Right click on  the selection and choose 'Open with Windows Explorer' from the context menu.</li>
+      <li>The Windows Explorer is openend with the path selected. If your path was a file, the file will
+        be selected and you only have to press Enter to open the file.</li>
+    </ul>
+    
+    <h3>Automatic file link recognition</h3>
+    
+    An automatic file link recognition scans for hyperlinks with a file:/// prefix.
+    For each of these hyperlinks a folder icon will be inserted right to the hyperlink.
+    If you click the icon the local file link is opened in Windows Explorer.
+  </body>
+</html>

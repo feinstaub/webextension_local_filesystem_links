@@ -1,0 +1,36 @@
+/* 
+    Document   : style
+    Created on : 12.12.2011, 10:59:52
+    Author     : mitsch
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.myButtonLink {
+        margin-left: 3px;
+        margin-bottom: -3px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background: url('folder-2.png') bottom;
+}
+.myButtonLink:hover {
+      margin-bottom: -4px;
+        background: url('folder-go.png') bottom;
+}      
+
+.myButtonLink2 {
+        margin-left: 3px;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: url('folder-grey.png') bottom;
+}
+.myButtonLink2:hover {
+        background: url('folder-green.png') bottom;
+}              

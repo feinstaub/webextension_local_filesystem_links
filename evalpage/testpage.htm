@@ -87,31 +87,7 @@
       }
     </script>
     
-    <style type="text/css">
-        .myButtonLink {
-                margin-left: 3px;
-                margin-bottom: -3px;
-                display: inline-block;
-                width: 16px;
-                height: 16px;
-                background: url('folder-2.png') bottom;
-        }
-        .myButtonLink:hover {
-              margin-bottom: -4px;
-                background: url('folder-go.png') bottom;
-        }      
-        
-        .myButtonLink2 {
-                margin-left: 3px;
-                display: inline-block;
-                width: 24px;
-                height: 24px;
-                background: url('folder-grey.png') bottom;
-        }
-        .myButtonLink2:hover {
-                background: url('folder-green.png') bottom;
-        }              
-    </style>
+    <link rel="stylesheet" href="../data/style.css"/>
     
   </head>
 
@@ -162,11 +138,11 @@
   </body>
   
   <script type="text/javascript">
-      (function jQueryEval() {
+      setTimeout(function jQueryEval() {
         //$('#_template.p').insertAfter('a');
         $('#_t').insertAfter('#_here');
         $('a').after(" [<a href='hallo'>hallo</a>]")
         // $('#_t2').insertAfter('a');
-      }())    
+      }, 1000); 
   </script>
 </html>

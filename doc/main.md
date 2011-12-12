@@ -2,4 +2,4 @@
  * License: www.mozilla.org/MPL/
  */
 
-TODO
+see AboutThisAddon.htm
