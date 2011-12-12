@@ -18,6 +18,10 @@ and open the template in the editor.
     <h2>Summary</h2>
     This Firefox extension deals with calling the Windows Explorer on the Windows operating system.
     
+    <h2>Target Audience</h2>
+    The extensions was created to assist people using local / enterprise intranet sites (e. g. Wikis)
+    where pages exist that link to files that are located on the local drive or on network shares.
+   
     <h2>Details</h2>
     
     <h3>Page context menu entry</h3>
@@ -36,5 +40,11 @@ and open the template in the editor.
     An automatic file link recognition scans for hyperlinks with a file:/// prefix.
     For each of these hyperlinks a folder icon will be inserted right to the hyperlink.
     If you click the icon the local file link is opened in Windows Explorer.
+    
+    <h3>Supported file links</h3>
+    <ul>
+      <li>Local disk file links like C:\Windows (file:///C:/Windows)</li>
+      <li>Network share links like \\server\folder\file.png (file://///server/folder/file.png)</li>
+    </ul>
   </body>
 </html>
