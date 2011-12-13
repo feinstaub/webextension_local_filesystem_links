@@ -1,7 +1,7 @@
 /*
  * License: www.mozilla.org/MPL/
  */
-// const linkUtil = require("link-util"); // this does not work
+"use strict"
 
 self.on('message', function onMessage(commandString) {
   if (commandString == "scan") {

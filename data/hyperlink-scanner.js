@@ -16,10 +16,14 @@ self.on('message', function onMessage(message) {
     link.attr('href', initData.styleFileUrl);
     link.appendTo("head"); // alternative: jQuery('head').append(link);
   }
-  else if (message.event === "scan") {
-    console.debug("scan hyperlinks");
+  else if (message.event === "scan_hyperlinks") {
+    console.debug("scan_hyperlinks");
     scanHyperlinks();
   }
+  else if (message.event === "scan_textnodes") {
+    console.debug("scan_textnodes");
+    scanTextNodes();
+  }  
   else if (message.event === "href_mod") {    
     modifyHyperlinkFromIndex(message.data); // message.data == i
   }
@@ -53,6 +57,10 @@ function scanHyperlinks() {
     var obj = { href: hrefs[i].href, i: i };
     self.port.emit('href_found', obj);
   }
+}
+
+function scanTextNodes() {
+  console.debug("TODO (make optional)");
 }
 
 // @param i index of the map
