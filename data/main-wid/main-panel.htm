@@ -9,17 +9,19 @@
     <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
 
+    <script type="text/javascript">
+//      console.log("......888888"); // strangely we do not see console messages
+//      //documentReady(); // from content script; does not work
+//      $(document).ready(function(){
+//        console.log("...............888888");
+//        $("a").button();
+//      });
+    </script>
+
     <style type="text/css">
       /*demo page css*/
       body{ font: 80% "Trebuchet MS", sans-serif; margin: 20px;}
-    </style>	    
-
-    <script type="text/javascript">
-      $(function() {
-        $("a").button();
-      }); 
-    </script>        
-
+    </style>
   </head>
   <body>
     <h2>Local Filesystem links</h2>
