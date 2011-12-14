@@ -60,7 +60,7 @@ function scanHyperlinks() {
 }
 
 function scanTextNodes() {
-  console.debug("TODO (make optional)");
+  console.debug("TODO (make optional; TODO: only scan visible area");
 }
 
 // @param i index of the map

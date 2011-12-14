@@ -10,12 +10,12 @@
     <script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
 
     <script type="text/javascript">
-//      console.log("......888888"); // strangely we do not see console messages
-//      //documentReady(); // from content script; does not work
-//      $(document).ready(function(){
-//        console.log("...............888888");
-//        $("a").button();
-//      });
+      //      console.log("......888888"); // strangely we do not see console messages
+      //      //documentReady(); // from content script; does not work
+      //      $(document).ready(function(){
+      //        console.log("...............888888");
+      //        $("a").button();
+      //      });
     </script>
 
     <style type="text/css">
@@ -24,12 +24,30 @@
     </style>
   </head>
   <body>
-    <h2>Local Filesystem links</h2>
+    <h2>Local Filesystem Links - Options</h2>
 
-    <h3>Options</h3>
+    <h3>Scope</h3>
 
-    <input type="text" name="a" value="test" />
+    <p>Here you can define on which pages the automatic hyperlink scanning should be active.</p>
+
+    <h3>Hyperlink scanning options</h3>
+
+    <p>Per default only "real" hyperlinks are scanned for local file links.</p>
+
+    <p>It is possible to also scan all text elements for potential local file links:</p>
+    <input type="checkbox" id="checkScanText" />
+    <label for="checkScanText">Scan text elements</label>
+    <small>(WARNING: SLOWs down page loading, experimental, not impleneted yet)</small>
+
+    <!--    <p><input type="text" name="a" value="test" /> </p>-->
+
+    <hr></hr>
 
     <p><a href="#" id="button_ok">Ok</a> <a href="#" id="button_cancel">Cancel</a></p>
+
+    <!--    debug-->
+<!--    <script type="text/javascript" src="main-panel.js"></script>    
+    <script type="text/javascript">onLoad();</script>-->
+    <!--    debug end -->    
   </body>
 </html>
