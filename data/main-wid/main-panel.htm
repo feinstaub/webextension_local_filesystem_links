@@ -20,7 +20,7 @@
 
     <style type="text/css">
       /*demo page css*/
-      body{ font: 80% "Trebuchet MS", sans-serif; margin: 20px;}
+      body{ font: 100% "Trebuchet MS", sans-serif; margin: 20px;}
     </style>
   </head>
   <body>
@@ -29,6 +29,10 @@
     <h3>Scope</h3>
 
     <p>Here you can define on which pages the automatic hyperlink scanning should be active.</p>
+    
+    <input type="checkbox" id="checkEnableScanning" />
+    <label for="checkEnableScanning"><b>Enable scanning</b></label>
+    <small>Uncheck this to disable all the scanning.</small>
 
     <h3>Hyperlink scanning options</h3>
 
@@ -36,18 +40,31 @@
 
     <p>It is possible to also scan all text elements for potential local file links:</p>
     <input type="checkbox" id="checkScanText" />
-    <label for="checkScanText">Scan text elements</label>
+    <label for="checkScanText"><b>Scan text elements</b></label>
     <small>(WARNING: SLOWs down page loading, experimental, not impleneted yet)</small>
 
     <!--    <p><input type="text" name="a" value="test" /> </p>-->
+
+    <h3>Firefox Preferences</h3>
+
+    TODO
+    
+    <pre>
+    <code>
+      <!-- SEE Google: "config:about not displaying capability.policy preferences" -->
+    user_pref("capability.policy.localfilelinks.checkloaduri.enabled", "allAccess");
+    user_pref("capability.policy.localfilelinks.sites", "http://site http://mylocalsite http://site.company.com");
+    user_pref("capability.policy.policynames", "localfilelinks");
+    </code>
+    </pre>
 
     <hr></hr>
 
     <p><a href="#" id="button_ok">Ok</a> <a href="#" id="button_cancel">Cancel</a></p>
 
     <!--    debug-->
-<!--    <script type="text/javascript" src="main-panel.js"></script>    
-    <script type="text/javascript">onLoad();</script>-->
+    <script type="text/javascript" src="main-panel.js"></script>    
+    <script type="text/javascript">onLoad();</script>
     <!--    debug end -->    
   </body>
 </html>
