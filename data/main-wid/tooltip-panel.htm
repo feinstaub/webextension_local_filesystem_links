@@ -20,12 +20,15 @@
   </head>
   <body>
     <h2>Local Filesystem Links</h2>
-    version: 0.65
+    version: <div id="version" style="display: inline">0.65</div>
     <p><a href="#" id="button_options">Options</a></p>
     
     <h3>Status</h3>
     
-    Active on current tab. / Disabled. / Inactive on current tab.
+    <div id="statusActive" style="display: inherit" >Active on current tab.</div>
+    <div id="statusInactive" style="display: none">Inactive on current tab.</div>
+    <div id="statusDisabled" style="display: none">Disabled.</div>
+    
     
 <!--    debug-->
 <!--    <script type="text/javascript" src="tooltip-panel.js"></script>-->

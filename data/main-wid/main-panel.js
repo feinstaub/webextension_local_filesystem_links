@@ -11,7 +11,7 @@ function onLoad() {
   
   $("#button_ok").click(function() {
     console.debug("o")
-    self.port.emit("button_ok");
+    self.port.emit("button_ok", getSettingsDataFromPage());
     return false;
   });
       
@@ -19,5 +19,19 @@ function onLoad() {
     console.debug("c")
     self.port.emit("button_cancel");
     return false;
-  });     
+  });
+  
+  self.port.emit("request_data");
+}
+
+self.port.on("fresh_data", function(data) {
+  $("#checkEnableScanning").prop("checked", data.enableScanning);
+});
+
+// reads all settings from the page and
+// returns an data object that will be passed to the ok method
+function getSettingsDataFromPage() {
+  return {
+    enableScanning: $("#checkEnableScanning").is(":checked")
+  };
 }

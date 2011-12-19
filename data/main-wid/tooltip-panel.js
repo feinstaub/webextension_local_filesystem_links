@@ -6,3 +6,23 @@ $("#button_options").click(function() {
   self.port.emit("show_options");
   return false;
 });
+
+self.on("message", function(message) {
+  
+  if (message.type === "fresh_data") {
+    var data = message.data;
+    
+    showElement($("#statusDisabled"), !data.enableScanning);
+    showElement($("#statusInactive"), data.enableScanning && false);
+    showElement($("#statusActive"), data.enableScanning);    
+  }
+});
+
+function showElement(elem, show) {
+  if (show) {
+    elem.show();
+  }
+  else {
+    elem.hide();
+  }
+}
