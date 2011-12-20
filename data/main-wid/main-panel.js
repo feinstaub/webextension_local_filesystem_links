@@ -32,6 +32,7 @@ self.port.on("fresh_data", function(data) {
 // returns an data object that will be passed to the ok method
 function getSettingsDataFromPage() {
   return {
+    // http://api.jquery.com/category/selectors/
     enableScanning: $("#checkEnableScanning").is(":checked")
   };
 }
