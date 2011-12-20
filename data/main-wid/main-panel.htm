@@ -46,26 +46,36 @@
         /* Init the table */
         oTable = $('#example').dataTable( {
           "bPaginate": false,
+          "aaSorting": [], // no default sort
           "aoColumns": [
-            { "sTitle": "Enabled" },
+            { "sTitle": "Enabled",
+              "sClass": "center",
+              "fnRender": function(obj) {
+                // create text box (and invisible text to have sorting)
+                var value = obj.aData[obj.iDataColumn];
+                var checked = value?' checked="yes" ' : '';
+                return '<input type="checkbox" id="checkboxUrlEnabled' + obj.iDataRow + '"' + checked + '/><div style="display: none">' + value + '</div>';
+              }              
+            },
             { "sTitle": "Url" },
             { "sTitle": "" ,
               "sClass": "center",
+              "bSortable": false,
               "fnRender": function(obj) {
-                // alert(JSON.stringify(obj.context));
-                // todo: only show delete via hover
-                return '<a href="#">delete</a>';
+                //alert(JSON.stringify(obj));
+                // TODO: show delete via hover
+                return '<a href="#delete(' + obj.iDataRow + ')">delete</a>';
               }
             }
           ],
           "aaData": [
             /* Reduced data set */
-            [ "Trident", "Internet Explorer 4.0", ""  ],
-            [ "Trident", "Internet Explorer 5.0", "" ],
-            [ "Gecko", "Firefox 1.5", "" ],
-            [ "Gecko", "Firefox 2", "" ],
-            [ "Webkit", "Safari 2.0", "" ],
-            [ "Webkit", "Safari 3.0", "" ]
+            [ true, "http://site", ""  ],
+            [ true, "http://mylocalsite", "" ],
+            [ true, "http://site.company.com", "" ],
+            [ false, "https://testsite.ar", "" ],
+            [ true, "http://google.com", "" ],
+            [ false, "http://muli.nx", "" ]
           ]
           
           // columns
@@ -88,6 +98,10 @@
         
         // set min-height for all datatables http://www.datatables.net/styling/ids_classes
         $('.dataTables_wrapper').css('min-height', '50px');
+        
+        // to have the columns resize to a sensible size
+        // TODO: after loading the data dynamically
+        oTable.fnAdjustColumnSizing();
       } );      
     </script>
 
