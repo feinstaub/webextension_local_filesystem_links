@@ -5,31 +5,104 @@
     <link rel="shortcut icon" href="../addon_icon_16x16.png" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 
-    <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />	    
+    <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+    <link type="text/css" href="../jsdt/css/demo_table.css" rel="stylesheet" />
+
+    <!--    <style type="text/css" title="currentStyle">
+          @import "../../media/css/demo_page.css";
+          @import "../../media/css/demo_table.css";
+        </style>    -->
+
     <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
 
+    <script type="text/javascript" src="../jsdt/jquery.dataTables.js"></script>
+
     <script type="text/javascript">
-      //      console.log("......888888"); // strangely we do not see console messages
       //      //documentReady(); // from content script; does not work
       //      $(document).ready(function(){
-      //        console.log("...............888888");
       //        $("a").button();
       //      });
+      
+      
+      var oTable;
+			
+      $(document).ready(function() {
+        //				/* Add a click handler to the rows - this could be used as a callback */
+        //				$("#example tbody").click(function(event) {
+        //					$(oTable.fnSettings().aoData).each(function (){
+        //						$(this.nTr).removeClass('row_selected');
+        //					});
+        //					$(event.target.parentNode).addClass('row_selected');
+        //				});
+        //				
+        //				/* Add a click handler for the delete row */
+        //				$('#delete').click( function() {
+        //					var anSelected = fnGetSelected( oTable );
+        //					oTable.fnDeleteRow( anSelected[0] );
+        //				} );
+				
+        /* Init the table */
+        oTable = $('#example').dataTable( {
+          "bPaginate": false,
+          "aoColumns": [
+            { "sTitle": "Enabled" },
+            { "sTitle": "Url" },
+            { "sTitle": "" ,
+              "sClass": "center",
+              "fnRender": function(obj) {
+                // alert(JSON.stringify(obj.context));
+                // todo: only show delete via hover
+                return '<a href="#">delete</a>';
+              }
+            }
+          ],
+          "aaData": [
+            /* Reduced data set */
+            [ "Trident", "Internet Explorer 4.0", ""  ],
+            [ "Trident", "Internet Explorer 5.0", "" ],
+            [ "Gecko", "Firefox 1.5", "" ],
+            [ "Gecko", "Firefox 2", "" ],
+            [ "Webkit", "Safari 2.0", "" ],
+            [ "Webkit", "Safari 3.0", "" ]
+          ]
+          
+          // columns
+          //            ,
+          //            { "sTitle": "Platform" },
+          //            { "sTitle": "Version", "sClass": "center" },
+          //            {
+          //              "sTitle": "Grade",
+          //              "sClass": "center",
+          //              "fnRender": function(obj) {
+          //                var sReturn = obj.aData[ obj.iDataColumn ];
+          //                if ( sReturn == "A" ) {
+          //                  sReturn = "<b>A</b>";
+          //                }
+          //                return sReturn;
+          //              }
+          //            }
+          //          ]
+        } );
+        
+        // set min-height for all datatables http://www.datatables.net/styling/ids_classes
+        $('.dataTables_wrapper').css('min-height', '50px');
+      } );      
     </script>
 
     <style type="text/css">
       /*demo page css*/
-      body{ font: 100% "Trebuchet MS", sans-serif; margin: 20px;}
+      body{ font: 100% "Trebuchet MS", sans-serif; margin: 20px; max-width: 800px }
     </style>
   </head>
   <body>
-    <h2><img src="../addon_icon_64x64.png"/> Local Filesystem Links - Options</h2>
+    <h2><img src="../addon_icon_64x64.png"/> Local Filesystem Links &HorizontalLine; Options</h2>
 
     <h3>Scope</h3>
 
     <p>Here you can define on which pages the automatic hyperlink scanning should be active.</p>
-    
+
     <input type="checkbox" id="checkEnableScanning" />
     <label for="checkEnableScanning"><b>Enable scanning</b></label>
     <small>Uncheck this to disable all the scanning.</small>
@@ -47,24 +120,38 @@
 
     <h3>Firefox Preferences</h3>
 
-    TODO
-    
+    <p>For intranet sites it is often desirable to be able to open all kinds of hyperlinks
+      including those starting with file:// that are blocked by default.</p>
+
+    <p>This can be configured using
+      <a href="http://www.mozilla.org/projects/security/components/ConfigPolicy.html">Configurable Security Policies</a>.
+      Up to date (2011/12) there is no known GUI to set these preferences.</p>
+
+    <p>Warning: the implementation is experimental. Only one policy name ('localfilelinks') is supported.</p>
+
+    <!-- SEE Google: "config:about not displaying capability.policy preferences" -->
+    <p>This is an example of a user prefs entry:</p>
     <pre>
     <code>
-      <!-- SEE Google: "config:about not displaying capability.policy preferences" -->
     user_pref("capability.policy.localfilelinks.checkloaduri.enabled", "allAccess");
     user_pref("capability.policy.localfilelinks.sites", "http://site http://mylocalsite http://site.company.com");
     user_pref("capability.policy.policynames", "localfilelinks");
     </code>
     </pre>
 
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+    </table>
+
+
+    <p>&nbsp;</p>
     <hr/>
 
-    <p><a href="#" id="button_ok">Ok</a> <a href="#" id="button_cancel">Cancel</a></p>
+    <!-- see $("a.button").button(); -->
+    <p><a href="#" class="button" id="button_ok">Ok</a> <a href="#" class="button" id="button_cancel">Cancel</a></p>
 
     <!--    debug-->
-<!--    <script type="text/javascript" src="main-panel.js"></script>    
-    <script type="text/javascript">onLoad();</script>-->
+    <!--    <script type="text/javascript" src="main-panel.js"></script>    
+        <script type="text/javascript">onLoad();</script>-->
     <!--    debug end -->    
   </body>
 </html>

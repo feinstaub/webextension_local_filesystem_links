@@ -7,7 +7,8 @@ self.port.on("load", function() {
 function onLoad() {
   console.debug("main-panel load");
 
-  $("a").button();
+  // ".button" selects elements with class=button
+  $("a.button").button();
   
   $("#button_ok").click(function() {
     console.debug("o")
