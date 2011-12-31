@@ -9,3 +9,19 @@ DESIGN DECISIONS
     - We use http://www.webismymind.be/editablegrid/ instead.
       - Drawback: can only load XML (no JavaScript arrays)
       
+
+
+
+
+
+
+
+
+
+
+
+IDE Hints
+---------
+IntelliJ IDEA Community Edition 11
+http://stackoverflow.com/questions/1147336/how-to-get-intellij-idea-to-display-directories
+
