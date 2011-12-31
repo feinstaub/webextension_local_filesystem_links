@@ -14,7 +14,9 @@ DESIGN DECISIONS
 
 
 
-
+JSDoc
+-----
+http://code.google.com/p/jsdoc-toolkit/wiki/DocExamples
 
 
 
