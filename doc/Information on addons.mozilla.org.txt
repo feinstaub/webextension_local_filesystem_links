@@ -1,0 +1,5 @@
+Name: Local Filesystem Links
+Add-on URL: local-filesystem-links
+Summary: This Firefox extension deals with calling the Windows Explorer on the Windows operating system.
+Tags: local file link
+Description: see AboutThisAddon.htm (only some html supported)
