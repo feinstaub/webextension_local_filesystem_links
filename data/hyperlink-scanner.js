@@ -64,14 +64,14 @@ function scanTextNodes() {
 }
 
 // @param i index of the map
-function __modifyHyperlink_old(i) {
-  console.debug(i);
-  var domHref = hrefMap[i];
-  var origHref = domHref.href;
-  domHref.addEventListener("click", hrefClickCallback);
-  domHref.href = "#" + origHref;
-  domHref.origHref = origHref; // set new attribute for later
-}
+//function __modifyHyperlink_old(i) {
+//  console.debug(i);
+//  var domHref = hrefMap[i];
+//  var origHref = domHref.href;
+//  domHref.addEventListener("click", hrefClickCallback);
+//  domHref.href = "#" + origHref;
+//  domHref.origHref = origHref; // set new attribute for later
+//}
 
 function modifyHyperlinkFromIndex(i) {
   console.debug(i);
