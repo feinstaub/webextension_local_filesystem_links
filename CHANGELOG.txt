@@ -2,4 +2,5 @@ Changelog
 ----------
 v0.64 --> master
 - NEW: Add Options page with basic options
+- Several minor fixes
 - EXPERIMENTAL: grid for options
