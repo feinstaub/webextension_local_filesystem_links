@@ -2,8 +2,8 @@
     "name": "alien-local-filesystem-links", 
     "license": "MPL 1.1/GPL 2.0/LGPL 2.1", 
     "author": "austrALIENsun", 
-    "version": "0.65", 
+    "version": "0.8",
     "fullName": "Local Filesystem Links",
     "id": "jid1-JAzC7z53jemo5Q", 
-    "description": "This Firefox extension deals with calling the Windows Explorer on the Windows operating system."
+    "description": "Scans pages for file:/// links and makes it possible to open them with the Windows Explorer (Windows only)."
 }

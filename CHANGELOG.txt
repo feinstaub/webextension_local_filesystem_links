@@ -1,6 +1,6 @@
 Changelog
 ----------
-v0.64 --> master
+v0.64 --> v0.8
 - NEW: Add Options page with basic options
 - Several minor fixes
 - Fix issue#2 "Blanks in path"
