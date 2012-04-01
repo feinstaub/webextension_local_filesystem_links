@@ -1,3 +1,10 @@
+\test\webserver\start_test_server.cmd
+-------------------------------------
+Starts a webserver where you can verify some features.
+- Q: Why don't we use local html files?
+- A: Because they are treated differently (compared to remotely served files) by Firefox
+
+
 DESIGN DECISIONS
 ----------------
 
@@ -9,17 +16,10 @@ DESIGN DECISIONS
     - We use http://www.webismymind.be/editablegrid/ instead.
       - Drawback: can only load XML (no JavaScript arrays)
       
-
-
-
-
-
+      
 JSDoc
 -----
 http://code.google.com/p/jsdoc-toolkit/wiki/DocExamples
-
-
-
 
 
 IDE Hints
