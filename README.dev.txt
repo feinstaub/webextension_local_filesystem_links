@@ -27,3 +27,6 @@ IDE Hints
 IntelliJ IDEA Community Edition 11
 http://stackoverflow.com/questions/1147336/how-to-get-intellij-idea-to-display-directories
 
+1) Start IntelliJ IDEA Community Edition 11.0
+2) File --> Open Project... --> Select folder firefox_addon_local_filesystem_links
+   (where this README.dev.txt resides)

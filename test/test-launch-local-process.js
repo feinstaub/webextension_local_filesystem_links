@@ -10,7 +10,7 @@ const localProcess = require("launch-local-process");
 
 exports.test_getEnvVar = function(test) {
   let v1 = localProcess.getEnvironmentVariable("WINDIR");
-  test.assertEqual(v1, "C:\\Windows");
+  test.assertEqual(v1.toUpperCase(), "C:\\WINDOWS");
   
   test.assertRaises(function() {
     localProcess.getEnvironmentVariable("__MUH__");
