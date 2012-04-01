@@ -1,0 +1,5 @@
+Changelog
+----------
+v0.64 --> master
+- NEW: Add Options page with basic options
+- EXPERIMENTAL: grid for options
