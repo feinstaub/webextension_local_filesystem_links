@@ -60,6 +60,7 @@ exports.test_runProcess = function(test) {
   //// localProcess.runProcess(explorerFile, [ "/e,", "C:\\Windows\\Downloaded Program Files" ]); // OK, works
   //// localProcess.runProcess(explorerFile, [ "/e,", "C:\\tmp\\path with blanks" ]); // OK, works
   //// localProcess.runProcess(explorerFile, [ "/e,", "\"C:\\tmp\\path,with,comma\"" ]); // does NOT work
+  //// localProcess.runProcess(explorerFile, [ "/e",  "\"C:\\tmp\\path,with,comma\"" ]); // does NOT work  
   //// localProcess.runProcess(explorerFile, [ "/e,", "C:\\tmp\\path,with,comma" ]); // does NOT work
   //// localProcess.runProcess(explorerFile, [ "/e,", "C:\\tmp\\path\",\"with\",\"comma" ]); // does NOT work
   console.info("please comment in the line above for interactive test"); 
