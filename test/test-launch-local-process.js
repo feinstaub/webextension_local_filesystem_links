@@ -50,18 +50,20 @@ exports.test_runProcess = function(test) {
   // let explorerFile = localProcess.getILocalFileFromPath("C:\\Users\\alien\\Documents\\test.cmd");
   
   // start explorer and select itself
-  // let args = [ "/select," + explorerPath ]; // ok
-  // let args = [ "/e,/root,C:\\Windows\\Downloaded Program Files" ]; // TODO: does not work because of space
-  let args = [ "/e,/root,C:\\Windows" ];
-  // TODO: a test case with \\uncpath\hallo\test
+  let args = [ "/select," + explorerPath ]; // OK, works
+  ////let args = [ "/e,/root,C:\\Windows" ]; // NOTE: /e,/root makes no sense
   
   console.debug(args);
-  localProcess.runProcess(explorerFile, args, false);
-  //localProcess.runProcess(explorerFile, args, false);
-  //console.info("plese comment in the line above");
+  ////localProcess.runProcess(explorerFile, args, false);
+  console.info("please comment in the line above for interactive test");
   
-  // localProcess.runProcess(explorerFile, [ "/root", "C:\\Windows\\Downloaded Program Files" ]);
+  //// localProcess.runProcess(explorerFile, [ "/e,", "C:\\Windows\\Downloaded Program Files" ]); // OK, works
+  //// localProcess.runProcess(explorerFile, [ "/e,", "C:\\tmp\\path with blanks" ]); // OK, works
+  //// localProcess.runProcess(explorerFile, [ "/e,", "\"C:\\tmp\\path,with,comma\"" ]); // does NOT work
+  //// localProcess.runProcess(explorerFile, [ "/e,", "C:\\tmp\\path,with,comma" ]); // does NOT work
+  //// localProcess.runProcess(explorerFile, [ "/e,", "C:\\tmp\\path\",\"with\",\"comma" ]); // does NOT work
+  console.info("please comment in the line above for interactive test"); 
   
   console.info("You should see the Windows Explorer.");
-  test.pass("You should see the Windows Explorer.");
+  test.pass("Check if you see the Windows Explorer window with correct item selected.");
 }
