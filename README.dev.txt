@@ -1,3 +1,10 @@
+NEXT
+----
+reveal makes it possible to support other OSs
+http://stackoverflow.com/questions/1418896/detect-operating-system-from-firefox-extension
+https://developer.mozilla.org/en/nsIXULRuntime
+
+
 \test\webserver\start_test_server.cmd
 -------------------------------------
 Starts a webserver where you can verify some features.
