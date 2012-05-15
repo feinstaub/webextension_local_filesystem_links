@@ -1,0 +1,19 @@
+Your add-on, Local Filesystem Links 0.9, has been reviewed by an editor and did not meet the criteria for being hosted in our gallery.
+
+Reviewer:
+Kris Maglione
+
+Comments:
+Your version was rejected because of the following problems:
+
+1) We can't match your included version of jQuery and jQuery UI to the checksum of any known version. Please include only releases of libraries obtained from official sources in their original, unmodified files. Please note that third party CDNs are not considered official sources for this purpose. In the case of jQuery UI, it's best to include individual files from the development bundle rather than a single, amalgamated script.
+
+   Please also remove the duplicate copies of jQuery and jquery.datatables that you include.
+
+This version didn't pass full review because of the following issues:
+
+1) Your add-on prints quite a lot of debugging information in the Error Console, which is generally not allowed in production add-ons.
+
+It would also be a good idea to use nsILocalFile.reveal() or .launch() rather than launching explorer.exe directly.
+
+Please fix them and submit again. Thank you.
