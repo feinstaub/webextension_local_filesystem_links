@@ -10,18 +10,18 @@ var initData;
 self.on('message', function onMessage(message) {
   if (message.event === "init") {
     initData = message.data;
-    console.debug("init: " + initData.styleFileUrl);
+    //// console.debug("init: " + initData.styleFileUrl);
     
     let link = jQuery('<link rel="stylesheet" type="text/css" />');
     link.attr('href', initData.styleFileUrl);
     link.appendTo("head"); // alternative: jQuery('head').append(link);
   }
   else if (message.event === "scan_hyperlinks") {
-    console.debug("scan_hyperlinks");
+    //// console.debug("scan_hyperlinks");
     scanHyperlinks();
   }
   else if (message.event === "scan_textnodes") {
-    console.debug("scan_textnodes");
+    //// console.debug("scan_textnodes");
     scanTextNodes();
   }  
   else if (message.event === "href_mod") {    
@@ -33,7 +33,7 @@ self.on('message', function onMessage(message) {
 });
 
 function scanHyperlinks() {
-  console.debug("scanHyperlinks");
+  //// console.debug("scanHyperlinks");
   let data = $("a");
   var hrefs = [];
   
@@ -47,7 +47,7 @@ function scanHyperlinks() {
     }
   }
 
-  console.debug(hrefs.length);
+  //// console.debug(hrefs.length);
   // console.debug(hrefs);
   
   for (var i in hrefs) {
@@ -60,7 +60,7 @@ function scanHyperlinks() {
 }
 
 function scanTextNodes() {
-  console.debug("TODO (make optional; TODO: only scan visible area");
+  //// console.debug("TODO (make optional; TODO: only scan visible area");
 }
 
 // @param i index of the map
@@ -74,7 +74,7 @@ function scanTextNodes() {
 //}
 
 function modifyHyperlinkFromIndex(i) {
-  console.debug(i);
+  //// console.debug(i);
   modifyHyperlink(hrefMap[i]);
 }
 
@@ -101,7 +101,7 @@ function hrefClickCallback(e) {
   // let href = mouseEvent.currentTarget.alien_OrigHref;
   let href = e.data.origHref; // http://api.jquery.com/event.data/
   let hrefDecoded = decodeURIComponent(href); // http://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
-  console.debug("Post: " + hrefDecoded);
+  //// console.debug("Post: " + hrefDecoded);
   self.port.emit('href', hrefDecoded);
 }
 

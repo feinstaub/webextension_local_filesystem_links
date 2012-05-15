@@ -1,23 +1,23 @@
-console.log("main-panel.htm loaded");
+//// console.log("main-panel.htm loaded");
 
 self.port.on("load", function() {
   onLoad();
 });
 
 function onLoad() {
-  console.debug("main-panel load");
+  //// console.debug("main-panel load");
 
   // ".button" selects elements with class=button
   $("a.button").button();
   
   $("#button_ok").click(function() {
-    console.debug("o")
+    //// console.debug("o")
     self.port.emit("button_ok", getSettingsDataFromPage());
     return false;
   });
       
   $("#button_cancel").click(function() {
-    console.debug("c")
+    //// console.debug("c")
     self.port.emit("button_cancel");
     return false;
   });

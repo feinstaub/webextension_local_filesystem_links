@@ -5,10 +5,10 @@
 
 self.on('message', function onMessage(commandString) {
   if (commandString == "scan") {
-    console.debug("scan content text (disabled)");
+    //// console.debug("scan content text (disabled)");
     // scanAndCreateHyperlinks();
   } else {
-    console.warn("unknown command");
+    //// console.warn("unknown command");
   }
 });
 
@@ -17,8 +17,8 @@ self.on('message', function onMessage(commandString) {
 // Can we do the scanning in background?
 //
 function scanAndCreateHyperlinks() {
-  console.log("scanAndCreateHyperlinks");
-  console.log(document.location);
+  //// console.log("scanAndCreateHyperlinks");
+  //// console.log(document.location);
   // console.log($("*").length);
   let data = $("*");
 
@@ -48,7 +48,7 @@ function scanAndCreateHyperlinks() {
       }
    });
 
-   console.log(localFileTextNodes.length);
+   //// console.log(localFileTextNodes.length);
 }
 
 function looksLikeLocalFileLink(text) {
