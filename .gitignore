@@ -2,6 +2,7 @@
 translator.xpi
 ttt/
 $p1/
+_p1/
 /local-filesystem-links.xpi
 /.komodotools/
 /.settings/
@@ -10,4 +11,6 @@ alien-local-filesystem-links.xpi
 alien-*.xpi
 alien-local-filesystem-links-0.63/
 ~testui/
-.idea/workspace.xml
+/.idea/workspace.xml
+/.directory
+*~
