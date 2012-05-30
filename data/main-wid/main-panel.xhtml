@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Local Filesystem Links - Options</title>
     <link rel="shortcut icon" href="../addon_icon_16x16.png" type="image/x-icon"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-
     <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
-
     <link type="text/css" href="../jsdt/css/demo_table.css" rel="stylesheet"/>
 
     <!--    <style type="text/css" title="currentStyle">
@@ -20,6 +17,7 @@
     <script type="text/javascript" src="../jsdt/jquery.dataTables.js"/>
 
     <script type="text/javascript">
+        <![CDATA[
         // //documentReady(); // from content script; does not work
         // $(document).ready(function(){
         // $("a").button();
@@ -103,6 +101,7 @@
         // TODO: after loading the data dynamically
         oTable.fnAdjustColumnSizing();
         } );
+        ]]>
     </script>
 
     <style type="text/css">
@@ -111,7 +110,7 @@
     </style>
 </head>
 <body>
-<h2><img src="../addon_icon_64x64.png"/> Local Filesystem Links &HorizontalLine; Options</h2>
+<h2><img src="../addon_icon_64x64.png" alt="addon icon"/> Local Filesystem Links - Options</h2>
 
 <h3>Scope</h3>
 
@@ -156,12 +155,12 @@
     </code>
     </pre>
 
-    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+    <table class="display" id="example">
     </table>
 
 </div>
 
-<p>&nbsp;</p>
+<p> </p>
 <hr/>
 
 <!-- see $("a.button").button(); -->

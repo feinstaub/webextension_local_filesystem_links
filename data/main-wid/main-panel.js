@@ -1,5 +1,3 @@
-//// console.log("main-panel.htm loaded");
-
 self.port.on("load", function() {
   onLoad();
 });

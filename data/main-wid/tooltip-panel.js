@@ -1,4 +1,3 @@
-//// console.log("tooltip-panel.htm loaded");
 $("a").button();
         
 $("#button_options").click(function() {
