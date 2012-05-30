@@ -12,12 +12,12 @@
     <!--    <style type="text/css" title="currentStyle">
           @import "../../media/css/demo_page.css";
           @import "../../media/css/demo_table.css";
-        </style>    -->
+        </style>
+    -->
 
-    <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
-
-    <script type="text/javascript" src="../jsdt/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.7.2.min.js"/>
+    <script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"/>
+    <script type="text/javascript" src="../jsdt/jquery.dataTables.js"/>
 
     <script type="text/javascript">
         // //documentReady(); // from content script; does not work
@@ -54,9 +54,7 @@
         // create text box (and invisible text to have sorting)
         var value = obj.aData[obj.iDataColumn];
         var checked = value?' checked="yes" ' : '';
-        return '<input type="checkbox" id="checkboxUrlEnabled' + obj.iDataRow + '"' + checked + '/>
-        <div style="display: none">' + value + '</div>
-        ';
+        return '<input type="checkbox" id="checkboxUrlEnabled' + obj.iDataRow + '"' + checked + '/><div style="display: none">' + value + '</div>';
         }
         },
         { "sTitle": "Url" },

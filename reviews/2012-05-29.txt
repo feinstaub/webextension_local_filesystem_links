@@ -1,0 +1,40 @@
+Your add-on, Local Filesystem Links 0.95, has been reviewed by an editor and did not meet the criteria for full review. However, your add-on has been granted preliminary review and is now available for download in our gallery at https://addons.mozilla.org/addon/local-filesystem-links/
+
+
+
+Reviewer:
+Kris Maglione
+
+Comments:
+This version didn't pass full review because of the following issues:
+
+1) I get the following errors in the Error Console at startup:
+
+Error: jQuery is not defined
+Source file: resource://jid1-jazc7z53jemo5q-at-jetpack/alien-local-filesystem-links/data/js/jquery-ui-1.8.16.custom.min.js
+Line: 18
+ ----------
+Error: jQuery is not defined
+Source file: resource://jid1-jazc7z53jemo5q-at-jetpack/alien-local-filesystem-links/data/jsdt/jquery.dataTables.js
+Line: 7440
+ ----------
+Error: unterminated string literal
+Source file: resource://jid1-jazc7z53jemo5q-at-jetpack/alien-local-filesystem-links/data/main-wid/main-panel.htm
+Line: 57, Column: 96
+Source code:
+        return '<input type="checkbox" id="checkboxUrlEnabled' + obj.iDataRow + '"' + checked + '/> 
+
+   It would incidentally be a good idea to ensure that your HTML files are well formed XHTML and change the extensions to .xhtml
+
+   See also https://developer.mozilla.org/en/XUL_School/DOM_Building_and_HTML_Insertion
+
+You should also remove or disable the unused code in your showPathInWindowsExplorer function.
+
+You need to correct them to get full approval. Thanks.
+
+Your add-on will now appear in search results and categories with some limitations. You may re-request full review by addressing the editor's comments and uploading a new version. To learn more about the review process, please visit https://addons.mozilla.org/developers/docs/policies/reviews#selection
+
+If you have any questions or comments on this review, please reply to this email or join #amo-editors on irc.mozilla.org
+--
+Mozilla Add-ons
+https://addons.mozilla.org
