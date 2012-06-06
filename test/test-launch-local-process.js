@@ -23,32 +23,27 @@ exports.test_pathExists = function(test) {
   test.assertEqual(localProcess.pathExists("C:\\muh.exe"), false);
 }
 
-exports.test_getILocalFileFromPath = function(test) {
-  let localFile = localProcess.getILocalFileFromPath("C:\\Windows\\explorer.exe");
-  localFile.QueryInterface(Components.interfaces.nsIFile);
-  test.assertEqual(localFile.exists(), true);
+exports.test_getNsIFileFromPath = function(test) {
+  let nsFile = localProcess.getNsIFileFromPath("C:\\Windows\\explorer.exe");
+  test.assertEqual(nsFile.exists(), true);
   
-  localFile = localProcess.getILocalFileFromPath("C:\\muh");
-  localFile.QueryInterface(Components.interfaces.nsIFile);
-  test.assertEqual(localFile.exists(), false);
+  nsFile = localProcess.getNsIFileFromPath("C:\\muh");
+  test.assertEqual(nsFile.exists(), false);
   
   // folder with space
-  localFile = localProcess.getILocalFileFromPath("C:\\Windows\\Downloaded Program Files");
-  localFile.QueryInterface(Components.interfaces.nsIFile);
-  test.assertEqual(localFile.exists(), true);
+  nsFile = localProcess.getNsIFileFromPath("C:\\Windows\\Downloaded Program Files");
+  test.assertEqual(nsFile.exists(), true);
   
   // with ""
-  localFile = localProcess.getILocalFileFromPath("\"C:\\Windows\\Downloaded Program Files\"");
-  localFile.QueryInterface(Components.interfaces.nsIFile);
-  test.assertEqual(localFile.exists(), true);  
+  nsFile = localProcess.getNsIFileFromPath("\"C:\\Windows\\Downloaded Program Files\"");
+  test.assertEqual(nsFile.exists(), true);
 }
 
 exports.test_runProcess = function(test) {
   let windir = localProcess.getEnvironmentVariable("WINDIR");
   let explorerPath = windir + "\\explorer.exe";
-  let explorerFile = localProcess.getILocalFileFromPath(explorerPath);
-  // let explorerFile = localProcess.getILocalFileFromPath("C:\\Users\\alien\\Documents\\test.cmd");
-  
+  ////let explorerFile = localProcess.getNsIFileFromPath(explorerPath);
+
   // start explorer and select itself
   let args = [ "/select," + explorerPath ]; // OK, works
   ////let args = [ "/e,/root,C:\\Windows" ]; // NOTE: /e,/root makes no sense
