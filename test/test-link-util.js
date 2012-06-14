@@ -11,9 +11,9 @@ exports.test_stripQuotes = function(test) {
   // test.assertEqual(localProcess.stripQuotes("\"aaa"), "aaa"); // throws error
 }
 
-exports.test_fileLinkToWindowsPath = function(test) {
-  test.assertEqual(linkUtil.fileLinkToWindowsPath("file:///W:/"), "W:\\");
-  test.assertEqual(linkUtil.fileLinkToWindowsPath("file:///W:/a/bb/ccc"), "W:\\a\\bb\\ccc");
+exports.test_fixFileLinkStringForWindowsOs = function(test) {
+  test.assertEqual(linkUtil.fixFileLinkStringForWindowsOs("file:///W:/"), "W:\\");
+  test.assertEqual(linkUtil.fixFileLinkStringForWindowsOs("file:///W:/a/bb/ccc"), "W:\\a\\bb\\ccc");
 }
 
 exports.test_looksLikeLocalFileLink = function(test) {
