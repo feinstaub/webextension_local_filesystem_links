@@ -9,7 +9,7 @@ var initData;
 
 self.on('message', function onMessage(message) {
   if (message.event === "init") {
-    initData = message.data;
+    initData = message.data; // see main.js (INIT_DATA_DEFINITION)
     //// console.debug("init: " + initData.styleFileUrl);
     
     let link = jQuery('<link rel="stylesheet" type="text/css" />');
@@ -85,7 +85,7 @@ function modifyHyperlink(domHref) {
   $(domHref).after("<a class='myButtonLink'></a>");
   var insertedNode = $(domHref).next();
   insertedNode.attr("href", "#" + origHref); // TODO: on hover show something in status bar to avoid having the #... in the address bar
-  insertedNode.attr("title", "Open in Windows Explorer: " + origHref); // quicktip; TODO: change this dynamically depending on OS
+  insertedNode.attr("title", "Open in " + initData.fileManagerDisplayName + ": " + origHref); // quicktip; TODO: change this dynamically depending on OS
   insertedNode.attr("alien_OrigHref", origHref); // set new attribute for later in callback
   // insertedNode.css('background-color', 'yellow');
   
