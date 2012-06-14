@@ -6,6 +6,21 @@
         <a href="file:///C:/tmp/existing_file - Kopie.txt">C:/tmp/existing_file - Kopie.txt</a>
     </li>
     <li>
+        <a href="file:///tmp/">file:////tmp/</a> (3 slashes: does not work)
+    </li>
+    <li>
+        <a href="file:////tmp/">file:////tmp/</a> (4 slashes: works)
+    </li>
+    <li>
+        <a href="file:////tmp">file:////tmp</a>
+    </li>
+    <li>
+        <a href="file:///data">file:///data</a> (does not work)
+    </li>
+    <li>
+        <a href="file:///~/data">file:///~/data</a> (works if path exists)
+    </li>
+    <li>
         <a href="file:///C:/tmp/existing_file.txt">C:/tmp/existing_file.txt</a>
     </li>
     <li>
