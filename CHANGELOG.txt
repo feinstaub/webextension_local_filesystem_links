@@ -5,3 +5,8 @@ v0.64 --> v0.8
 - Several minor fixes
 - Fix issue#2 "Blanks in path"
 - EXPERIMENTAL: grid for options
+
+v0.96 --> v.97
+- Also support Linux
+TODO: search for "Windows Explorer" in documentation and replace with OS specific string
+TODO: show addon version also in main (TODO: access addon-version)
