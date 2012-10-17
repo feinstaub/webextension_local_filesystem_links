@@ -7,13 +7,14 @@
         display: inline-block;
         width: 16px;
         height: 16px;
-        background: url('folder-2.png') bottom;
+        background: url('icon-folder.png') bottom;
 }
 .myButtonLink:hover {
-      margin-bottom: -4px;
-        background: url('folder-go.png') bottom;
+      margin-bottom: -3px;
+        background: url('icon-folder-go.png') bottom;
 }      
 
+/* not used in production; for eval page */
 .myButtonLink2 {
         margin-left: 3px;
         display: inline-block;
@@ -21,6 +22,8 @@
         height: 24px;
         background: url('folder-grey.png') bottom;
 }
+
+/* not used in production; for eval page */
 .myButtonLink2:hover {
         background: url('folder-green.png') bottom;
 }              
