@@ -5,5 +5,5 @@
     "version": "0.97",
     "fullName": "Local Filesystem Links",
     "id": "jid1-JAzC7z53jemo5Q", 
-    "description": "Scans pages for file:/// links and makes it possible to open them with the Windows Explorer."
+    "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser (e. g. Windows Explorer)."
 }
