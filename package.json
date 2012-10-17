@@ -2,7 +2,7 @@
     "name": "alien-local-filesystem-links", 
     "license": "MPL 1.1/GPL 2.0/LGPL 2.1", 
     "author": "austrALIENsun", 
-    "version": "0.97",
+    "version": "0.98",
     "fullName": "Local Filesystem Links",
     "id": "jid1-JAzC7z53jemo5Q", 
     "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser (e. g. Windows Explorer)."

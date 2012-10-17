@@ -13,3 +13,5 @@ v0.97 --> v0.98
 - Upgrade to jetpack-sdk-1.10
 - Fix issue #8: Page layout is shaky. (https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/8)
 - Update documentation
+- Fix issue #5: "Prevent Reloading of Page" when working with Plone.
+
