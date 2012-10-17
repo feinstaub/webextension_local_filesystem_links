@@ -1,36 +1,34 @@
 <strong>Summary</strong>
-This Firefox extension scans pages for file:/// links and makes it possible to open them with the Windows Explorer (Windows only).
+This Firefox extension scans pages for file:/// links and makes it possible to open them with the system's file browser (e. g. Windows Explorer).
 
 <strong>Target Audience</strong>
 The extensions was created to assist people using local or enterprise intranet sites (e. g. Wikis)
 where pages exist that link to files that are located on the local drive or on network shares.
 
 <strong>Details</strong>
-
 Currently there are two methods of opening local file system links.
 
 <i>1) Automatic file link recognition</i>
 An automatic file link recognition scans for hyperlinks with a file:/// prefix.
 For each of these hyperlinks a folder icon will be inserted on the right side of the hyperlink.
-If you click the icon the local file link is opened in Windows Explorer.
+If you click the icon the local file link is opened with the system's file browser (e. g. Windows Explorer).
+In case of a link to a directory, the file browser opens the directory.
+In case of a link to a file, the file will be selected (NOT executed) in the file browser.
 
 <i>2) Page context menu entry</i>
 The extension adds an entry 'Open with Windows Explorer' to the page context menu that works on selected text.
-
-Step by Step
+It works as follows:
 <ul>
     <li>Select a text portion that contains the path to a local file or folder (e. g. C:\Windows).</li>
     <li>Right click on the selection and choose 'Open with Windows Explorer' from the context menu.</li>
-    <li>The Windows Explorer is opened with the path selected. If your path was a file, the file will
-        be selected and you only have to press Enter to open the file.</li>
-    <li>If the path was not found an error message will we displayed.</li>
+    <li>See the two cases above.</li>
 </ul>
 
 <i>Supported file links</i>
 <ul>
     <li>Local disk file links like C:\Windows (file:///C:/Windows)</li>
     <li>Network share links (UNC paths) like \\server\folder\file.png (file://///server/folder/file.png)</li>
-    <li>Blanks in the path (since v0.8)</li>
+    <li>Blanks in the path</li>
 </ul>
 
 <strong>Known Issues</strong>

@@ -10,8 +10,6 @@ v0.96 --> v.97
 - Also support Linux
 
 v0.97 --> v0.98
--
-
-TODO: search for "Windows Explorer" in documentation and replace with OS specific string
-   
-TODO: show addon version also in main widget (TODO: access addon-version)
+- Upgrade to jetpack-sdk-1.10
+- Fix issue #8: Page layout is shaky. (https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/8)
+- Update documentation
