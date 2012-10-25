@@ -27,6 +27,10 @@ self.on('message', function onMessage(message) {
   else if (message.event === "href_mod") {    
     modifyHyperlinkFromIndex(message.data); // message.data == i
   }
+  else if (message.event === "rescan_page") {
+    console.debug("............hlink scanner rescan");
+    scanHyperlinks(); // TODO: replace with real rescan method!!!
+  }
   else {
     console.warn("unknown command");
   }
