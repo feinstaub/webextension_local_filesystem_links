@@ -15,3 +15,6 @@ v0.97 --> v0.98
 - Update documentation
 - Fix issue #5: "Prevent Reloading of Page" when working with Plone.
 
+v0.98 --> v0.981
+- Add a button "Rescan" to the toolbar panel that rescans a page and
+  finds hyperlinks that were added dynamically.
