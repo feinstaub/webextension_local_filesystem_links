@@ -13,4 +13,6 @@ Context menu:
 Scan for links on the page
 - use regex?
 
- 
+
+Use https://addons.mozilla.org/en-US/developers/docs/sdk/1.8/packages/addon-kit/addon-page.html
+to display the settings page if that makes sense
