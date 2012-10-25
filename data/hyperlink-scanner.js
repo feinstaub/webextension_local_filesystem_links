@@ -59,7 +59,7 @@ function scanHyperlinks() {
     // href string
     hrefMap[i] = hrefs[i];
     var obj = { href: hrefs[i].href, i: i };
-    self.port.emit('href_found', obj);
+    self.port.emit("href_found", obj);
   }
 }
 
