@@ -86,7 +86,7 @@ function modifyHyperlink(domHref) {
   var origHref = domHref.href;
   
   //$(domHref).after(" [<a class='myButtonLink' href='hallo'>hallo</a>]");
-  $(domHref).after("<a class='myButtonLink'></a>");
+  $(domHref).after("<a class='alien-lfl-href-buttonLink'></a>");
   var insertedNode = $(domHref).next();
   
   // do not do that:

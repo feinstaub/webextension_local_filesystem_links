@@ -1,7 +1,7 @@
 /*
  * License: www.mozilla.org/MPL/
  */
-.myButtonLink {
+.alien-lfl-href-buttonLink {
         margin-left: 3px;
         margin-bottom: -3px;
         display: inline-block;
@@ -9,7 +9,7 @@
         height: 16px;
         background: url('icon-folder.png') bottom;
 }
-.myButtonLink:hover {
+.alien-lfl-href-buttonLink:hover {
       margin-bottom: -3px;
         background: url('icon-folder-go.png') bottom;
 }      
