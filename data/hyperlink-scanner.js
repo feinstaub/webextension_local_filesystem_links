@@ -87,24 +87,24 @@ function modifyHyperlink(domHref) {
   
   //$(domHref).after(" [<a class='myButtonLink' href='hallo'>hallo</a>]");
   $(domHref).after("<a class='alien-lfl-href-buttonLink'></a>");
-  var insertedNode = $(domHref).next();
+  var alienHrefElement = $(domHref).next(); // get the just inserted element
   
   // do not do that:
-  //// insertedNode.attr("href", "#" + origHref); // todo: on hover show something in status bar to avoid having the #... in the address bar
+  //// alienHrefElement.attr("href", "#" + origHref); // todo: on hover show something in status bar to avoid having the #... in the address bar
   // because:
   // 1. http://stackoverflow.com/questions/876390/reliable-cross-browser-way-of-setting-status-bar-text
   //   "For security reasons, most modern browsers disable status bar access by default."
   // 2. Fixes https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/5
   
-  insertedNode.attr("title", "Open in " + initData.fileManagerDisplayName + ": " + origHref); // quicktip; TODO: change this dynamically depending on OS
-  insertedNode.attr("alien_OrigHref", origHref); // set new attribute for later in callback
-  // insertedNode.css('background-color', 'yellow');
+  alienHrefElement.attr("title", "Open in " + initData.fileManagerDisplayName + ": " + origHref); // quicktip; TODO: change this dynamically depending on OS
+  alienHrefElement.attr("alien_OrigHref", origHref); // set new attribute for later in callback
+  // alienHrefElement.css('background-color', 'yellow');
   
   // http://stackoverflow.com/questions/2316199/jquery-get-dom-node  --> [0]
   // we use the original DOM node to add the event listener because the addon works only in FF
-  // insertedNode[0].addEventListener("click", hrefClickCallback);
+  // alienHrefElement[0].addEventListener("click", hrefClickCallback);
   
-  insertedNode.click({ origHref: origHref }, hrefClickCallback);
+  alienHrefElement.click({ origHref: origHref }, hrefClickCallback);
 }
 
 //function hrefClickCallback(mouseEvent) {
