@@ -28,8 +28,7 @@ self.on('message', function onMessage(message) {
     modifyHyperlinkFromIndex(message.data); // message.data == i
   }
   else if (message.event === "rescan_page") {
-    console.debug("............hlink scanner rescan");
-    scanHyperlinks(); // TODO: replace with real rescan method!!!
+    scanHyperlinks(); // same as in event "scan_hyperlinks", can handle both cases
   }
   else {
     console.warn("unknown command");
@@ -84,11 +83,25 @@ function modifyHyperlinkFromIndex(i) {
 
 function modifyHyperlink(domHref) {
   var origHref = domHref.href;
-  
-  //$(domHref).after(" [<a class='myButtonLink' href='hallo'>hallo</a>]");
-  $(domHref).after("<a class='alien-lfl-href-buttonLink'></a>");
-  var alienHrefElement = $(domHref).next(); // get the just inserted element
-  
+
+  var potentialAlienLink = $(domHref).next();
+  var alienHrefElement = null;
+
+  // if the next element has not a special attribute that "alien" links have
+  // then create the link (which is always the case on first page load)
+  if (potentialAlienLink.attr("alien_OrigHref") == null) {
+    $(domHref).after("<a class='alien-lfl-href-buttonLink'></a>");
+    alienHrefElement = $(domHref).next(); // get the just inserted element
+  }
+  else {
+    // the potential link was an actual alien link (if rescanning a page)
+    alienHrefElement = potentialAlienLink;
+  }
+
+  //
+  // now add or update attributes:
+  //
+
   // do not do that:
   //// alienHrefElement.attr("href", "#" + origHref); // todo: on hover show something in status bar to avoid having the #... in the address bar
   // because:
@@ -103,7 +116,8 @@ function modifyHyperlink(domHref) {
   // http://stackoverflow.com/questions/2316199/jquery-get-dom-node  --> [0]
   // we use the original DOM node to add the event listener because the addon works only in FF
   // alienHrefElement[0].addEventListener("click", hrefClickCallback);
-  
+
+  alienHrefElement.unbind(); // remove event from first page scan
   alienHrefElement.click({ origHref: origHref }, hrefClickCallback);
 }
 
