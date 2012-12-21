@@ -1,6 +1,8 @@
 Dinge, die zu tun sind:
 -----------------------
 
+- Rename toolbar-panel.xhtml to addin-toolbar-panel.xhtml etc.
+
 Via Options-Dialog:
 - Set file link preferences
   (set capabilities)
