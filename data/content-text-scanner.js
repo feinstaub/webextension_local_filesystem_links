@@ -5,7 +5,7 @@
 
 self.on('message', function onMessage(commandString) {
   if (commandString == "scan") {
-    //// console.debug("scan content text (disabled)");
+    //// console.log("debug: scan content text (disabled)");
     // scanAndCreateHyperlinks();
   } else {
     //// console.warn("unknown command");

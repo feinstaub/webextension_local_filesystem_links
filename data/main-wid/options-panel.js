@@ -7,13 +7,13 @@ function onLoad() {
   $("a.button").button();
   
   $("#button_ok").click(function() {
-    //// console.debug("o")
+    //// console.log("debug: ok")
     self.port.emit("button_ok", getSettingsDataFromPage());
     return false;
   });
       
   $("#button_cancel").click(function() {
-    //// console.debug("c")
+    //// console.log("debug: cancel")
     self.port.emit("button_cancel");
     return false;
   });

@@ -48,7 +48,7 @@ exports.test_getNsIFileFromPath = function(test) {
 ////  let args = [ "/select," + explorerPath ]; // OK, works
 ////  ////let args = [ "/e,/root,C:\\Windows" ]; // NOTE: /e,/root makes no sense
 ////  
-////  console.debug(args);
+////  console.log(args);
 ////  ////localProcess.runProcess(explorerFile, args, false);
 ////  console.info("please comment in the line above for interactive test");
 ////  

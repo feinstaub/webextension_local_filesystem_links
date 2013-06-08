@@ -10,18 +10,18 @@ var initData;
 self.on('message', function onMessage(message) {
   if (message.event === "init") {
     initData = message.data; // see main.js (INIT_DATA_DEFINITION)
-    //// console.debug("init: " + initData.styleFileUrl);
+    console.log("init: " + initData.styleFileUrl);
     
     let link = jQuery('<link rel="stylesheet" type="text/css" />');
     link.attr('href', initData.styleFileUrl);
     link.appendTo("head"); // alternative: jQuery('head').append(link);
   }
   else if (message.event === "scan_hyperlinks") {
-    //// console.debug("scan_hyperlinks");
+    //// console.log("scan_hyperlinks");
     scanHyperlinks();
   }
   else if (message.event === "scan_textnodes") {
-    //// console.debug("scan_textnodes");
+    //// console.log("scan_textnodes");
     scanTextNodes();
   }  
   else if (message.event === "href_mod") {    
@@ -36,7 +36,7 @@ self.on('message', function onMessage(message) {
 });
 
 function scanHyperlinks() {
-  //// console.debug("scanHyperlinks");
+  console.log("scanHyperlinks");
   let data = $("a");
   var hrefs = [];
   
@@ -50,8 +50,8 @@ function scanHyperlinks() {
     }
   }
 
-  //// console.debug(hrefs.length);
-  // console.debug(hrefs);
+  //// console.log(hrefs.length);
+  // console.log(hrefs);
   
   for (var i in hrefs) {
     // tell the main.js that we encountered a href and also pass the
@@ -63,12 +63,12 @@ function scanHyperlinks() {
 }
 
 function scanTextNodes() {
-  //// console.debug("TODO (make optional; TODO: only scan visible area");
+  //// console.log("TODO (make optional; TODO: only scan visible area");
 }
 
 // @param i index of the map
 //function __modifyHyperlink_old(i) {
-//  console.debug(i);
+//  console.log(i);
 //  var domHref = hrefMap[i];
 //  var origHref = domHref.href;
 //  domHref.addEventListener("click", hrefClickCallback);
@@ -77,7 +77,7 @@ function scanTextNodes() {
 //}
 
 function modifyHyperlinkFromIndex(i) {
-  //// console.debug(i);
+  //// console.log(i);
   modifyHyperlink(hrefMap[i]);
 }
 
@@ -126,7 +126,7 @@ function hrefClickCallback(e) {
   // let href = mouseEvent.currentTarget.alien_OrigHref;
   let href = e.data.origHref; // http://api.jquery.com/event.data/
   let hrefDecoded = decodeURIComponent(href); // http://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
-  //// console.debug("Post: " + hrefDecoded);
+  //// console.log("Post: " + hrefDecoded);
   self.port.emit('href', hrefDecoded);
 }
 
