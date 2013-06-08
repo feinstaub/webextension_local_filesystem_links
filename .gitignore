@@ -5,7 +5,6 @@ $p1/
 _p1/
 /local-filesystem-links.xpi
 /.komodotools/
-/.settings/
 alien-lfl.xpi
 alien-local-filesystem-links.xpi
 alien-*.xpi
