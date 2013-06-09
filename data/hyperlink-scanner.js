@@ -10,7 +10,7 @@ var initData;
 self.on('message', function onMessage(message) {
   if (message.event === "init") {
     initData = message.data; // see main.js (INIT_DATA_DEFINITION)
-    console.log("init: " + initData.styleFileUrl);
+    //// console.log("init: " + initData.styleFileUrl);
     
     let link = jQuery('<link rel="stylesheet" type="text/css" />');
     link.attr('href', initData.styleFileUrl);
@@ -36,7 +36,7 @@ self.on('message', function onMessage(message) {
 });
 
 function scanHyperlinks() {
-  console.log("scanHyperlinks");
+  //// console.log("scanHyperlinks");
   let data = $("a");
   var hrefs = [];
   
