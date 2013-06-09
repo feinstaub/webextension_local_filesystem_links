@@ -19,13 +19,15 @@ self.on("message", function(message) {
     
     showElement($("#statusDisabled"), !data.enableScanning);
     showElement($("#statusInactive"), data.enableScanning && false); // TODO
-    showElement($("#statusActive"), data.enableScanning);    
+    showElement($("#statusActive"), data.enableScanning);
+    
+    $("#versionText").text(data.selfVersion);
   }
 });
 
 function showElement(elem, show) {
   if (show) {
-    elem.show();
+    elem.css('display', 'inline');
   }
   else {
     elem.hide();
