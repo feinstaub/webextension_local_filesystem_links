@@ -18,3 +18,9 @@ v0.97 --> v0.98
 v0.98 --> v0.981
 - Add a button "Rescan" to the toolbar panel that rescans a page and
   finds hyperlinks that were added dynamically.
+
+v0.99.22 (from v0.98)
+---------------------
+* FIX: No icon if page is served from local drive (https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/15)
+* NEW: Show addon version in toolbarpanel (https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/9)
+* TECH: upgrade to sdk-1.14

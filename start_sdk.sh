@@ -1,11 +1,13 @@
-#!/bin/bash
+#!/bin/bash 
 
-# does not work yet
+# call it with source (.)
+# e. g. $ . ./start_sdk.sh
 
 # see start_sdk.cmd
 
-cd ../addon-sdk-1.7
+cd ~/dev/share/addon-sdk-1.14/
 source bin/activate
+cd -
 
 #########################
 # cfx run -p _p1

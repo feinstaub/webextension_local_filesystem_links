@@ -24,7 +24,7 @@
         Linux: <a href="file:///tmp/">file:////tmp/</a> (3 slashes: does not work)
     </li>
     <li>
-        Linux: <a href="file:////tmp/">file:////tmp/</a> (4 slashes: works)
+        Linux: <a href="file:////tmp/">file:////tmp/</a> (4 slashes: works: 3 slashes for file:/// and 1 for root dir)
     </li>
     <li>
         Linux: <a href="file:////tmp">file:////tmp</a>
@@ -35,6 +35,18 @@
     <li>
         Linux: <a href="file:///~/data">file:///~/data</a> (works if path exists)
     </li>        
+    <li>
+        Linux: <a href="file:///~/dev">file:///~/dev</a> (works if path exists)
+    </li>            
+    <li>
+        Linux: <a href="dev">dev</a> (DEV)
+    </li>                
+    <li>
+        Linux: <a href="~/dev">~/dev</a> (DEV)
+    </li>            
+    <li>
+        Linux: <a href="/tmp">/tmp</a> (DEV)
+    </li>                
 </ul>
 </body>
 </html>
