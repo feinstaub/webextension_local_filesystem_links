@@ -1,6 +1,10 @@
 Changelog for Local Filesystem Links
 ====================================
 
+v0.99.25 (from v0.99.22)
+------------------------
+* NEW: add option to Add-on preferences to exclude user-defined URLs from hyperlink scanning
+
 v0.99.22 (from v0.98)
 ---------------------
 * FIX: No icon if page is served from local drive (https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/15)

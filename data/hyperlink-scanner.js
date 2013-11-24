@@ -37,6 +37,19 @@ self.on('message', function onMessage(message) {
 
 function scanHyperlinks() {
     //// console.log("scanHyperlinks");
+    ////alert(document.URL);
+  
+    let documentUrl = document.URL;
+    let excludeUrlStartsWithList = initData.excludeUrlStartsWithList.split(" "); // empty string results in [""] which must be handeled separately
+    
+    for (var i = 0; i < excludeUrlStartsWithList.length; i += 1) {
+      let item = excludeUrlStartsWithList[i];
+      if (item.length > 0 && strStartsWith(documentUrl, item)) {
+	////console.log("----------------return...");
+	return; // exit this method if one of the exclude URLs matches
+      }
+    }
+    
     let data = $("a");
     var hrefs = [];
 
