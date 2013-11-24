@@ -1,3 +1,5 @@
+var currentPageInfo = null;
+
 $("a").button();
 
 $("#button_options").click(function() {
@@ -16,22 +18,31 @@ self.on("message", function(message) {
 
     var message_data = message.data;
     
-    if (message.type === "fresh_data") {
+    if (message.type === "fresh_data") { // always called when the popup opens
         setDisplay($("#statusEnabled"), message_data.enableScanning);
         setDisplay($("#statusDisabled"), !message_data.enableScanning);
 
-        // does not work:
-        //setVisibility($("#statusUrlIgnoredLi"), false);
-        //setVisibility($("#statusUrlIgnoredMsg"), false);
+        // reset visibility
+        setVisibility($("#statusUrlIgnoredLi"), false);
+        setVisibility($("#statusUrlIgnoredMsg"), false);
+	// apply visibility if scanning enabled
+        if (message_data.enableScanning) {
+           applyCurrentPageInfo();
+        }
 
         $("#versionText").text(message_data.selfVersion);
     }
-    else if (message.type === "updateCurrentPageInfo") {
-      let show = message_data !== null; // TODO: also show which element matched using the data passed by updateCurrentPageInfo
-      setVisibility($("#statusUrlIgnoredLi"), show);
-      setVisibility($("#statusUrlIgnoredMsg"), show);
+    else if (message.type === "updateCurrentPageInfo") { // always called when the page is refreshed
+      currentPageInfo = message_data;
+      applyCurrentPageInfo();
     }
 });
+
+function applyCurrentPageInfo() {
+      let show = currentPageInfo !== null; // TODO: also show which element matched using the data passed by updateCurrentPageInfo
+      setVisibility($("#statusUrlIgnoredLi"), show);
+      setVisibility($("#statusUrlIgnoredMsg"), show);  
+}
 
 // hide as if not present
 function setDisplay(elem, show) {
