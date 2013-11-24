@@ -40,12 +40,13 @@ function scanHyperlinks() {
     ////alert(document.URL);
   
     let documentUrl = document.URL;
-    let excludeUrlStartsWithList = initData.excludeUrlStartsWithList.split(" "); // empty string results in [""] which must be handeled separately
+    let excludeUrlStartsWithList = initData.excludeUrlStartsWithList.split(" "); // empty string results in [""] which must be handeled separately (length > 0 condition)
     
     for (var i = 0; i < excludeUrlStartsWithList.length; i += 1) {
-      let item = excludeUrlStartsWithList[i];
-      if (item.length > 0 && strStartsWith(documentUrl, item)) {
+      let excludeItem = excludeUrlStartsWithList[i];
+      if (excludeItem.length > 0 && strStartsWith(documentUrl, excludeItem)) {
 	////console.log("----------------return...");
+	self.port.emit("documenturl_ignored", excludeItem);
 	return; // exit this method if one of the exclude URLs matches
       }
     }

@@ -22,9 +22,15 @@
      <span style="font-weight: normal; font-size: 70%"><small>(Version: <span id="versionText">aaa</span>)</small></span>
     </h2>
     <b>Status:</b>
-    <div id="statusActive" style="display: inline" >Active on current tab.</div>
-    <div id="statusInactive" style="display: none">Inactive on current tab.</div>
-    <div id="statusDisabled" style="display: none">Disabled.</div>    
+    <ul>
+      <li>
+	<div id="statusEnabled" style="display: inline">Scanning enabled.</div>
+	<div id="statusDisabled" style="display: none">Scanning <b>disabled</b>.</div>
+      </li>
+      <li id="statusUrlIgnoredLi" style="visibility: hidden;">
+	<div id="statusUrlIgnoredMsg" style="visibility: hidden;">Current URL <b>ignored</b> due to user setting.</div>
+      </li>
+    </ul>
 
     <p><a href="#" id="button_options">Options</a></p>
 

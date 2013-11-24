@@ -14,22 +14,41 @@ $("#button_rescan").click(function() {
 
 self.on("message", function(message) {
 
+    var message_data = message.data;
+    
     if (message.type === "fresh_data") {
-        var data = message.data;
+        setDisplay($("#statusEnabled"), message_data.enableScanning);
+        setDisplay($("#statusDisabled"), !message_data.enableScanning);
 
-        showElement($("#statusDisabled"), !data.enableScanning);
-        showElement($("#statusInactive"), data.enableScanning && false); // TODO
-        showElement($("#statusActive"), data.enableScanning);
+        // does not work:
+        //setVisibility($("#statusUrlIgnoredLi"), false);
+        //setVisibility($("#statusUrlIgnoredMsg"), false);
 
-        $("#versionText").text(data.selfVersion);
+        $("#versionText").text(message_data.selfVersion);
+    }
+    else if (message.type === "updateCurrentPageInfo") {
+      let show = message_data !== null; // TODO: also show which element matched using the data passed by updateCurrentPageInfo
+      setVisibility($("#statusUrlIgnoredLi"), show);
+      setVisibility($("#statusUrlIgnoredMsg"), show);
     }
 });
 
-function showElement(elem, show) {
+// hide as if not present
+function setDisplay(elem, show) {
     if (show) {
         elem.css('display', 'inline');
     }
     else {
         elem.hide();
+    }
+}
+
+// hides but keeps reserving the layout space
+function setVisibility(elem, show) {
+    if (show) {
+        elem.css('visibility', 'visible');
+    }
+    else {
+        elem.css('visibility', 'hidden');
     }
 }
