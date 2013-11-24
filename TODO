@@ -1,15 +1,21 @@
-Dinge, die zu tun sind:
------------------------
-- FIX unit tests (cfx test)
+TODOs
+=====
+* FIX unit tests (cfx test)
 
-- Rename toolbar-panel.xhtml to addin-toolbar-panel.xhtml etc.
+* https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/11 Click the hyperlink text as opposed to clicking the icon
 
-Via Options-Dialog:
-- Set file link preferences
-  (set capabilities)
+* Open Addonpreferences from toolbar widget button
 
-Context menu:
-- how to place an icon on the left?
+* Move settings to Addon preferences
+
+* Rename toolbar-panel.xhtml to addin-toolbar-panel.xhtml etc.
+
+* Via Options-Dialog:
+  - Set file link preferences
+    (set capabilities)
+
+* Page context menu:
+  - how to place an icon on the menu item?
 
 Scan for links on the page
 - use regex?
