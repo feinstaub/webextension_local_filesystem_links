@@ -122,9 +122,22 @@ function modifyHyperlink(domHref) {
     // 1. http://stackoverflow.com/questions/876390/reliable-cross-browser-way-of-setting-status-bar-text
     //   "For security reasons, most modern browsers disable status bar access by default."
     // 2. Fixes https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/5
-
-    alienHrefElement.attr("title", "Open in " + initData.fileManagerDisplayName + ": " + origHref); // quicktip; TODO: change this dynamically depending on OS
-    alienHrefElement.attr("alien_OrigHref", origHref); // set new attribute for later in callback
+    if(origHref)
+    {
+        var tooltip;
+        //Check if path is a file and change tooltip accordingly
+        if(isFile(origHref))
+        {
+            tooltip = "your default programme";
+        }
+        else
+        {
+            tooltip = initData.fileManagerDisplayName;
+        }
+        alienHrefElement.attr("title", "Open in " + tooltip + ": " + origHref); // quicktip; TODO: change this dynamically depending on OS
+        alienHrefElement.attr("alien_OrigHref", origHref); // set new attribute for later in callback
+    }
+    
     // alienHrefElement.css('background-color', 'yellow');
 
     // http://stackoverflow.com/questions/2316199/jquery-get-dom-node  --> [0]
@@ -133,6 +146,16 @@ function modifyHyperlink(domHref) {
 
     alienHrefElement.unbind(); // remove event from first page scan
     alienHrefElement.click({ origHref: origHref }, hrefClickCallback);
+}
+
+/**
+ * Crude check if a path is a file. If a path ends with .FILENAME then it it's considered a file
+ * 
+ * @param pathName to check
+ * @returns {Boolean} true if it is, otherwise false
+ */
+function isFile(pathName) {
+    return pathName.split('/').pop().split('.').length > 1;
 }
 
 //function hrefClickCallback(mouseEvent) {
