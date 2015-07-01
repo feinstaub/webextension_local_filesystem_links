@@ -6,7 +6,7 @@
 // SEE https://addons.mozilla.org/en-US/developers/docs/sdk/1.1/packages/api-utils/docs/unit-test.html
 
 const {Ci} = require("chrome");
-const localProcess = require("launch-local-process");
+const localProcess = require("sdk/launch-local-process");
 
 exports.test_getEnvVar = function(test) {
   let v1 = localProcess.getEnvironmentVariable("WINDIR");

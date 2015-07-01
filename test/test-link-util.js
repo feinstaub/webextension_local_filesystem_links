@@ -3,7 +3,7 @@
  */
 "use strict";
 
-const linkUtil = require("link-util");
+const linkUtil = require("sdk/link-util");
 
 exports.test_stripQuotes = function(test) {
   test.assertEqual(linkUtil.stripQuotes("aaa"), "aaa");
