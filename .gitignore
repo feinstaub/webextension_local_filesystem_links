@@ -13,3 +13,11 @@ alien-local-filesystem-links-0.63/
 /.idea/workspace.xml
 /.directory
 *~
+/nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
