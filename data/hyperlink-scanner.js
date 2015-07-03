@@ -15,6 +15,7 @@ self.on('message', function onMessage(message) {
         let link = jQuery('<link rel="stylesheet" type="text/css" />');
         link.attr('href', initData.styleFileUrl);
         link.appendTo("head"); // alternative: jQuery('head').append(link);
+        initiateDynamicHyperlinkScan();
     }
     else if (message.event === "scan_hyperlinks") {
         //// console.log("scan_hyperlinks");
@@ -34,6 +35,55 @@ self.on('message', function onMessage(message) {
         console.warn("unknown command");
     }
 });
+
+var ajaxDetector;
+var ajaxDetectorConfig = {
+    childList: true, 
+    attributes: false, 
+    haracterData: false, 
+    subtree: true, 
+    attributeOldValue: false, 
+    characterDataOldValue: false
+};
+
+/**
+ * Initiates dynamic hyperlink scan
+ */
+function initiateDynamicHyperlinkScan() {
+    ajaxDetector = new MutationObserver(function(mutationRecord){ 
+        dynamicHyperlinkScan(mutationRecord); 
+    });
+    
+    ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+}
+
+/**
+ * Gets triggered every time a batch of mutations occurs to body
+ */
+function dynamicHyperlinkScan(mutationRecords) {
+    //Go through the batch
+    for (let i = 0; i < mutationRecords.length; i++)
+    {
+        //Pick out childLists
+        if(mutationRecords[i].type === "childList")
+        {
+            //Go through addedNodes only
+            for(let j = 0; j < mutationRecords[i].addedNodes.length; j++)
+            {
+                //We only care about nodes which are hyperlinks (HTML A-tag or X(HT)ML a-tag)
+                if(mutationRecords[i].addedNodes[j].tagName === "A" || 
+                        mutationRecords[i].addedNodes[j].tagName === "a")
+                {
+                    //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
+                    ajaxDetector.disconnect();
+                    modifyHyperlink(mutationRecords[i].addedNodes[j]);
+                    //Reconnect detector since we have finished modifying the hyperlink
+                    ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+                }
+            }
+        }
+    }
+}
 
 function scanHyperlinks() {
     //// console.log("scanHyperlinks");
