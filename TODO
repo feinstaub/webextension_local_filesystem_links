@@ -1,7 +1,7 @@
 TODOs
 =====
-* FIX display of if page is being ignored by user setting!!!
-  * cause by: toolbar widget info is updated only when a page is reloaded and not always when switching tabs!!!
+* FIX display of if page is being ignored by user setting! (https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/27)
+  * cause by: toolbar widget info is updated only when a page is reloaded and not always when switching tabs!
 
 * FIX unit tests (cfx test)
 
