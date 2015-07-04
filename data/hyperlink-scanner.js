@@ -103,7 +103,7 @@ function modifyHyperlink(domHref) {
 
     // if the next element has not a special attribute that "alien" links have
     // then create the link (which is always the case on first page load)
-    if (potentialAlienLink.attr("alien_OrigHref") == null) {
+    if (potentialAlienLink.attr("alien_orighref") == null) {
         $(domHref).after("<a class='alien-lfl-href-buttonLink'></a>");
         alienHrefElement = $(domHref).next(); // get the just inserted element
     }
@@ -123,8 +123,8 @@ function modifyHyperlink(domHref) {
     //   "For security reasons, most modern browsers disable status bar access by default."
     // 2. Fixes https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/5
 
-    alienHrefElement.attr("title", "Open in " + initData.fileManagerDisplayName + ": " + origHref); // quicktip; TODO: change this dynamically depending on OS
-    alienHrefElement.attr("alien_OrigHref", origHref); // set new attribute for later in callback
+    alienHrefElement.attr("title", "Open in " + initData.fileManagerDisplayName + ": " + origHref); // quicktip
+    alienHrefElement.attr("alien_orighref", origHref); // set new attribute for later in callback
     // alienHrefElement.css('background-color', 'yellow');
 
     // http://stackoverflow.com/questions/2316199/jquery-get-dom-node  --> [0]
