@@ -123,7 +123,9 @@ function modifyHyperlink(domHref) {
     //   "For security reasons, most modern browsers disable status bar access by default."
     // 2. Fixes https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/5
 
-    alienHrefElement.attr("title", "Open in " + initData.fileManagerDisplayName + ": " + origHref); // quicktip
+    // tooltip
+    alienHrefElement.attr("title", "Open '" + origHref + "' with " + initData.fileManagerDisplayName + " if it is a directory or with default application if it is a file. (Provided by Local Filesystem Links addon)");
+
     alienHrefElement.attr("alien_orighref", origHref); // set new attribute for later in callback
     // alienHrefElement.css('background-color', 'yellow');
 
