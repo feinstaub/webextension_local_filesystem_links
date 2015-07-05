@@ -17,6 +17,8 @@ License: www.mozilla.org/MPL/, GPLv3
 Start developing
 ----------------
 
+The following instructions are for UNIXoid system which are all summarized by the term Linux.
+
 Download SDK:
 https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Installation#Installation_on_OS_X_FreeBSD_Linux
 and save it so it can be found by start_sdk.sh (see there).
