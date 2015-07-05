@@ -46,3 +46,8 @@ cfx run -p _p1
 # Firefox opens with the addon installed (in the addons page there will even be a Debug button)
 # Navigate to the url above.
 ```
+
+Create xpi file:
+```
+cfx xpi
+```
