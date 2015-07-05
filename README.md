@@ -14,10 +14,35 @@ It contains:
 License: www.mozilla.org/MPL/, GPLv3
 
 
-Start developing
+Start developing [DOES NOT WORK YET, see next section about cxf]
 ----------------
 
 The following instructions are for UNIXoid system which are all summarized by the term Linux.
+
+Based on https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
+
+Install jpm.
+```
+sudo npm install jpm -g
+```
+
+Run unit tests.
+```
+mkdir _p_test           # once
+jpm test -p ./_p_test   # don't forget the ./
+# or see https://github.com/mozilla/jpm/issues/287
+jpm -b /usr/lib64/firefox/firefox test -p ./_p_test
+```
+
+In progress: see https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/cfx_to_jpm
+
+--> Currently fails. See my comment on https://github.com/mozilla/jpm/issues/287
+Also fails on freshly created addon via `jpm init`
+So there is something very wrong.
+
+
+Developing with deprecated cxf
+------------------------------
 
 Download SDK:
 https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Installation#Installation_on_OS_X_FreeBSD_Linux
