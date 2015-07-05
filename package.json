@@ -5,16 +5,16 @@
     "version": "0.99.37",
     "__comment-on-version": "/* australiensun: <major>.<minor>.<released for firefox version yyy> */", 
     "fullName": "Local Filesystem Links",
-    "id": "jid1-JAzC7z53jemo5Q", 
+    "id": "jid1-JAzC7z53jemo5Q@jetpack",
     "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser (e.g. Windows Explorer).",
-    
+
     "preferences": [
       {
-	  "name": "excludeUrlStartsWithList",
-	  "title": "Exclude 'Start with' URIs (space separated list)",
-	  "description": "If the URI of the current page starts with one of the URIs listed here it will be ignored when scanning for filesystem links. For example if you put 'file:/// http://mozilla.org/about' in the text box then all local pages and all pages that start with 'http://mozilla.org/about' will be ignored.",
-	  "type": "string",
-	  "value": ""
+      "name": "excludeUrlStartsWithList",
+      "title": "Exclude 'Start with' URIs (space separated list)",
+      "description": "If the URI of the current page starts with one of the URIs listed here it will be ignored when scanning for filesystem links. For example if you put 'file:/// http://mozilla.org/about' in the text box then all local pages and all pages that start with 'http://mozilla.org/about' will be ignored.",
+      "type": "string",
+      "value": ""
       }
     ]
 }
