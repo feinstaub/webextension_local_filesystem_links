@@ -1,8 +1,7 @@
 .directory
 translator.xpi
-ttt/
-$p1/
 _p1/
+_p_test/
 /local-filesystem-links.xpi
 /.komodotools/
 alien-lfl.xpi
@@ -13,3 +12,4 @@ alien-local-filesystem-links-0.63/
 /.idea/workspace.xml
 /.directory
 *~
+.kateproject.d/notes.txt
