@@ -89,7 +89,8 @@ function dynamicHyperlinkScan(mutationRecords) {
                     var hrefPos = -1;
                     var endLinkPos = -1;
                     
-                    //Try to find links while we haven't reached end of String
+                    //Try to find links while we haven't reached end of String 
+                    // and we haven't found a badly formatted URL
                     do
                     {
                         hrefPos = addedNodes[j].innerHTML.indexOf("href=\"", hrefPos) + 6;
