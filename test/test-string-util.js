@@ -3,7 +3,7 @@
  */
 "use strict";
 
-const stringUtil = require("sdk/string-util");
+const stringUtil = require("./string-util");
 
 exports.test_strEndsWith = function(test) {
   test.assertEqual(stringUtil.strEndsWith("W:\\", "\\"), true);

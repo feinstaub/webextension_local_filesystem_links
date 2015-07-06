@@ -165,7 +165,7 @@ function modifyHyperlink(domHref) {
 
     // if the next element has not a special attribute that "alien" links have
     // then create the link (which is always the case on first page load)
-    if (potentialAlienLink.attr("alien_OrigHref") == null) {
+    if (potentialAlienLink.attr("alien_orighref") == null) {
         $(domHref).after("<a class='alien-lfl-href-buttonLink'></a>");
         alienHrefElement = $(domHref).next(); // get the just inserted element
     }
@@ -196,8 +196,8 @@ function modifyHyperlink(domHref) {
         {
             tooltip = initData.fileManagerDisplayName;
         }
-        alienHrefElement.attr("title", "Open in " + tooltip + ": " + origHref); // quicktip; TODO: change this dynamically depending on OS
-        alienHrefElement.attr("alien_OrigHref", origHref); // set new attribute for later in callback
+        alienHrefElement.attr("title", "Open '" + origHref + "' with " + tooltip + " (Provided by Local Filesystem Links addon)"); // quicktip; TODO: change this dynamically depending on OS
+        alienHrefElement.attr("alien_origHref", origHref); // set new attribute for later in callback
     }
     
     // alienHrefElement.css('background-color', 'yellow');
