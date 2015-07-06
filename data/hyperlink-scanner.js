@@ -100,7 +100,7 @@ function dynamicHyperlinkScan(mutationRecords) {
                         {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                             ajaxDetector.disconnect();
-                            modifyInnerHyperlink(mutationRecords[i].addedNodes[j], innerLink, endLinkPos);
+                            hrefPos += modifyInnerHyperlink(mutationRecords[i].addedNodes[j], innerLink, endLinkPos);
                             //Reconnect detector since we have finished modifying the hyperlink
                             ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
                         }
@@ -208,10 +208,14 @@ var buttonLinkClass = "alien-lfl-href-buttonLink";
  */
 function modifyInnerHyperlink(outerElement, origHref, endLinkPos)
 {    
+    var alienHrefText = "<a class=\"" + buttonLinkClass + "\"" +
+            " title=\"" + createTooltip(origHref) + "\"" +
+            " onclick=\"window.hrefClickCallback('','" + origHref + "')\"></a>";
+    
     outerElement.innerHTML = outerElement.innerHTML.insert(endLinkPos, 
-            "<a class=\"" + buttonLinkClass + "\"" +
-                    " title=\"" + createTooltip(origHref) + "\"" +
-                    " onclick=\"window.hrefClickCallback('','" + origHref + "')\"></a>");
+            alienHrefText);
+            
+    return alienHrefText.length;
 }
 
 /**
