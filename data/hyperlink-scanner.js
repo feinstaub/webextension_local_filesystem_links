@@ -67,18 +67,44 @@ function dynamicHyperlinkScan(mutationRecords) {
         //Pick out childLists
         if(mutationRecords[i].type === "childList")
         {
+            var addedNodes = mutationRecords[i].addedNodes;
+            
             //Go through addedNodes only
-            for(let j = 0; j < mutationRecords[i].addedNodes.length; j++)
+            for(let j = 0; j < addedNodes.length; j++)
             {
-                //We only care about nodes which are hyperlinks (HTML A-tag or X(HT)ML a-tag)
-                if(mutationRecords[i].addedNodes[j].tagName === "A" || 
-                        mutationRecords[i].addedNodes[j].tagName === "a")
+                //See if we have a regular hyperlink (HTML A-tag or X(HT)ML a-tag)
+                if(addedNodes[j].tagName === "A" || 
+                        addedNodes[j].tagName === "a")
                 {
                     //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                     ajaxDetector.disconnect();
                     modifyHyperlink(mutationRecords[i].addedNodes[j]);
                     //Reconnect detector since we have finished modifying the hyperlink
                     ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+                }
+                //Otherwise, check if we have any text in innerHTML
+                else if(addedNodes[j].innerHTML !== "")
+                {
+                    var innerLink = "";
+                    var hrefPos = -1;
+                    var endLinkPos = -1;
+                    
+                    //Try to find links while we haven't reached end of String
+                    do
+                    {
+                        hrefPos = addedNodes[j].innerHTML.indexOf("href=\"", hrefPos) + 6;
+                        innerLink = addedNodes[j].innerHTML.substring(hrefPos, addedNodes[j].innerHTML.indexOf("\"", hrefPos));
+                        endLinkPos = addedNodes[j].innerHTML.indexOf("</a>", hrefPos) + 4;
+                        
+                        if(innerLink !== "" && innerLink !== "ef=")
+                        {
+                            //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
+                            ajaxDetector.disconnect();
+                            modifyInnerHyperlink(mutationRecords[i].addedNodes[j], innerLink, endLinkPos);
+                            //Reconnect detector since we have finished modifying the hyperlink
+                            ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+                        }
+                    } while (innerLink !== "" && innerLink !== "ef=");                    
                 }
             }
         }
@@ -146,34 +172,72 @@ function modifyHyperlinkFromIndex(i) {
 }
 
 function modifyHyperlink(domHref) {
-    var test = domHref.nextSibling.className;
-    //Make sure we only modify hyperlinks once
-    if(domHref.nextSibling.className === "alien-lfl-href-buttonLink" 
-            || domHref.className === "alien-lfl-href-buttonLink")
+    //Make sure we don't modify our alien links
+    if(domHref.className === "alien-lfl-href-buttonLink")
     {
         return;
     }
-    
+
     var origHref = domHref.href;
 
-    var potentialAlienLink = $(domHref).next();
-    var alienHrefElement = null;
-
-    // if the next element has not a special attribute that "alien" links have
-    // then create the link (which is always the case on first page load)
-    if (potentialAlienLink.attr("alien_orighref") == null) {
-        $(domHref).after("<a class='alien-lfl-href-buttonLink'></a>");
-        alienHrefElement = $(domHref).next(); // get the just inserted element
-    }
-    else {
-        // the potential link was an actual alien link (if rescanning a page)
-        alienHrefElement = potentialAlienLink;
-    }
+    var alienHrefElement = createAlienHrefElement(domHref);
 
     //
     // now add or update attributes:
     //
+    alienHrefElement.attr("title", createTooltip(origHref)); // quicktip; TODO: change this dynamically depending on OS
+    if(origHref)
+    {
+        alienHrefElement.attr("alien_origHref", origHref); // set new attribute for later in callback
+    }
+    
+    // alienHrefElement.css('background-color', 'yellow');
 
+    // http://stackoverflow.com/questions/2316199/jquery-get-dom-node  --> [0]
+    // we use the original DOM node to add the event listener because the addon works only in FF
+    // alienHrefElement[0].addEventListener("click", hrefClickCallback);
+
+    alienHrefElement.unbind(); // remove event from first page scan
+    alienHrefElement.click({ origHref: origHref }, hrefClickCallback);
+}
+
+var buttonLinkClass = "alien-lfl-href-buttonLink";
+
+/**
+ * Modifies hyperlinks which are added by innerHTML
+ */
+function modifyInnerHyperlink(outerElement, origHref, endLinkPos)
+{    
+    outerElement.innerHTML = outerElement.innerHTML.insert(endLinkPos, 
+            "<a class=\"" + buttonLinkClass + "\"" +
+                    " title=\"" + createTooltip(origHref) + "\"" +
+                    " onclick=\"window.hrefClickCallback('','" + origHref + "')\"></a>");
+}
+
+/**
+ * Creates appropriate alienHrefElement
+ */
+function createAlienHrefElement(domHref)
+{
+    let potentialAlienLink = $(domHref).next();
+    
+    // if the next element has not a special attribute that "alien" links have
+    // then create the link (which is always the case on first page load)
+    if (potentialAlienLink.attr("alien_orighref") == null) {
+        $(domHref).after("<a class='" + buttonLinkClass + "'></a>");
+        return $(domHref).next(); // get the just inserted element
+    }
+    else {
+        // the potential link was an actual alien link (if rescanning a page)
+        return potentialAlienLink;
+    }
+}
+
+/**
+ * Creates tooltip text
+ */
+function createTooltip(origHref)
+{
     // do not do that:
     //// alienHrefElement.attr("href", "#" + origHref); // todo: on hover show something in status bar to avoid having the #... in the address bar
     // because:
@@ -192,18 +256,10 @@ function modifyHyperlink(domHref) {
         {
             tooltip = initData.fileManagerDisplayName;
         }
-        alienHrefElement.attr("title", "Open '" + origHref + "' with " + tooltip + " (Provided by Local Filesystem Links addon)"); // quicktip; TODO: change this dynamically depending on OS
-        alienHrefElement.attr("alien_origHref", origHref); // set new attribute for later in callback
+        return "Open '" + origHref + "' with " + tooltip + " (Provided by Local Filesystem Links addon)";
     }
     
-    // alienHrefElement.css('background-color', 'yellow');
-
-    // http://stackoverflow.com/questions/2316199/jquery-get-dom-node  --> [0]
-    // we use the original DOM node to add the event listener because the addon works only in FF
-    // alienHrefElement[0].addEventListener("click", hrefClickCallback);
-
-    alienHrefElement.unbind(); // remove event from first page scan
-    alienHrefElement.click({ origHref: origHref }, hrefClickCallback);
+    return "";
 }
 
 /**
@@ -216,14 +272,31 @@ function isFile(pathName) {
     return pathName.split('/').pop().split('.').length > 1;
 }
 
+/**
+ * Inserts string at the given position
+ */
+String.prototype.insert = function (index, string) {
+  if (index > 0)
+    return this.substring(0, index) + string + this.substring(index, this.length);
+  else
+    return string + this;
+};
+
 //function hrefClickCallback(mouseEvent) {
-function hrefClickCallback(e) {
+function hrefClickCallback(e, href) {
     // let href = mouseEvent.currentTarget.alien_OrigHref;
-    let href = e.data.origHref; // http://api.jquery.com/event.data/
+    //Get href from element if href is undefined or empty
+    if(href === undefined || href === "")
+    {
+        href = e.data.origHref; // http://api.jquery.com/event.data/
+    }
     let hrefDecoded = decodeURIComponent(href); // http://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
     //// console.log("Post: " + hrefDecoded);
     self.port.emit('href', hrefDecoded);
 }
+
+//Make hrefClickCallback accessible from page code, see https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Content_Scripts/Interacting_with_page_scripts
+exportFunction(hrefClickCallback, unsafeWindow, {defineAs: "hrefClickCallback"});
 
 function strStartsWith(str, prefix) {
     return str.substring(0, prefix.length) === prefix;
