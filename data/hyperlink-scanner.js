@@ -15,6 +15,7 @@ self.on('message', function onMessage(message) {
         let link = jQuery('<link rel="stylesheet" type="text/css" />');
         link.attr('href', initData.styleFileUrl);
         link.appendTo("head"); // alternative: jQuery('head').append(link);
+        scanHyperlinks();
         initiateDynamicHyperlinkScan();
     }
     else if (message.event === "scan_hyperlinks") {
@@ -145,8 +146,19 @@ function modifyHyperlinkFromIndex(i) {
     modifyHyperlink(hrefMap[i]);
 }
 
+var hyperlinksModified = [];
 function modifyHyperlink(domHref) {
+    //Make sure we only modify hyperlinks once
+    for(let i = 0; i < hyperlinksModified.length; i++)
+    {
+        if(hyperlinksModified[i] === domHref)
+        {
+            return;
+        }
+    }
+    
     var origHref = domHref.href;
+    hyperlinksModified.push(domHref);
 
     var potentialAlienLink = $(domHref).next();
     var alienHrefElement = null;
