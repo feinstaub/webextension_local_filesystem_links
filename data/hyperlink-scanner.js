@@ -96,7 +96,7 @@ function dynamicHyperlinkScan(mutationRecords) {
                         innerLink = addedNodes[j].innerHTML.substring(hrefPos, addedNodes[j].innerHTML.indexOf("\"", hrefPos));
                         endLinkPos = addedNodes[j].innerHTML.indexOf("</a>", hrefPos) + 4;
                         
-                        if(innerLink !== "" && innerLink !== "ef=")
+                        if(innerLink !== "" && innerLink.indexOf("//") > -1)
                         {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                             ajaxDetector.disconnect();
@@ -104,7 +104,7 @@ function dynamicHyperlinkScan(mutationRecords) {
                             //Reconnect detector since we have finished modifying the hyperlink
                             ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
                         }
-                    } while (innerLink !== "" && innerLink !== "ef=");                    
+                    } while (innerLink !== "" && innerLink.indexOf("//") > -1);                    
                 }
             }
         }
