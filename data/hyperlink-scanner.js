@@ -110,7 +110,8 @@ function dynamicHyperlinkScan(mutationRecords) {
                         innerLink = addedNodes[j].innerHTML.substring(hrefPos, addedNodes[j].innerHTML.indexOf("\"", hrefPos));
                         endLinkPos = addedNodes[j].innerHTML.indexOf("</a>", hrefPos) + 4;
                         
-                        if(innerLink !== "" && innerLink.indexOf("//") > -1)
+                        if(innerLink !== "" && (innerLink.indexOf("///") > -1 || 
+                                innerLink.indexOf("smb://") > -1))
                         {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                             stopObservingDom();
@@ -118,7 +119,8 @@ function dynamicHyperlinkScan(mutationRecords) {
                             //Reconnect detector since we have finished modifying the hyperlink
                             startObservingDom();
                         }
-                    } while (innerLink !== "" && innerLink.indexOf("//") > -1);                    
+                    } while (innerLink !== "" && innerLink.indexOf("///") > -1 || 
+                            innerLink.indexOf("smb://") > -1);                    
                 }
             }
         }
