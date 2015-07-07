@@ -119,8 +119,8 @@ function dynamicHyperlinkScan(mutationRecords) {
                             //Reconnect detector since we have finished modifying the hyperlink
                             startObservingDom();
                         }
-                    } while (innerLink !== "" && innerLink.indexOf("///") > -1 || 
-                            innerLink.indexOf("smb://") > -1);                    
+                    } while (innerLink !== "" && (innerLink.indexOf("///") > -1 || 
+                            innerLink.indexOf("smb://") > -1));                    
                 }
             }
         }
