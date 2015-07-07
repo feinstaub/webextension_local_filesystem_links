@@ -37,14 +37,25 @@ self.on('message', function onMessage(message) {
 });
 
 var ajaxDetector;
-var ajaxDetectorConfig = {
-    childList: true, 
-    attributes: false, 
-    haracterData: false, 
-    subtree: true, 
-    attributeOldValue: false, 
-    characterDataOldValue: false
-};
+
+function startObservingDom()
+{
+    let ajaxDetectorConfig = {
+        childList: true, 
+        attributes: false, 
+        haracterData: false, 
+        subtree: true, 
+        attributeOldValue: false, 
+        characterDataOldValue: false
+    };
+    
+    ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+}
+
+function stopObservingDom()
+{
+    ajaxDetector.disconnect();
+}
 
 /**
  * Initiates dynamic hyperlink scan
@@ -54,7 +65,7 @@ function initiateDynamicHyperlinkScan() {
         dynamicHyperlinkScan(mutationRecord); 
     });
     
-    ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+    startObservingDom();
 }
 
 /**
@@ -77,13 +88,15 @@ function dynamicHyperlinkScan(mutationRecords) {
                         addedNodes[j].tagName === "a")
                 {
                     //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
-                    ajaxDetector.disconnect();
-                    modifyHyperlink(mutationRecords[i].addedNodes[j]);
+                    stopObservingDom();
+                    //modifyHyperlink(mutationRecords[i].addedNodes[j]); does this have any performance benefits?
+                    scanHyperlinks();
                     //Reconnect detector since we have finished modifying the hyperlink
-                    ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+                    startObservingDom();
                 }
                 //Otherwise, check if we have any text in innerHTML
-                else if(addedNodes[j].innerHTML !== "")
+                else if(addedNodes[j].innerHTML !== undefined && 
+                        addedNodes[j].innerHTML !== "")
                 {
                     var innerLink = "";
                     var hrefPos = -1;
@@ -100,10 +113,10 @@ function dynamicHyperlinkScan(mutationRecords) {
                         if(innerLink !== "" && innerLink.indexOf("//") > -1)
                         {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
-                            ajaxDetector.disconnect();
+                            stopObservingDom();
                             hrefPos += modifyInnerHyperlink(mutationRecords[i].addedNodes[j], innerLink, endLinkPos);
                             //Reconnect detector since we have finished modifying the hyperlink
-                            ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+                            startObservingDom();
                         }
                     } while (innerLink !== "" && innerLink.indexOf("//") > -1);                    
                 }
@@ -174,7 +187,8 @@ function modifyHyperlinkFromIndex(i) {
 
 function modifyHyperlink(domHref) {
     //Make sure we don't modify our alien links
-    if(domHref.className === "alien-lfl-href-buttonLink")
+    if(domHref.className === "alien-lfl-href-buttonLink" || 
+            (domHref.nextSibling !== null && domHref.nextSibling.className === "alien-lfl-href-buttonLink"))
     {
         return;
     }
