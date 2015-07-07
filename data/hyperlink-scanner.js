@@ -43,7 +43,7 @@ function startObservingDom()
     let ajaxDetectorConfig = {
         childList: true, 
         attributes: false, 
-        haracterData: false, 
+        characterData: false, 
         subtree: true, 
         attributeOldValue: false, 
         characterDataOldValue: false
