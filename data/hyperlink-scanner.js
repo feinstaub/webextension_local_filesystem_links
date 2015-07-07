@@ -83,14 +83,16 @@ function dynamicHyperlinkScan(mutationRecords) {
             //Go through addedNodes only
             for(let j = 0; j < addedNodes.length; j++)
             {
+                //TODO take exclude URIs list into consideration
+                
                 //See if we have a regular hyperlink (HTML A-tag or X(HT)ML a-tag)
                 if(addedNodes[j].tagName === "A" || 
                         addedNodes[j].tagName === "a")
                 {
                     //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                     stopObservingDom();
-                    //modifyHyperlink(mutationRecords[i].addedNodes[j]); does this have any performance benefits?
-                    scanHyperlinks();
+                    modifyHyperlink(mutationRecords[i].addedNodes[j]);
+                    //scanHyperlinks(); quickly kills performance
                     //Reconnect detector since we have finished modifying the hyperlink
                     startObservingDom();
                 }
