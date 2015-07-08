@@ -10,7 +10,7 @@
             $("#links").append('<li><a href="file:///C:/">file:///C:/ (win)</a> - link inserted into DOM with javascript</li>');
         });
         $("#addOneNonFile").click(function() {
-            $("#links").append('<li><a href="http://google.com">http://google.com</a> - link inserted into DOM with javascript</li>');
+            $("#links").append('<li><a href="http://google.com">http://google.com</a> - non file link inserted into DOM with javascript</li>');
         });
         $("#addTwo").click(function() {
             $("#links").append('<li><a href="file:////tmp/">file:////tmp/ (Linux)</a>, <a href="file:///C:/">file:///C:/ (win)</a> - links inserted into DOM with javascript</li>');
@@ -27,7 +27,7 @@
         $("#directAddNonFile").click(function() {
             var a = document.createElement("a");
             a.setAttribute("href", "http://google.com");
-            a.innerHTML = "http://google.com (win) - link inserted directly into DOM with javascript";
+            a.innerHTML = "http://google.com (win) - non file link inserted directly into DOM with javascript";
             document.getElementById("links").appendChild(a);
         });
     });
