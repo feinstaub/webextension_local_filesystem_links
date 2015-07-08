@@ -91,11 +91,12 @@ function dynamicHyperlinkScan(mutationRecords) {
                 {
                     //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                     stopObservingDom();
+                    //TODO this push will cause an enormous array list on very 
+                    // large pages or pages with lots of DOM changes. 
+                    // We might want try to trim the array in some way
                     let pos = hrefMap.push(mutationRecords[i].addedNodes[j]) - 1;
                     var obj = { href: mutationRecords[i].addedNodes[j].href, i: pos };
                     self.port.emit("href_found", obj);
-                    //modifyHyperlink(mutationRecords[i].addedNodes[j]);
-                    //scanHyperlinks(); quickly kills performance
                     //Reconnect detector since we have finished modifying the hyperlink
                     startObservingDom();
                 }
