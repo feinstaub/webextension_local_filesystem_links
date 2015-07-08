@@ -86,19 +86,22 @@ function dynamicHyperlinkScan(mutationRecords) {
                 //TODO take exclude URIs list into consideration
                 
                 //See if we have a regular hyperlink (HTML A-tag or X(HT)ML a-tag)
-                if(addedNodes[j].tagName === "A" || 
-                        addedNodes[j].tagName === "a")
+                if(addedNodes[j].tagName === "A" || addedNodes[j].tagName === "a")
                 {
-                    //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
-                    stopObservingDom();
-                    //TODO this push will cause an enormous array list on very 
-                    // large pages or pages with lots of DOM changes. 
-                    // We might want try to trim the array in some way
-                    let pos = hrefMap.push(mutationRecords[i].addedNodes[j]) - 1;
-                    var obj = { href: mutationRecords[i].addedNodes[j].href, i: pos };
-                    self.port.emit("href_found", obj);
-                    //Reconnect detector since we have finished modifying the hyperlink
-                    startObservingDom();
+                    if(addedNodes[j].className !== "alien-lfl-href-buttonLink" &&
+                        addedNodes[j].href !== "")
+                    {
+                        //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
+                        stopObservingDom();
+                        //TODO this push will cause an enormous array list on very 
+                        // large pages or pages with lots of DOM changes. 
+                        // We might want try to trim the array in some way
+                        let pos = hrefMap.push(addedNodes[j]) - 1;
+                        var obj = { href: addedNodes[j].href, i: pos };
+                        self.port.emit("href_found", obj);
+                        //Reconnect detector since we have finished modifying the hyperlink
+                        startObservingDom();
+                    }
                 }
                 //Otherwise, check if we have any text in innerHTML
                 else if(addedNodes[j].innerHTML !== undefined && 
@@ -150,27 +153,19 @@ function scanHyperlinks() {
     }
     
     let data = $("a");
-    var hrefs = [];
 
-    for (var i = 0; i < data.length; i += 1) {
+    for (var j = 0; j < data.length; j++) {
 
         // todo?: get href caption (for what?)
 
-        let hrefAttr = data[i].href;
-        if (hrefAttr != undefined) {
-            hrefs.push(data[i]); 
+        let hrefAttr = data[j].href;
+        if (hrefAttr !== undefined) {
+            // tell the main.js that we encountered a href and also pass the
+            // href string and its index in hrefMap
+            hrefMap[j] = data[j];
+            var obj = { href: data[j].href, i: j };
+            self.port.emit("href_found", obj);
         }
-    }
-
-    //// console.log(hrefs.length);
-    // console.log(hrefs);
-
-    for (var i in hrefs) {
-        // tell the main.js that we encountered a href and also pass the
-        // href string
-        hrefMap[i] = hrefs[i];
-        var obj = { href: hrefs[i].href, i: i };
-        self.port.emit("href_found", obj);
     }
 }
 
