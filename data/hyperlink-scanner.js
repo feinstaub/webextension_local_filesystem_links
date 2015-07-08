@@ -4,7 +4,7 @@
 "use strict"
 
 //maps an integer id (loop counter) to the found href
-var hrefMap = {};
+var hrefMap = [];
 var initData;
 
 self.on('message', function onMessage(message) {
@@ -91,7 +91,10 @@ function dynamicHyperlinkScan(mutationRecords) {
                 {
                     //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                     stopObservingDom();
-                    modifyHyperlink(mutationRecords[i].addedNodes[j]);
+                    let pos = hrefMap.push(mutationRecords[i].addedNodes[j]) - 1;
+                    var obj = { href: mutationRecords[i].addedNodes[j].href, i: pos };
+                    self.port.emit("href_found", obj);
+                    //modifyHyperlink(mutationRecords[i].addedNodes[j]);
                     //scanHyperlinks(); quickly kills performance
                     //Reconnect detector since we have finished modifying the hyperlink
                     startObservingDom();
@@ -112,7 +115,7 @@ function dynamicHyperlinkScan(mutationRecords) {
                         innerLink = addedNodes[j].innerHTML.substring(hrefPos, addedNodes[j].innerHTML.indexOf("\"", hrefPos));
                         endLinkPos = addedNodes[j].innerHTML.indexOf("</a>", hrefPos) + 4;
                         
-                        if(innerLink !== "" && (innerLink.indexOf("///") > -1 || 
+                        if(innerLink !== "" && (innerLink.indexOf("file:///") > -1 || 
                                 innerLink.indexOf("smb://") > -1))
                         {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
@@ -121,7 +124,7 @@ function dynamicHyperlinkScan(mutationRecords) {
                             //Reconnect detector since we have finished modifying the hyperlink
                             startObservingDom();
                         }
-                    } while (innerLink !== "" && (innerLink.indexOf("///") > -1 || 
+                    } while (innerLink !== "" && (innerLink.indexOf("file:///") > -1 || 
                             innerLink.indexOf("smb://") > -1));                    
                 }
             }

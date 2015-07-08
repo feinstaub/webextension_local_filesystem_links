@@ -9,6 +9,9 @@
             $("#links").append('<li><a href="file:////tmp/">file:////tmp/ (Linux)</a> - link inserted into DOM with javascript</li>');
             $("#links").append('<li><a href="file:///C:/">file:///C:/ (win)</a> - link inserted into DOM with javascript</li>');
         });
+        $("#addOneNonFile").click(function() {
+            $("#links").append('<li><a href="http://google.com">http://google.com</a> - link inserted into DOM with javascript</li>');
+        });
         $("#addTwo").click(function() {
             $("#links").append('<li><a href="file:////tmp/">file:////tmp/ (Linux)</a>, <a href="file:///C:/">file:///C:/ (win)</a> - links inserted into DOM with javascript</li>');
         });
@@ -18,7 +21,13 @@
         $("#directAdd").click(function() {
             var a = document.createElement("a");
             a.setAttribute("href", "file:///C:/");
-            a.innerHTML = "file:///C:/ (win)";
+            a.innerHTML = "file:///C:/ (win) - link inserted directly into DOM with javascript";
+            document.getElementById("links").appendChild(a);
+        });
+        $("#directAddNonFile").click(function() {
+            var a = document.createElement("a");
+            a.setAttribute("href", "http://google.com");
+            a.innerHTML = "http://google.com (win) - link inserted directly into DOM with javascript";
             document.getElementById("links").appendChild(a);
         });
     });
@@ -32,10 +41,12 @@ The source of this html page was copied from <a href="http://www.stud.fit.vutbr.
             <a href="file:////tmp/">file:////tmp/ (Linux)</a>, <a href="file:///C:/">file:///C:/ (win)</a> - links that are at the DOM when page is loaded
         </li>
     </ul>
-    <button id="addOne">Add two links, two rows</button>
-    <button id="addTwo">Add two links, one row</button>
-    <button id="addThree">Add three links, one row</button>
-    <button id="directAdd">Add a link directly onto the DOM</button>
+    <button id="addOne">Add two links, two rows</button><br>
+    <button id="addOneNonFile">Add one link which is not a file link</button><br>
+    <button id="addTwo">Add two links, one row</button><br>
+    <button id="addThree">Add three links, one row</button><br>
+    <button id="directAdd">Add a link directly into the DOM</button><br>
+    <button id="directAddNonFile">Add a link which is not a file link directly into the DOM</button><br>
     Note (known issue): in v0.8 newly added links will not be recognized.
 </div>
 </body>
