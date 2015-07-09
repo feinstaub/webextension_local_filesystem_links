@@ -23,12 +23,14 @@
             a.setAttribute("href", "file:///C:/");
             a.innerHTML = "file:///C:/ (win) - link inserted directly into DOM with javascript";
             document.getElementById("links").appendChild(a);
+            document.getElementById("links").appendChild(document.createElement("br"));
         });
         $("#directAddNonFile").click(function() {
             var a = document.createElement("a");
             a.setAttribute("href", "http://google.com");
             a.innerHTML = "http://google.com (win) - non file link inserted directly into DOM with javascript";
             document.getElementById("links").appendChild(a);
+            document.getElementById("links").appendChild(document.createElement("br"));
         });
     });
     </script>

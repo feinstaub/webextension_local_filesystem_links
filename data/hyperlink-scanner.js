@@ -61,6 +61,11 @@ function stopObservingDom()
  * Initiates dynamic hyperlink scan
  */
 function initiateDynamicHyperlinkScan() {
+    //If current page is excluded, do not create and start mutation observer
+    if(currentPageIsExcluded()) {
+        return;
+    }
+    
     ajaxDetector = new MutationObserver(function(mutationRecord){ 
         dynamicHyperlinkScan(mutationRecord); 
     });
@@ -73,24 +78,18 @@ function initiateDynamicHyperlinkScan() {
  */
 function dynamicHyperlinkScan(mutationRecords) {
     //Go through the batch
-    for (let i = 0; i < mutationRecords.length; i++)
-    {
+    for (let i = 0; i < mutationRecords.length; i++) {
         //Pick out childLists
-        if(mutationRecords[i].type === "childList")
-        {
+        if(mutationRecords[i].type === "childList") {
             var addedNodes = mutationRecords[i].addedNodes;
             
             //Go through addedNodes only
-            for(let j = 0; j < addedNodes.length; j++)
-            {
-                //TODO take exclude URIs list into consideration
-                
+            for(let j = 0; j < addedNodes.length; j++) {                
                 //See if we have a regular hyperlink (HTML A-tag or X(HT)ML a-tag)
-                if(addedNodes[j].tagName === "A" || addedNodes[j].tagName === "a")
-                {
+                if(addedNodes[j].tagName === "A" || addedNodes[j].tagName === "a") {
+                    //Only consider links which aren't empty and isn't our button class
                     if(addedNodes[j].className !== "alien-lfl-href-buttonLink" &&
-                        addedNodes[j].href !== "")
-                    {
+                        addedNodes[j].href !== "") {
                         //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                         stopObservingDom();
                         //TODO this push will cause an enormous array list on very 
@@ -105,23 +104,20 @@ function dynamicHyperlinkScan(mutationRecords) {
                 }
                 //Otherwise, check if we have any text in innerHTML
                 else if(addedNodes[j].innerHTML !== undefined && 
-                        addedNodes[j].innerHTML !== "")
-                {
+                        addedNodes[j].innerHTML !== "") {
                     var innerLink = "";
                     var hrefPos = -1;
                     var endLinkPos = -1;
                     
                     //Try to find links while we haven't reached end of String 
                     // and we haven't found a badly formatted URL
-                    do
-                    {
+                    do {
                         hrefPos = addedNodes[j].innerHTML.indexOf("href=\"", hrefPos) + 6;
                         innerLink = addedNodes[j].innerHTML.substring(hrefPos, addedNodes[j].innerHTML.indexOf("\"", hrefPos));
                         endLinkPos = addedNodes[j].innerHTML.indexOf("</a>", hrefPos) + 4;
                         
                         if(innerLink !== "" && (innerLink.indexOf("file:///") > -1 || 
-                                innerLink.indexOf("smb://") > -1))
-                        {
+                                innerLink.indexOf("smb://") > -1)) {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                             stopObservingDom();
                             hrefPos += modifyInnerHyperlink(mutationRecords[i].addedNodes[j], innerLink, endLinkPos);
@@ -138,18 +134,10 @@ function dynamicHyperlinkScan(mutationRecords) {
 
 function scanHyperlinks() {
     //// console.log("scanHyperlinks");
-    ////alert(document.URL);
   
-    let documentUrl = document.URL;
-    let excludeUrlStartsWithList = initData.excludeUrlStartsWithList.split(" "); // empty string results in [""] which must be handeled separately (length > 0 condition)
-    
-    for (var i = 0; i < excludeUrlStartsWithList.length; i += 1) {
-        let excludeItem = excludeUrlStartsWithList[i];
-        if (excludeItem.length > 0 && strStartsWith(documentUrl, excludeItem)) {
-            ////console.log("----------------return...");
-            self.port.emit("documenturl_ignored", excludeItem);
-            return; // exit this method if one of the exclude URLs matches
-        }
+    //If current page is excluded, do not scan hyperlinks
+    if(currentPageIsExcluded()) {
+        return;
     }
     
     let data = $("a");
@@ -167,6 +155,27 @@ function scanHyperlinks() {
             self.port.emit("href_found", obj);
         }
     }
+}
+
+/**
+ * Check if current page is in exclude list
+ * 
+ * @return true if it is, false otherwise
+ */
+function currentPageIsExcluded() {
+    let documentUrl = document.URL;
+    let excludeUrlStartsWithList = initData.excludeUrlStartsWithList.split(" "); // empty string results in [""] which must be treated separately (length > 0 condition)
+    
+    for (let i = 0; i < excludeUrlStartsWithList.length; i += 1) {
+        let excludeItem = excludeUrlStartsWithList[i];
+        if (excludeItem.length > 0 && strStartsWith(documentUrl, excludeItem)) {
+            ////console.log("----------------return...");
+            self.port.emit("documenturl_ignored", excludeItem);
+            return true; // return true if one of the exclude URLs matches
+        }
+    }
+    
+    return false; //Page wasn't in exclude list, return false
 }
 
 function scanTextNodes() {
