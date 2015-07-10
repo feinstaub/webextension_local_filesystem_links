@@ -160,7 +160,7 @@ function scanHyperlinks() {
 /**
  * Check if current page is in exclude list
  * 
- * @return true if it is, false otherwise
+ * @returns true if it is, false otherwise
  */
 function currentPageIsExcluded() {
     let documentUrl = document.URL;
