@@ -1,7 +1,7 @@
 {
     "title": "Local Filesystem Links",
     "name": "alien-local-filesystem-links",
-    "version": "0.99.37",
+    "version": "0.99.38",
     "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser (e.g. Windows Explorer).",
     "main": "lib/main.js",
     "main-NEW-later": "index.js",
