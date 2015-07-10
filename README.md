@@ -57,9 +57,16 @@ Init SDK:
 # There will be some greeting message
 ```
 
-Run unit tests:
+Run unit tests with currently installed Firefox:
 ```
-cfx test -p _p_test
+cfx test -p _pt
+```
+
+Run unit tests with nightly Firefox:
+Download from https://nightly.mozilla.org/ and extract
+Run, e.g.:
+```
+cfx test -p _pt -b ~/dev/share/firefox-42.0a1/firefox
 ```
 
 Run test webserver and run firefox with the addon to do integration tests.
@@ -70,10 +77,14 @@ node /test-server.nodejs.js
 # show something like:
 # Server running at http://127.0.0.1:8125/
 
-cfx run -p _p1
+```
+cfx run -p _pr
+# or:
+cfx run -p _pr -b ~/dev/share/firefox-42.0a1/firefox
+```
 # Firefox opens with the addon installed (in the addons page there will even be a Debug button)
 # Navigate to the url above.
-```
+
 
 Create xpi file:
 ```
