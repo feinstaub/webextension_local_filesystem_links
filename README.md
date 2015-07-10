@@ -11,7 +11,10 @@ It contains:
 * tests (test/)
 * documentation (doc/)
 
-License: www.mozilla.org/MPL/, GPLv3
+License
+-------
+GPLv3 or later
+www.mozilla.org/MPL/ v2 or later
 
 
 Start developing [DOES NOT WORK YET, see next section about cxf]
