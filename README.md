@@ -31,10 +31,11 @@ sudo npm install jpm -g
 
 Run unit tests.
 ```
-mkdir _p_test           # once
-jpm test -p ./_p_test   # don't forget the ./
+mkdir _pt           # once
+jpm test -p ./_pt   # don't forget the ./
 # or see https://github.com/mozilla/jpm/issues/287
-jpm -b /usr/lib64/firefox/firefox test -p ./_p_test
+jpm -b /usr/lib64/firefox/firefox test -p ./_pt
+jpm -b ~/dev/share/firefox-42.0a1/firefox test -p ./_pt
 ```
 
 In progress: see https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/cfx_to_jpm
@@ -73,7 +74,7 @@ Run test webserver and run firefox with the addon to do integration tests.
 We need node to create a webserver because we cannot test properly with local websites.
 ```
 cd test/webserver # because the node server definition uses relative paths
-node /test-server.nodejs.js
+node test-server.nodejs.js
 # show something like:
 # Server running at http://127.0.0.1:8125/
 
