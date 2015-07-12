@@ -12,6 +12,14 @@ alien-local-filesystem-links-0.63/
 /.idea/workspace.xml
 /.directory
 *~
+/nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
 .kateproject.d/notes.txt
 /jid1-JAzC7z53jemo5Q@jetpack-*.xpi
 _pr/
