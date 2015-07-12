@@ -1,7 +1,8 @@
 .directory
 translator.xpi
+ttt/
+$p1/
 _p1/
-_p_test/
 /local-filesystem-links.xpi
 /.komodotools/
 alien-lfl.xpi
@@ -20,5 +21,3 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 .nb-gradle/
-.kateproject.d/notes.txt
-/jid1-JAzC7z53jemo5Q@jetpack-*.xpi

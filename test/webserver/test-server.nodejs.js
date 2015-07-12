@@ -30,7 +30,7 @@ http.createServer(function (request, response) {
             break;
     }
      
-    fs.exists(filePath, function(exists) {
+    path.exists(filePath, function(exists) {
      
         if (exists) {
             fs.readFile(filePath, function(error, content) {
