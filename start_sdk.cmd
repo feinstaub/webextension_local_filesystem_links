@@ -73,15 +73,15 @@ call set "Alt=%%Alt[%1]%%"
 :: Step 2. Match on the Altlication names and perform the installation for each
 if "%Alt%" EQU "One" ( 
 	echo Executing test
-	start /WAIT jpm -p ./_pt test
+	start cmd /K jpm -p ./_pt test
 )
 if "%Alt%" EQU "Two" ( 
 	echo Executing run with debug console
-	start /WAIT jpm -p ./_pt run --debug
+	start cmd /K jpm -p ./_pt run --debug
 )
 if "%Alt%" EQU "Three" (
 	echo Creating XPI
-	start /WAIT jpm -p ./_pt xpi
+	start cmd /K jpm -p ./_pt xpi
 )
 if "%Alt%" NEQ "Four" (
 	goto Prompt
