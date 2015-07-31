@@ -1,7 +1,7 @@
 /*
  * License: www.mozilla.org/MPL/
  */
-"use strict"
+"use strict";
 
 //maps an integer id (loop counter) to the found href
 var ajaxDetector;
@@ -38,40 +38,38 @@ self.on('message', function onMessage(message) {
     }
 });
 
-var startObservingDom = function ()
-{
+var startObservingDom = function () {
     let ajaxDetectorConfig = {
-        childList: true, 
-        attributes: false, 
-        characterData: false, 
-        subtree: true, 
-        attributeOldValue: false, 
+        childList: true,
+        attributes: false,
+        characterData: false,
+        subtree: true,
+        attributeOldValue: false,
         characterDataOldValue: false
     };
-    
-    ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
-}
 
-var stopObservingDom = function ()
-{
+    ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
+};
+
+var stopObservingDom = function () {
     ajaxDetector.disconnect();
-}
+};
 
 /**
  * Initiates dynamic hyperlink scan
  */
 var initiateDynamicHyperlinkScan = function () {
     //If current page is excluded, do not create and start mutation observer
-    if(currentPageIsExcluded()) {
+    if (currentPageIsExcluded()) {
         return;
     }
-    
-    ajaxDetector = new MutationObserver(function(mutationRecord){ 
-        dynamicHyperlinkScan(mutationRecord); 
+
+    ajaxDetector = new MutationObserver(function (mutationRecord) {
+        dynamicHyperlinkScan(mutationRecord);
     });
-    
+
     startObservingDom();
-}
+};
 
 /**
  * Gets triggered every time a batch of mutations occurs to body
@@ -80,15 +78,15 @@ var dynamicHyperlinkScan = function (mutationRecords) {
     //Go through the batch
     for (let i = 0; i < mutationRecords.length; i++) {
         //Pick out childLists
-        if(mutationRecords[i].type === "childList") {
+        if (mutationRecords[i].type === "childList") {
             var addedNodes = mutationRecords[i].addedNodes;
-            
+
             //Go through addedNodes only
-            for(let j = 0; j < addedNodes.length; j++) {                
+            for (let j = 0; j < addedNodes.length; j++) {
                 //See if we have a regular hyperlink (HTML A-tag or X(HT)ML a-tag)
-                if(addedNodes[j].tagName === "A" || addedNodes[j].tagName === "a") {
+                if (addedNodes[j].tagName === "A" || addedNodes[j].tagName === "a") {
                     //Only consider links which aren't empty and isn't our button class
-                    if(addedNodes[j].className !== "alien-lfl-href-buttonLink" &&
+                    if (addedNodes[j].className !== "alien-lfl-href-buttonLink" &&
                         addedNodes[j].href !== "") {
                         //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                         stopObservingDom();
@@ -102,21 +100,21 @@ var dynamicHyperlinkScan = function (mutationRecords) {
                         startObservingDom();
                     }
                 }
-                //Otherwise, check if we have any text in innerHTML
-                else if(addedNodes[j].innerHTML !== undefined && 
+                    //Otherwise, check if we have any text in innerHTML
+                else if (addedNodes[j].innerHTML !== undefined &&
                         addedNodes[j].innerHTML !== "") {
                     var innerLink = "";
                     var hrefPos = -1;
                     var endLinkPos = -1;
-                    
+
                     //Try to find links while we haven't reached end of String 
                     // and we haven't found a badly formatted URL
                     do {
                         hrefPos = addedNodes[j].innerHTML.indexOf("href=\"", hrefPos) + 6;
                         innerLink = addedNodes[j].innerHTML.substring(hrefPos, addedNodes[j].innerHTML.indexOf("\"", hrefPos));
                         endLinkPos = addedNodes[j].innerHTML.indexOf("</a>", hrefPos) + 4;
-                        
-                        if(innerLink !== "" && (innerLink.indexOf("file:///") > -1 || 
+
+                        if (innerLink !== "" && (innerLink.indexOf("file:///") > -1 ||
                                 innerLink.indexOf("smb://") > -1)) {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                             stopObservingDom();
@@ -124,22 +122,22 @@ var dynamicHyperlinkScan = function (mutationRecords) {
                             //Reconnect detector since we have finished modifying the hyperlink
                             startObservingDom();
                         }
-                    } while (innerLink !== "" && (innerLink.indexOf("file:///") > -1 || 
-                            innerLink.indexOf("smb://") > -1));                    
+                    } while (innerLink !== "" && (innerLink.indexOf("file:///") > -1 ||
+                            innerLink.indexOf("smb://") > -1));
                 }
             }
         }
     }
-}
+};
 
 var scanHyperlinks = function () {
     //// console.log("scanHyperlinks");
-  
+
     //If current page is excluded, do not scan hyperlinks
-    if(currentPageIsExcluded()) {
+    if (currentPageIsExcluded()) {
         return;
     }
-    
+
     let data = $("a");
 
     for (var j = 0; j < data.length; j++) {
@@ -155,7 +153,7 @@ var scanHyperlinks = function () {
             self.port.emit("href_found", obj);
         }
     }
-}
+};
 
 /**
  * Check if current page is in exclude list
@@ -165,7 +163,7 @@ var scanHyperlinks = function () {
 var currentPageIsExcluded = function () {
     let documentUrl = document.URL;
     let excludeUrlStartsWithList = initData.excludeUrlStartsWithList.split(" "); // empty string results in [""] which must be treated separately (length > 0 condition)
-    
+
     for (let i = 0; i < excludeUrlStartsWithList.length; i += 1) {
         let excludeItem = excludeUrlStartsWithList[i];
         if (excludeItem.length > 0 && strStartsWith(documentUrl, excludeItem)) {
@@ -174,13 +172,13 @@ var currentPageIsExcluded = function () {
             return true; // return true if one of the exclude URLs matches
         }
     }
-    
+
     return false; //Page wasn't in exclude list, return false
-}
+};
 
 var scanTextNodes = function () {
     //// console.log("TODO (make optional; TODO: only scan visible area");
-}
+};
 
 //@param i index of the map
 //function __modifyHyperlink_old(i) {
@@ -195,13 +193,12 @@ var scanTextNodes = function () {
 var modifyHyperlinkFromIndex = function (i) {
     //// console.log(i);
     modifyHyperlink(hrefMap[i]);
-}
+};
 
 var modifyHyperlink = function (domHref) {
     //Make sure we don't modify our alien links
-    if(domHref.className === "alien-lfl-href-buttonLink" || 
-            (domHref.nextSibling !== null && domHref.nextSibling.className === "alien-lfl-href-buttonLink"))
-    {
+    if (domHref.className === "alien-lfl-href-buttonLink" ||
+            (domHref.nextSibling !== null && domHref.nextSibling.className === "alien-lfl-href-buttonLink")) {
         return;
     }
 
@@ -213,11 +210,10 @@ var modifyHyperlink = function (domHref) {
     // now add or update attributes:
     //
     alienHrefElement.attr("title", createTooltip(origHref)); // quicktip; TODO: change this dynamically depending on OS
-    if(origHref)
-    {
+    if (origHref) {
         alienHrefElement.attr("alien_origHref", origHref); // set new attribute for later in callback
     }
-    
+
     // alienHrefElement.css('background-color', 'yellow');
 
     // http://stackoverflow.com/questions/2316199/jquery-get-dom-node  --> [0]
@@ -226,30 +222,28 @@ var modifyHyperlink = function (domHref) {
 
     alienHrefElement.unbind(); // remove event from first page scan
     alienHrefElement.click({ origHref: origHref }, hrefClickCallback);
-}
+};
 
 /**
  * Modifies hyperlinks which are added by innerHTML
  */
-var modifyInnerHyperlink = function (outerElement, origHref, endLinkPos)
-{    
+var modifyInnerHyperlink = function (outerElement, origHref, endLinkPos) {
     var alienHrefText = "<a class=\"" + buttonLinkClass + "\"" +
             " title=\"" + createTooltip(origHref) + "\"" +
             " onclick=\"window.hrefClickCallback('','" + origHref + "')\"></a>";
-    
-    outerElement.innerHTML = outerElement.innerHTML.insert(endLinkPos, 
+
+    outerElement.innerHTML = outerElement.innerHTML.insert(endLinkPos,
             alienHrefText);
-            
+
     return alienHrefText.length;
-}
+};
 
 /**
  * Creates appropriate alienHrefElement
  */
-var createAlienHrefElement = function (domHref)
-{
+var createAlienHrefElement = function (domHref) {
     let potentialAlienLink = $(domHref).next();
-    
+
     // if the next element has not a special attribute that "alien" links have
     // then create the link (which is always the case on first page load)
     if (potentialAlienLink.attr("alien_orighref") == null) {
@@ -260,36 +254,32 @@ var createAlienHrefElement = function (domHref)
         // the potential link was an actual alien link (if rescanning a page)
         return potentialAlienLink;
     }
-}
+};
 
 /**
  * Creates tooltip text
  */
-var createTooltip = function (origHref)
-{
+var createTooltip = function (origHref) {
     // do not do that:
     //// alienHrefElement.attr("href", "#" + origHref); // todo: on hover show something in status bar to avoid having the #... in the address bar
     // because:
     // 1. http://stackoverflow.com/questions/876390/reliable-cross-browser-way-of-setting-status-bar-text
     //   "For security reasons, most modern browsers disable status bar access by default."
     // 2. Fixes https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues/5
-    if(origHref)
-    {
+    if (origHref) {
         var tooltip;
         //Check if path is a file and change tooltip accordingly
-        if(isFile(origHref))
-        {
+        if (isFile(origHref)) {
             tooltip = "your default programme";
         }
-        else
-        {
+        else {
             tooltip = initData.fileManagerDisplayName;
         }
         return "Open '" + origHref + "' with " + tooltip + " (Provided by Local Filesystem Links addon)";
     }
-    
+
     return "";
-}
+};
 
 /**
  * Crude check if a path is a file. If a path ends with .FILENAME then it it's considered a file
@@ -299,7 +289,7 @@ var createTooltip = function (origHref)
  */
 var isFile = function (pathName) {
     return pathName.split('/').pop().split('.').length > 1;
-}
+};
 
 /**
  * Inserts string at the given position
@@ -315,21 +305,20 @@ String.prototype.insert = function (index, string) {
 var hrefClickCallback = function (e, href) {
     // let href = mouseEvent.currentTarget.alien_OrigHref;
     //Get href from element if href is undefined or empty
-    if(href === undefined || href === "")
-    {
+    if (href === undefined || href === "") {
         href = e.data.origHref; // http://api.jquery.com/event.data/
     }
     let hrefDecoded = decodeURIComponent(href); // http://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
     //// console.log("Post: " + hrefDecoded);
     self.port.emit('href', hrefDecoded);
-}
+};
 
 //Make hrefClickCallback accessible from page code, see https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Content_Scripts/Interacting_with_page_scripts
 exportFunction(hrefClickCallback, unsafeWindow, {defineAs: "hrefClickCallback"});
 
 var strStartsWith = function (str, prefix) {
     return str.substring(0, prefix.length) === prefix;
-}
+};
 
 var getAllProperties = function (obj) {
     var result = [];
