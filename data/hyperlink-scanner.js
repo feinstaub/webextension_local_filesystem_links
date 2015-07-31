@@ -4,6 +4,8 @@
 "use strict"
 
 //maps an integer id (loop counter) to the found href
+var ajaxDetector;
+var buttonLinkClass = "alien-lfl-href-buttonLink";
 var hrefMap = [];
 var initData;
 
@@ -36,9 +38,7 @@ self.on('message', function onMessage(message) {
     }
 });
 
-var ajaxDetector;
-
-function startObservingDom()
+var startObservingDom = function ()
 {
     let ajaxDetectorConfig = {
         childList: true, 
@@ -52,7 +52,7 @@ function startObservingDom()
     ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
 }
 
-function stopObservingDom()
+var stopObservingDom = function ()
 {
     ajaxDetector.disconnect();
 }
@@ -60,7 +60,7 @@ function stopObservingDom()
 /**
  * Initiates dynamic hyperlink scan
  */
-function initiateDynamicHyperlinkScan() {
+var initiateDynamicHyperlinkScan = function () {
     //If current page is excluded, do not create and start mutation observer
     if(currentPageIsExcluded()) {
         return;
@@ -76,7 +76,7 @@ function initiateDynamicHyperlinkScan() {
 /**
  * Gets triggered every time a batch of mutations occurs to body
  */
-function dynamicHyperlinkScan(mutationRecords) {
+var dynamicHyperlinkScan = function (mutationRecords) {
     //Go through the batch
     for (let i = 0; i < mutationRecords.length; i++) {
         //Pick out childLists
@@ -132,7 +132,7 @@ function dynamicHyperlinkScan(mutationRecords) {
     }
 }
 
-function scanHyperlinks() {
+var scanHyperlinks = function () {
     //// console.log("scanHyperlinks");
   
     //If current page is excluded, do not scan hyperlinks
@@ -162,7 +162,7 @@ function scanHyperlinks() {
  * 
  * @returns true if it is, false otherwise
  */
-function currentPageIsExcluded() {
+var currentPageIsExcluded = function () {
     let documentUrl = document.URL;
     let excludeUrlStartsWithList = initData.excludeUrlStartsWithList.split(" "); // empty string results in [""] which must be treated separately (length > 0 condition)
     
@@ -178,7 +178,7 @@ function currentPageIsExcluded() {
     return false; //Page wasn't in exclude list, return false
 }
 
-function scanTextNodes() {
+var scanTextNodes = function () {
     //// console.log("TODO (make optional; TODO: only scan visible area");
 }
 
@@ -192,12 +192,12 @@ function scanTextNodes() {
 //domHref.origHref = origHref; // set new attribute for later
 //}
 
-function modifyHyperlinkFromIndex(i) {
+var modifyHyperlinkFromIndex = function (i) {
     //// console.log(i);
     modifyHyperlink(hrefMap[i]);
 }
 
-function modifyHyperlink(domHref) {
+var modifyHyperlink = function (domHref) {
     //Make sure we don't modify our alien links
     if(domHref.className === "alien-lfl-href-buttonLink" || 
             (domHref.nextSibling !== null && domHref.nextSibling.className === "alien-lfl-href-buttonLink"))
@@ -228,12 +228,10 @@ function modifyHyperlink(domHref) {
     alienHrefElement.click({ origHref: origHref }, hrefClickCallback);
 }
 
-var buttonLinkClass = "alien-lfl-href-buttonLink";
-
 /**
  * Modifies hyperlinks which are added by innerHTML
  */
-function modifyInnerHyperlink(outerElement, origHref, endLinkPos)
+var modifyInnerHyperlink = function (outerElement, origHref, endLinkPos)
 {    
     var alienHrefText = "<a class=\"" + buttonLinkClass + "\"" +
             " title=\"" + createTooltip(origHref) + "\"" +
@@ -248,7 +246,7 @@ function modifyInnerHyperlink(outerElement, origHref, endLinkPos)
 /**
  * Creates appropriate alienHrefElement
  */
-function createAlienHrefElement(domHref)
+var createAlienHrefElement = function (domHref)
 {
     let potentialAlienLink = $(domHref).next();
     
@@ -267,7 +265,7 @@ function createAlienHrefElement(domHref)
 /**
  * Creates tooltip text
  */
-function createTooltip(origHref)
+var createTooltip = function (origHref)
 {
     // do not do that:
     //// alienHrefElement.attr("href", "#" + origHref); // todo: on hover show something in status bar to avoid having the #... in the address bar
@@ -299,7 +297,7 @@ function createTooltip(origHref)
  * @param pathName to check
  * @returns {Boolean} true if it is, otherwise false
  */
-function isFile(pathName) {
+var isFile = function (pathName) {
     return pathName.split('/').pop().split('.').length > 1;
 }
 
@@ -314,7 +312,7 @@ String.prototype.insert = function (index, string) {
 };
 
 //function hrefClickCallback(mouseEvent) {
-function hrefClickCallback(e, href) {
+var hrefClickCallback = function (e, href) {
     // let href = mouseEvent.currentTarget.alien_OrigHref;
     //Get href from element if href is undefined or empty
     if(href === undefined || href === "")
@@ -329,11 +327,11 @@ function hrefClickCallback(e, href) {
 //Make hrefClickCallback accessible from page code, see https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Content_Scripts/Interacting_with_page_scripts
 exportFunction(hrefClickCallback, unsafeWindow, {defineAs: "hrefClickCallback"});
 
-function strStartsWith(str, prefix) {
+var strStartsWith = function (str, prefix) {
     return str.substring(0, prefix.length) === prefix;
 }
 
-function getAllProperties(obj) {
+var getAllProperties = function (obj) {
     var result = [];
     var names = Object.getOwnPropertyNames(obj);
     // print(names); // "firstName,lastName,5,test"
