@@ -17,19 +17,36 @@ GPLv3 or later
 www.mozilla.org/MPL/ v2 or later
 
 
-Start developing [DOES NOT WORK YET, see next section about cxf]
+Start developing [LINUX DOES NOT WORK YET, see next section about cxf]
 ----------------
-
-The following instructions are for UNIXoid system which are all summarized by the term Linux.
-
 Based on https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
 
-Install jpm.
+### Windows ###
+If you haven't already, install appropriate Node.js version from https://nodejs.org/download/.
+
+
+***Install jpm.***
+
+In Node.js command prompt:
+```
+npm install jpm -g
+```
+
+***Run various jpm commands.***
+
+Execute \start_sdk.cmd for convenient fast access to the most common jpm commands allowing you 
+to execute unit tests, run with debug window and create a xpi file.
+
+
+### Linux ###
+The following instructions are for UNIXoid system which are all summarized by the term Linux.
+
+***Install jpm.***
 ```
 sudo npm install jpm -g
 ```
 
-Run unit tests.
+***Run unit tests.***
 ```
 mkdir _pt           # once
 jpm test -p ./_pt   # don't forget the ./
@@ -38,14 +55,12 @@ jpm -b /usr/lib64/firefox/firefox test -p ./_pt
 jpm -b ~/dev/share/firefox-42.0a1/firefox test -p ./_pt
 ```
 
-In progress: see https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/cfx_to_jpm
-
 --> Currently fails. See my comment on https://github.com/mozilla/jpm/issues/287
 Also fails on freshly created addon via `jpm init`
 So there is something very wrong.
 
 
-Developing with deprecated cxf
+Developing with deprecated cxf [Only Linux]
 ------------------------------
 
 Download SDK:

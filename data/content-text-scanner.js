@@ -16,7 +16,7 @@ self.on('message', function onMessage(commandString) {
 // slows down page loading a lot.
 // Can we do the scanning in background?
 //
-function scanAndCreateHyperlinks() {
+var scanAndCreateHyperlinks = function() {
   //// console.log("scanAndCreateHyperlinks");
   //// console.log(document.location);
   // console.log($("*").length);
@@ -51,12 +51,12 @@ function scanAndCreateHyperlinks() {
    //// console.log(localFileTextNodes.length);
 }
 
-function looksLikeLocalFileLink(text) {
+var looksLikeLocalFileLink = function(text) {
   // TODO
   return text.length >= 2 && text.length < 30;
 }
 
-function getAllProperties(obj) {
+var getAllProperties = function(obj) {
   var result = [];
   var names = Object.getOwnPropertyNames(obj);
   // print(names); // "firstName,lastName,5,test"
