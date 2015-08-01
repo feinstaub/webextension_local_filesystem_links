@@ -38,7 +38,7 @@ self.on('message', function onMessage(message) {
     }
 });
 
-var startObservingDom = function () {
+var startObservingDom = function() {
     let ajaxDetectorConfig = {
         childList: true,
         attributes: false,
@@ -51,14 +51,14 @@ var startObservingDom = function () {
     ajaxDetector.observe(document.querySelector("body"), ajaxDetectorConfig);
 };
 
-var stopObservingDom = function () {
+var stopObservingDom = function() {
     ajaxDetector.disconnect();
 };
 
 /**
  * Initiates dynamic hyperlink scan
  */
-var initiateDynamicHyperlinkScan = function () {
+var initiateDynamicHyperlinkScan = function() {
     //If current page is excluded, do not create and start mutation observer
     if (currentPageIsExcluded()) {
         return;
@@ -74,7 +74,7 @@ var initiateDynamicHyperlinkScan = function () {
 /**
  * Gets triggered every time a batch of mutations occurs to body
  */
-var dynamicHyperlinkScan = function (mutationRecords) {
+var dynamicHyperlinkScan = function(mutationRecords) {
     //Go through the batch
     for (let i = 0; i < mutationRecords.length; i++) {
         //Pick out childLists
@@ -130,7 +130,7 @@ var dynamicHyperlinkScan = function (mutationRecords) {
     }
 };
 
-var scanHyperlinks = function () {
+var scanHyperlinks = function() {
     //// console.log("scanHyperlinks");
 
     //If current page is excluded, do not scan hyperlinks
@@ -160,7 +160,7 @@ var scanHyperlinks = function () {
  * 
  * @returns true if it is, false otherwise
  */
-var currentPageIsExcluded = function () {
+var currentPageIsExcluded = function() {
     let documentUrl = document.URL;
     let excludeUrlStartsWithList = initData.excludeUrlStartsWithList.split(" "); // empty string results in [""] which must be treated separately (length > 0 condition)
 
@@ -176,7 +176,7 @@ var currentPageIsExcluded = function () {
     return false; //Page wasn't in exclude list, return false
 };
 
-var scanTextNodes = function () {
+var scanTextNodes = function() {
     //// console.log("TODO (make optional; TODO: only scan visible area");
 };
 
@@ -190,12 +190,12 @@ var scanTextNodes = function () {
 //domHref.origHref = origHref; // set new attribute for later
 //}
 
-var modifyHyperlinkFromIndex = function (i) {
+var modifyHyperlinkFromIndex = function(i) {
     //// console.log(i);
     modifyHyperlink(hrefMap[i]);
 };
 
-var modifyHyperlink = function (domHref) {
+var modifyHyperlink = function(domHref) {
     //Make sure we don't modify our alien links
     if (domHref.className === "alien-lfl-href-buttonLink" ||
             (domHref.nextSibling !== null && domHref.nextSibling.className === "alien-lfl-href-buttonLink")) {
@@ -227,7 +227,7 @@ var modifyHyperlink = function (domHref) {
 /**
  * Modifies hyperlinks which are added by innerHTML
  */
-var modifyInnerHyperlink = function (outerElement, origHref, endLinkPos) {
+var modifyInnerHyperlink = function(outerElement, origHref, endLinkPos) {
     var alienHrefText = "<a class=\"" + buttonLinkClass + "\"" +
             " title=\"" + createTooltip(origHref) + "\"" +
             " onclick=\"window.hrefClickCallback('','" + origHref + "')\"></a>";
@@ -241,7 +241,7 @@ var modifyInnerHyperlink = function (outerElement, origHref, endLinkPos) {
 /**
  * Creates appropriate alienHrefElement
  */
-var createAlienHrefElement = function (domHref) {
+var createAlienHrefElement = function(domHref) {
     let potentialAlienLink = $(domHref).next();
 
     // if the next element has not a special attribute that "alien" links have
@@ -259,7 +259,7 @@ var createAlienHrefElement = function (domHref) {
 /**
  * Creates tooltip text
  */
-var createTooltip = function (origHref) {
+var createTooltip = function(origHref) {
     // do not do that:
     //// alienHrefElement.attr("href", "#" + origHref); // todo: on hover show something in status bar to avoid having the #... in the address bar
     // because:
@@ -294,7 +294,7 @@ var isFile = function (pathName) {
 /**
  * Inserts string at the given position
  */
-String.prototype.insert = function (index, string) {
+String.prototype.insert = function(index, string) {
   if (index > 0)
     return this.substring(0, index) + string + this.substring(index, this.length);
   else
@@ -302,7 +302,7 @@ String.prototype.insert = function (index, string) {
 };
 
 //function hrefClickCallback(mouseEvent) {
-var hrefClickCallback = function (e, href) {
+var hrefClickCallback = function(e, href) {
     // let href = mouseEvent.currentTarget.alien_OrigHref;
     //Get href from element if href is undefined or empty
     if (href === undefined || href === "") {
@@ -316,11 +316,11 @@ var hrefClickCallback = function (e, href) {
 //Make hrefClickCallback accessible from page code, see https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Content_Scripts/Interacting_with_page_scripts
 exportFunction(hrefClickCallback, unsafeWindow, {defineAs: "hrefClickCallback"});
 
-var strStartsWith = function (str, prefix) {
+var strStartsWith = function(str, prefix) {
     return str.substring(0, prefix.length) === prefix;
 };
 
-var getAllProperties = function (obj) {
+var getAllProperties = function(obj) {
     var result = [];
     var names = Object.getOwnPropertyNames(obj);
     // print(names); // "firstName,lastName,5,test"
