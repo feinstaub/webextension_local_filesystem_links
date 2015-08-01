@@ -1,0 +1,10 @@
+.*
+*.xpi
+start_sdk.cmd
+start_sdk.sh
+.*/
+doc/
+evalpage/
+intellij_module/
+reviews/
+test/webserver/
