@@ -37,7 +37,7 @@ DOCUMENTATION
 We use JSDoc for documentation, see http://code.google.com/p/jsdoc-toolkit/wiki/DocExamples
 
 
-IDE Hints
+IDE HINTS
 ---------
 IntelliJ IDEA Community Edition 11
 http://stackoverflow.com/questions/1147336/how-to-get-intellij-idea-to-display-directories
