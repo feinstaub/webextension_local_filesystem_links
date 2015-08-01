@@ -1,0 +1,7 @@
+Comments:
+Your version was rejected because of the following problems:
+
+1) New uploads must have a higher version number than the previously uploaded versions otherwise those files do not propagate across our mirror network correctly, and many users will receive the old version, which they will be unable to install due to checksum mismatches.
+
+
+Please fix them and submit again. Thank you.
