@@ -1,10 +1,14 @@
 .*
 *.xpi
-start_sdk.cmd
-start_sdk.sh
+*.cmd
+*.sh
 .*/
 doc/
 evalpage/
 intellij_module/
 reviews/
-test/webserver/
+test/
+TODO
+*.md
+CONTRIBUTORS
+CHANGELOG
