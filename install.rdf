@@ -5,7 +5,7 @@
           <em:type>2</em:type>
           <em:bootstrap>true</em:bootstrap>
           <em:unpack>false</em:unpack>
-          <em:version>0.99.40</em:version>
+          <em:version>0.99.39b</em:version>
           <em:name>Local Filesystem Links</em:name>
           <em:description>Scans pages for file:/// links and makes it possible to open them with the system&apos;s file browser.</em:description>
           <em:creator>austrALIENsun</em:creator>
