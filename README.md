@@ -25,7 +25,7 @@ Based on https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
 If you haven't already, install appropriate Node.js version from https://nodejs.org/download/.
 
 
-***Install jpm.***
+***Install jpm***
 
 In Node.js command prompt:
 ```
@@ -41,7 +41,7 @@ to execute unit tests, run with debug window and create a xpi file.
 ### Linux ###
 The following instructions are for UNIXoid system which are all summarized by the term Linux.
 
-***Install jpm.***
+***Install jpm***
 ```
 sudo npm install jpm -g
 ```
