@@ -34,7 +34,7 @@ npm install jpm -g
 
 ***Run various jpm commands.***
 
-Execute \start_sdk.cmd for convenient fast access to the most common jpm commands allowing you 
+Execute \start_sdk.cmd for convenient fast access to the most common jpm commands allowing you
 to execute unit tests, run with debug window and create a xpi file.
 
 
@@ -58,6 +58,13 @@ jpm -b ~/dev/share/firefox-42.0a1/firefox test -p ./_pt
 --> Currently fails. See my comment on https://github.com/mozilla/jpm/issues/287
 Also fails on freshly created addon via `jpm init`
 So there is something very wrong.
+
+***Build xpi***
+Review package.json to have the correct version number.
+
+```
+jpm xpi
+```
 
 
 Developing with deprecated cxf [Only Linux]
