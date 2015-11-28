@@ -101,6 +101,9 @@ var dynamicHyperlinkScan = function(mutationRecords) {
                     }
                 }
                     //Otherwise, check if we have any text in innerHTML
+                    // A. Wolf note - innerHTML change from an iframe won't be detected
+                    // that's why a change in jsfiddle output isn't updating the link
+
                 else if (addedNodes[j].innerHTML !== undefined &&
                         addedNodes[j].innerHTML !== "") {
                     var innerLink = "";
@@ -113,12 +116,14 @@ var dynamicHyperlinkScan = function(mutationRecords) {
                         hrefPos = addedNodes[j].innerHTML.indexOf("href=\"", hrefPos) + 6;
                         innerLink = addedNodes[j].innerHTML.substring(hrefPos, addedNodes[j].innerHTML.indexOf("\"", hrefPos));
                         endLinkPos = addedNodes[j].innerHTML.indexOf("</a>", hrefPos) + 4;
-
+                        //console.log('scanner', addedNodes[j].innerHTML);
                         if (innerLink !== "" && (innerLink.indexOf("file:///") > -1 ||
                                 innerLink.indexOf("smb://") > -1)) {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                             stopObservingDom();
-                            hrefPos += modifyInnerHyperlink(mutationRecords[i].addedNodes[j], innerLink, endLinkPos);
+                            // console.log('modify required');
+                            //hrefPos += 
+                            modifyInnerHyperlink(mutationRecords[i].addedNodes[j], innerLink, endLinkPos);
                             //Reconnect detector since we have finished modifying the hyperlink
                             startObservingDom();
                         }
@@ -228,14 +233,30 @@ var modifyHyperlink = function(domHref) {
  * Modifies hyperlinks which are added by innerHTML
  */
 var modifyInnerHyperlink = function(outerElement, origHref, endLinkPos) {
+    /*
     var alienHrefText = "<a class=\"" + buttonLinkClass + "\"" +
             " title=\"" + createTooltip(origHref) + "\"" +
             " onclick=\"window.hrefClickCallback('','" + origHref + "')\"></a>";
 
+    // the following code is not allowed but adding to DOM is required for dynamically added links
     outerElement.innerHTML = outerElement.innerHTML.insert(endLinkPos,
-            alienHrefText);
+            alienHrefText); 
+    */
 
-    return alienHrefText.length;
+    //var json = [ elemtntype, {attributes}, 'text' ];
+
+    var json = [
+        'html:a', 
+            {
+                class: buttonLinkClass, 
+                title: createTooltip(origHref), 
+                onclick: "window.hrefClickCallback('','" + origHref +"')" 
+            }, ''];
+
+    //console.log('dynamic content', alienHrefText);
+    outerElement.appendChild(jsonToDOM(json, document, {}));
+
+    //return alienHrefText.length; // not needed
 };
 
 /**
