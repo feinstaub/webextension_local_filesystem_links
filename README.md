@@ -30,6 +30,10 @@ Some parts of this repository are from Feinstaub's repository (see link above):
 - utitlty function (link-utils.js, os-utils.js, strin-utils.js)
 - test/webserver
 
+# Screenshots
+![Addon at local test server](http://img.ctrlv.in/img/15/11/29/565a4e897bd41.png)
+![Context menu](http://img.ctrlv.in/img/15/11/29/565a4f43370b1.png)
+
 #Todo
 - Add tooltip to link
 - Check why the preferences of the addon are not saved
