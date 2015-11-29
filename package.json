@@ -10,11 +10,17 @@
     "fennec": ">=38.0a1"
   },
   "preferences": [{
-    "name": "whitelistUrls",
+    "name": "whitelist",
     "title": "Urls added to white-list will be clickable",
     "description": "Any link that will be added to white-list will be clickable. Empty or * will enable all. Wildcards are allowed e.g. *.trello.com",
     "type": "string",
-    "value": ""
+    "value": "*"
+  },
+  {
+    "type": "control",
+    "label": "apply",
+    "name": "applyWhitelist",
+    "title": "Apply whitelist"
   },
   {
     "name": "enableLinkIcons",

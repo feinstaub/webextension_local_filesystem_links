@@ -36,6 +36,8 @@ Some parts of this repository are from Feinstaub's repository (see link above):
 
 #Todo
 - Add tooltip to link
+- Add a prefix option e.g. add `my_prefix` to a local path: c:\my_prefix\test\test.txt
+- Can windows path variables be used in the links? e.g. %java_jdk%/bin
 - Check why the preferences of the addon are not saved
 - Test whitelist setting (once the preferences are saved)
 - Add unit tests

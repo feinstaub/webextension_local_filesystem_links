@@ -24,10 +24,19 @@
 
     activate();
 
-    self.port.on( "prefchange", function( data ) {
+    self.port.on( "initSettings", function( data ) {
+        console.log( "init settings" );
+
+        //$.extend( options, data ); // Update options
+        options.enableLinkIcons = data.enableLinkIcons;
+        console.log( options, data );
+    } );
+
+    self.port.on( "prefChange", function( data ) {
         console.log( "prefchange", data );
 
-        $.extend( options, data ); // Update options
+        // $.extend( options, data ); // Update options
+        options.enableLinkIcons = data.enableLinkIcons;
 
         startLinkEnhancer();
     } );
@@ -68,7 +77,7 @@
         var $newLinks = $( fileLinkSelectors.join( ", " ) )
             .not( ":has(>i.link-icon)" );
 
-        if ( $newLinks.length > 0 ) {
+        if ( $newLinks.length > 0 && options.enableLinkIcons ) {
             console.log( $newLinks.length );
             $newLinks.append( $icon.clone() );
         }
