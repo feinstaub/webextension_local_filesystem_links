@@ -1,0 +1,54 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>local_filesystem_links / Test Page / dynamic</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#addOne").click(function() {
+            $("#links").append('<li><a href="file:////tmp/">file:////tmp/ (Linux)</a> - link inserted into DOM with javascript</li>');
+            $("#links").append('<li><a href="file:///C:/">file:///C:/ (win)</a> - link inserted into DOM with javascript</li>');
+        });
+        $("#addOneNonFile").click(function() {
+            $("#links").append('<li><a href="http://google.com">http://google.com</a> - non file link inserted into DOM with javascript</li>');
+        });
+        $("#addTwo").click(function() {
+            $("#links").append('<li><a href="file:////tmp/">file:////tmp/ (Linux)</a>, <a href="file:///C:/">file:///C:/ (win)</a> - links inserted into DOM with javascript</li>');
+        });
+        $("#addThree").click(function() {
+            $("#links").append('<li><a href="file:////tmp/">file:////tmp/ (Linux)</a>, <a href="file:///C:/">file:///C:/ (win)</a>, <a href="smb://tmp/">smb://tmp/ (mac)</a> - links inserted into DOM with javascript</li>');
+        });
+        $("#directAdd").click(function() {
+            var a = document.createElement("a");
+            a.setAttribute("href", "file:///C:/");
+            a.innerHTML = "file:///C:/ (win) - link inserted directly into DOM with javascript";
+            document.getElementById("links").appendChild(a);
+            document.getElementById("links").appendChild(document.createElement("br"));
+        });
+        $("#directAddNonFile").click(function() {
+            var a = document.createElement("a");
+            a.setAttribute("href", "http://google.com");
+            a.innerHTML = "http://google.com (win) - non file link inserted directly into DOM with javascript";
+            document.getElementById("links").appendChild(a);
+            document.getElementById("links").appendChild(document.createElement("br"));
+        });
+    });
+    </script>
+</head>
+<body>
+The source of this html page was copied from <a href="http://www.stud.fit.vutbr.cz/~xholas03/l/index.html">here</a>.
+<div>
+    <ul id="links">
+        <li>
+            <a href="file:////tmp/">file:////tmp/ (Linux)</a>, <a href="file:///C:/">file:///C:/ (win)</a> - links that are at the DOM when page is loaded
+        </li>
+    </ul>
+    <button id="addOne">Add two links, two rows</button><br>
+    <button id="addOneNonFile">Add one link which is not a file link</button><br>
+    <button id="addTwo">Add two links, one row</button><br>
+    <button id="addThree">Add three links, one row</button><br>
+    <button id="directAdd">Add a link directly into the DOM</button><br>
+    <button id="directAddNonFile">Add a link which is not a file link directly into the DOM</button><br>
+</div>
+</body>
+</html>

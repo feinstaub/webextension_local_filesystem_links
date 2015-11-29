@@ -1,0 +1,14 @@
+.link-icon {
+    line-height: 16px;
+    padding-left: 2px;
+    color: #fdd835;
+}
+
+.link-icon:after {
+    font-size: 16px;
+    content: "folder";
+}
+
+a:hover > .link-icon:after{
+    content: "folder_open";
+}

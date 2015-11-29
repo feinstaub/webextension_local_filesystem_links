@@ -1,0 +1,37 @@
+{
+  "title": "Local links opener Addon",
+  "name": "link-firefox-addon",
+  "version": "0.0.1",
+  "description": "Adds the behaviour to open local links file:/// style in windows explorer.",
+  "main": "lib/main.js",
+  "author": "A. Wolf <awolf2904@gmail.com>",
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "preferences": [{
+    "name": "whitelistUrls",
+    "title": "Urls added to white-list will be clickable",
+    "description": "Any link that will be added to white-list will be clickable. Empty or * will enable all. Wildcards are allowed e.g. *.trello.com",
+    "type": "string",
+    "value": ""
+  },
+  {
+    "name": "enableLinkIcons",
+    "title": "Enable link icons",
+    "description": "if checked there will be a link added to every local link",
+    "type": "bool",
+    "value": true
+  },
+  {
+    "description": "How many of them we have.",
+    "name": "myInteger",
+    "type": "integer",
+    "value": 8,
+    "title": "How Many?"
+  }],
+  "license": "MIT",
+  "keywords": [
+    "jetpack"
+  ]
+}

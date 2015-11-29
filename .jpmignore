@@ -1,0 +1,12 @@
+.*
+.*/
+CHANGELOG
+*.cmd
+CONTRIBUTORS
+doc/
+evalpage/
+*.md
+reviews/
+test/
+TODO
+*.xpi
