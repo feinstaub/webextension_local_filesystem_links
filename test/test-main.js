@@ -1,23 +1,18 @@
-var main = require('../lib/main');
+var main = require( "../lib/main" ),
+    tabs = require( "sdk/tabs" ),
+    whitelist = require( "sdk/simple-prefs" ).prefs.whitelist;
 
-exports['test main'] = function(assert) {
-    assert.pass('Unit test running');
-}
-/*
-exports["test main"] = function(assert) {
-  assert.pass("Unit test running!");
+exports[ "test in whitelist" ] = function( assert, done ) {
+    whitelist = "*.jsfiddle.net";
+    tabs.open( "http://www.jsfiddle.net" );
+
+    tabs.on( "ready", function( tab ) {
+        assert.ok( main.isAttached() === 1, "Attached whitelisted" );
+        tab.close();
+
+        done();
+    } );
+
 };
 
-exports["test main async"] = function(assert, done) {
-  assert.pass("async Unit test running!");
-  done();
-};
-
-exports["test dummy"] = function(assert, done) {
-  main.dummy("foo", function(text) {
-    assert.ok((text === "foo"), "Is the text actually 'foo'");
-    done();
-  });
-};*/
-
-require("sdk/test").run(exports);
+require( "sdk/test" ).run( exports );
