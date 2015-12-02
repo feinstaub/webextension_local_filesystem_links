@@ -35,11 +35,11 @@ Some parts of this repository are from Feinstaub's repository (see link above):
 ![Context menu](http://img.ctrlv.in/img/15/11/29/565a4f43370b1.png)
 
 #Todo
-- Add tooltip to link
+- <del>Add tooltip to link</del>
 - Add a prefix option e.g. add `my_prefix` to a local path: c:\my_prefix\test\test.txt
 - Can windows path variables be used in the links? e.g. %java_jdk%/bin
-- Check why the preferences of the addon are not saved
-- Test whitelist setting (once the preferences are saved)
+- <del>Check why the preferences of the addon are not saved</del>
+- <del>Test whitelist setting (once the preferences are saved)</del>
 - Add unit tests
 - test code with validation tool from mozilla
 - check if I push this to the mozilla addon gallery
