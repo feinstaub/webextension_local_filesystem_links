@@ -1,5 +1,5 @@
 {
-  "title": "Local links opener Addon",
+  "title": "Local links Addon",
   "name": "link-firefox-addon",
   "version": "0.0.1",
   "description": "Adds the behaviour to open local links file:/// style in windows explorer.",
@@ -12,15 +12,9 @@
   "preferences": [{
     "name": "whitelist",
     "title": "Urls added to white-list will be clickable",
-    "description": "Any link that will be added to white-list will be clickable. Empty or * will enable all. Wildcards are allowed e.g. *.trello.com",
+    "description": "Any link that will be added to the white-list will be clickable. Empty or * will enable all. Multiple urls are space separated. Wildcards are allowed e.g. *.trello.com",
     "type": "string",
     "value": "*"
-  },
-  {
-    "type": "control",
-    "label": "apply",
-    "name": "applyWhitelist",
-    "title": "Apply whitelist"
   },
   {
     "name": "enableLinkIcons",
