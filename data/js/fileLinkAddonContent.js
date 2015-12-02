@@ -3,13 +3,12 @@
 ( function fileLinkAddon( $, self ) {
 
     var fileLinkSelectors = [ 'a[href^="file://"]', 'a[href^="smb://"]' ],
-
-        //RegExLinks = /{^(file|smb):\/\/}/i,
         $icon = $( "<i/>" )
             .addClass( "material-icons link-icon" ),
         options = {
             enableLinkIcons: self.options.enableLinkIcons
-        };
+        },
+        tooltipFilemanagerText, appName;
 
     var REFRESH_INTERVAL = 1000; // Check links every 1000ms
 
@@ -24,18 +23,19 @@
 
     activate();
 
+    // Get settings from addon
     self.port.on( "initSettings", function( data ) {
-        console.log( "init settings" );
-
-        //$.extend( options, data ); // Update options
         options.enableLinkIcons = data.enableLinkIcons;
-        console.log( options, data );
     } );
 
-    self.port.on( "prefChange", function( data ) {
-        console.log( "prefchange", data );
+    // Get message texts from addon
+    self.port.on( "textConstants", function( constants ) {
+        tooltipFilemanagerText = constants.MESSAGES.FILEMANAGER;
+        appName = constants.APP.name;
+    } );
 
-        // $.extend( options, data ); // Update options
+    // Update settings on change of pref.
+    self.port.on( "prefChange", function( data ) {
         options.enableLinkIcons = data.enableLinkIcons;
 
         startLinkEnhancer();
@@ -63,7 +63,7 @@
     //   content added to the DOM
     // - use an interval (every second) that's checking if there is a new link
     //
-    // One timeout was OK at the beginning because the icons will be checked after any click
+    // A timeout was OK at the beginning because the icons will be checked after any click
     //
     // -->better check if there are new links with an interval if the icons are enabled.
     //    if they're disabled we don't need an interval (works also for ajax added content)
@@ -74,8 +74,15 @@
 
     function checkLinks() {
 
-        var $newLinks = $( fileLinkSelectors.join( ", " ) )
-            .not( ":has(>i.link-icon)" );
+        var tooltipText = "",
+            $newLinks = $( fileLinkSelectors.join( ", " ) )
+            .not( ":has(>i.link-icon)" ).each( function() {
+                tooltipText = "Open " + this.href +
+                    " with " + tooltipFilemanagerText +
+                    " (provided by " + appName + ")";
+
+                $( this ).attr( "title", String( tooltipText ) );
+            } );
 
         if ( $newLinks.length > 0 && options.enableLinkIcons ) {
             console.log( $newLinks.length );
@@ -93,28 +100,5 @@
             setTimeout( checkLinks, REFRESH_INTERVAL );
         }
     }
-    /*
-    // I don't like the behavior with click event
-    // becasuse there are no icons if the links are loaded with ajax.
-    $(document).on('click', function() {
-        console.log('clicked document!!');
-        checkLinks();
-
-        // if ( !checkLinks() ) {
-            // recheck once more after a timeout //<<<<<<<<<<<<<<<<<<<not working at trello
-            // links are working at trello but the icon is not showing!!!
-            // <<<<<<<<<<<<check if timeout is executed after 5 seconds!
-
-    //        setTimeout(checkLinks, 5000); // 2seconds
-    //    }
-    });
-    */
-
-    // Ajax events not working, probably global events disabled in trello or
-    // we can't listen to trello's ajax
-    // $(document).ajaxSuccess(function() {
-    //     console.log('ajax stopped');
-    //     checkLinks();
-    // });
 
 }( jQuery, window.self ) );
