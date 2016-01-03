@@ -1,7 +1,7 @@
-#Local links opener Addon
+# Local links opener Addon
 Adds the behaviour to firefox to open local links file:/// style in windows explorer.
 
-#About this plugin
+# About this plugin
 It's similar to this [plugin](https://github.com/feinstaub/firefox_addon_local_filesystem_links). I've created it because the mentioned repo is difficult to read and I'd like to learn how to write firefox addons.
 
 The addon is working (locally tested in windows). Linux not tested yet. Also SMB protocol not tested yet.
@@ -15,7 +15,7 @@ The addon is working (locally tested in windows). Linux not tested yet. Also SMB
 - Right click context menu that opens a text selection that contains a file link + option to reveal the directory of a directly linked file.
 - Whitelist option to enable local links only at a specific url e.g. `*.trello` (not tested yet)
 
-#Installation
+# Installation
 
 Clone the repositority and start firefox with `jpm run` in the root directory for testing the plugin in the browser.
 
@@ -23,7 +23,7 @@ Clone the repositority and start firefox with `jpm run` in the root directory fo
 
 To run the tests you can use `jpm test`.
 
-#License
+# License
 GPL v2
 
 Some parts of this repository are from Feinstaub's repository (see link above):
@@ -34,7 +34,7 @@ Some parts of this repository are from Feinstaub's repository (see link above):
 ![Addon at local test server](http://img.ctrlv.in/img/15/11/29/565a4e897bd41.png)
 ![Context menu](http://img.ctrlv.in/img/15/11/29/565a4f43370b1.png)
 
-#Todo
+# Todo
 - <del>Add tooltip to link</del>
 - Add a prefix option e.g. add `my_prefix` to a local path: c:\my_prefix\test\test.txt
 - Can windows path variables be used in the links? e.g. %java_jdk%/bin
