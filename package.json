@@ -5,6 +5,10 @@
   "description": "Adds the behaviour to open local links file:/// style in windows explorer.",
   "main": "lib/main.js",
   "author": "A. Wolf <awolf2904@gmail.com>",
+  "scripts": {
+    "jpm": "jpm run",
+    "jpmLinux": "jpm run -b $(which firefox)"
+  },
   "engines": {
     "firefox": ">=38.0a1",
     "fennec": ">=38.0a1"

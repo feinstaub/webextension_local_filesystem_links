@@ -4,7 +4,7 @@ Adds the behaviour to firefox to open local links file:/// style in windows expl
 # About this plugin
 It's similar to this [plugin](https://github.com/feinstaub/firefox_addon_local_filesystem_links). I've created it because the mentioned repo is difficult to read and I'd like to learn how to write firefox addons.
 
-The addon is working (locally tested in windows). Linux not tested yet. Also SMB protocol not tested yet.
+The addon is working (locally tested with Windows 8.1 (64 bit) and Ubuntu 14.04 LTS (32 bit)). SMB protocol not working yet.
 
 # Features
 
