@@ -2,7 +2,11 @@
 
 ( function fileLinkAddon( $, self ) {
 
-    var fileLinkSelectors = [ 'a[href^="file://"]', 'a[href^="smb://"]' ],
+    var fileLinkSelectors = [ 
+            'a[href^="file://"]', 
+            'a[href^="smb://"]',
+            'a[href^="afp://"]' 
+        ],
         $icon = $( "<i/>" )
             .addClass( "material-icons link-icon" ),
         options = {
