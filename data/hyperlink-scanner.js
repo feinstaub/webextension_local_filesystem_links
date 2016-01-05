@@ -26,8 +26,8 @@ self.on('message', function onMessage(message) {
     else if (message.event === "scan_textnodes") {
         //// console.log("scan_textnodes");
         scanTextNodes();
-    }  
-    else if (message.event === "href_mod") {    
+    }
+    else if (message.event === "href_mod") {
         modifyHyperlinkFromIndex(message.data); // message.data == i
     }
     else if (message.event === "rescan_page") {
@@ -90,8 +90,8 @@ var dynamicHyperlinkScan = function(mutationRecords) {
                         addedNodes[j].href !== "") {
                         //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                         stopObservingDom();
-                        //TODO this push will cause an enormous array list on very 
-                        // large pages or pages with lots of DOM changes. 
+                        //TODO this push will cause an enormous array list on very
+                        // large pages or pages with lots of DOM changes.
                         // We might want try to trim the array in some way
                         let pos = hrefMap.push(addedNodes[j]) - 1;
                         var obj = { href: addedNodes[j].href, i: pos };
@@ -101,24 +101,29 @@ var dynamicHyperlinkScan = function(mutationRecords) {
                     }
                 }
                     //Otherwise, check if we have any text in innerHTML
+                    // A. Wolf note - innerHTML change from an iframe won't be detected
+                    // that's why a change in jsfiddle output isn't updating the link
+
                 else if (addedNodes[j].innerHTML !== undefined &&
                         addedNodes[j].innerHTML !== "") {
                     var innerLink = "";
                     var hrefPos = -1;
                     var endLinkPos = -1;
 
-                    //Try to find links while we haven't reached end of String 
+                    //Try to find links while we haven't reached end of String
                     // and we haven't found a badly formatted URL
                     do {
                         hrefPos = addedNodes[j].innerHTML.indexOf("href=\"", hrefPos) + 6;
                         innerLink = addedNodes[j].innerHTML.substring(hrefPos, addedNodes[j].innerHTML.indexOf("\"", hrefPos));
                         endLinkPos = addedNodes[j].innerHTML.indexOf("</a>", hrefPos) + 4;
-
                         if (innerLink !== "" && (innerLink.indexOf("file:///") > -1 ||
                                 innerLink.indexOf("smb://") > -1)) {
                             //Disconnect detector while modifying hyperlink in order to avoid endless modification of DOM
                             stopObservingDom();
-                            hrefPos += modifyInnerHyperlink(mutationRecords[i].addedNodes[j], innerLink, endLinkPos);
+                            // console.log('modify required');
+                            //hrefPos +=
+                            modifyInnerHyperlink(mutationRecords[i]
+                                    .addedNodes[j], innerLink, endLinkPos);
                             //Reconnect detector since we have finished modifying the hyperlink
                             startObservingDom();
                         }
@@ -157,7 +162,7 @@ var scanHyperlinks = function() {
 
 /**
  * Check if current page is in exclude list
- * 
+ *
  * @returns true if it is, false otherwise
  */
 var currentPageIsExcluded = function() {
@@ -228,14 +233,35 @@ var modifyHyperlink = function(domHref) {
  * Modifies hyperlinks which are added by innerHTML
  */
 var modifyInnerHyperlink = function(outerElement, origHref, endLinkPos) {
-    var alienHrefText = "<a class=\"" + buttonLinkClass + "\"" +
+
+    /*var alienHrefText = "<a class=\"" + buttonLinkClass + "\"" +
             " title=\"" + createTooltip(origHref) + "\"" +
             " onclick=\"window.hrefClickCallback('','" + origHref + "')\"></a>";
 
+    // the following code is not allowed but adding to DOM is required for dynamically added links
     outerElement.innerHTML = outerElement.innerHTML.insert(endLinkPos,
-            alienHrefText);
+            alienHrefText);*/
 
-    return alienHrefText.length;
+
+    //var json = [ elementype, {attributes}, 'text' ];
+
+    var json = [
+        'html:a',
+            {
+                class: buttonLinkClass,
+                title: createTooltip(origHref),
+                onclick: "window.hrefClickCallback('','" + origHref +"')"
+            }, ''],
+            newElement = jsonToDOM(json, document, {});
+
+
+    // console.log('dynamic content', outerElement.innerHTML.insert(endLinkPos,
+    //         newElement.outerHTML));
+
+    outerElement.innerHTML = outerElement.innerHTML.insert(endLinkPos,
+           newElement.outerHTML);
+
+    //return alienHrefText.length; // not needed a-tag always length 0
 };
 
 /**
@@ -283,7 +309,7 @@ var createTooltip = function(origHref) {
 
 /**
  * Crude check if a path is a file. If a path ends with .FILENAME then it it's considered a file
- * 
+ *
  * @param pathName to check
  * @returns {Boolean} true if it is, otherwise false
  */
