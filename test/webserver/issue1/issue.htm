@@ -32,6 +32,23 @@
             document.getElementById("links").appendChild(a);
             document.getElementById("links").appendChild(document.createElement("br"));
         });
+        var desktopLinkState = [
+            {
+                href: 'file:///C:\\users\\alexander\\desktop',
+                text: 'show desktop'
+            },
+            {
+                href: 'file:///C:\\\\',
+                text: 'Show root of C: folder'
+            }
+        ],
+            desktopState = 0;
+        $('#changeDesktopLink').click(function(e) {
+            desktopState = desktopState == 0 ? 1 : 0;
+            $('#desktop_link')
+                .attr('href', desktopLinkState[desktopState].href)
+                .text(desktopLinkState[desktopState].text);
+        });
     });
     </script>
 </head>
@@ -42,6 +59,9 @@ The source of this html page was copied from <a href="http://www.stud.fit.vutbr.
         <li>
             <a href="file:////tmp/">file:////tmp/ (Linux)</a>, <a href="file:///C:/">file:///C:/ (win)</a> - links that are at the DOM when page is loaded
         </li>
+        <li>
+            <a id="desktop_link" href="file:///C:\users\alexander\desktop">show desktop</a>
+        </li>
     </ul>
     <button id="addOne">Add two links, two rows</button><br>
     <button id="addOneNonFile">Add one link which is not a file link</button><br>
@@ -49,6 +69,7 @@ The source of this html page was copied from <a href="http://www.stud.fit.vutbr.
     <button id="addThree">Add three links, one row</button><br>
     <button id="directAdd">Add a link directly into the DOM</button><br>
     <button id="directAddNonFile">Add a link which is not a file link directly into the DOM</button><br>
+    <button id="changeDesktopLink">Change show desktop</button>Change a link with js and check if the file link icon button updates <br/>
 </div>
 </body>
 </html>

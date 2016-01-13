@@ -2,26 +2,29 @@
 
 ( function fileLinkAddon( $, self ) {
 
-    var fileLinkSelectors = [ 
-            'a[href^="file://"]', 
+    $.noConflict();
+
+    var fileLinkSelectors = [
+            'a[href^="file://"]',
             'a[href^="smb://"]',
-            'a[href^="afp://"]' 
+            'a[href^="afp://"]'
         ],
         $icon = $( "<i/>" )
             .addClass( "material-icons link-icon" ),
         options = {
             enableLinkIcons: self.options.enableLinkIcons
         },
-        tooltipFilemanagerText, appName;
-
-    var REFRESH_INTERVAL = 1000; // Check links every 1000ms
+        tooltipFilemanagerText,
+        appName,
+        latestNodesAdded;
 
     /**
-     * Activates the plugin - add icon after link and starts interval if enabled
+     * Activates the plugin - add icon after link and starts observer if enabled
      */
     function activate() {
         if ( options.enableLinkIcons ) {
-            startLinkEnhancer();
+            createObserver();
+            updateLink($(fileLinkSelectors.join(', ')));
         }
     }
 
@@ -42,7 +45,6 @@
     self.port.on( "prefChange", function( data ) {
         options.enableLinkIcons = data.enableLinkIcons;
 
-        startLinkEnhancer();
     } );
 
     // Use delegate so the click event is also avaliable at newly added links
@@ -55,6 +57,10 @@
         } );
     } );
 
+
+    // -------------------------------------------------------------------------
+    // add link icons (if enabled)
+    //
     // Check at every click if there are new a-tags
     // almost works, there is an issue if the content is loaded with ajax it will fail
     // because at the moment after click there is no new link icon
@@ -72,37 +78,63 @@
     // -->better check if there are new links with an interval if the icons are enabled.
     //    if they're disabled we don't need an interval (works also for ajax added content)
     //
-    // Todo:
-    // - check if we need to limit the count of intervals (every pageMod will add an interval)
-    //   --> multiple pageMods are possible for a tab (e.g. for every iframe)
+    // --> final solution: use jquery-observe that's simplyfing mutationObserver
 
-    function checkLinks() {
-
-        var tooltipText = "",
-            $newLinks = $( fileLinkSelectors.join( ", " ) )
-            .not( ":has(>i.link-icon)" ).each( function() {
-                tooltipText = "Open " + this.href +
-                    " with " + tooltipFilemanagerText +
-                    " (provided by " + appName + ")";
-
-                $( this ).attr( "title", String( tooltipText ) );
-            } );
-
-        if ( $newLinks.length > 0 && options.enableLinkIcons ) {
-            console.log( $newLinks.length );
-            $newLinks.append( $icon.clone() );
-        }
-
-        startLinkEnhancer(); // Checks if link icons are enable
+    function updateLink($element) {
+        //console.log('updating', $element);
+        $icon.clone().appendTo($element);
     }
 
-    function startLinkEnhancer() {
-        if ( options.enableLinkIcons ) {
+    function createObserver() {
+        // observe changes of file links
+        // @todo: will fail if the link was added with ajax
+        // --> check if observing on document is possible
+        $(fileLinkSelectors.join(', '))
+            .observe({ attributes: true, attributeFilter: ['href'] },
+                function(record) {
+                // observe href change
+                // check if icon is still there
+                //console.log('changed href', record, $icon.attr('class'));
+                if ( !$(record.target)
+                	.find('i').hasClass($icon.attr('class')) )							  												{
+                    //console.log('changed link and removed icon');
+                    updateLink(record.target);
+                }
+        });
 
-            // Only add icons if the option is enabled,
-            // if disabled only link will be clickable.
-            setTimeout( checkLinks, REFRESH_INTERVAL );
-        }
+        // observe newly added file links
+        $(document)
+            .observe('added', fileLinkSelectors.join(', '),
+                function(record) {
+            // Observe if elements matching 'a[href^="file://"]' have been added
+            //
+            // there can be multiple observer callbacks attached now!!
+            // --> if you add three links you'll get three callback events
+            //     with the same elements
+            //     --> store elements in first observer,
+            //         so next observer callback detect that there is
+            //         nothing new
+            //
+            // Info:
+            // That's working but it would be better to not trigger
+            // these callbacks but I'm not sure how to fix.
+            // --> asked if it could be fixed,
+            //     see here https://github.com/kapetan/jquery-observe/issues/5
+            //console.log(record);
+            if (latestNodesAdded !== record.addedNodes) {
+            	// new nodes
+                console.log('addedNodes', record.addedNodes);
+                var $elements = $(record.addedNodes)
+                    .find(fileLinkSelectors.join(', ')),
+                    $element = $elements.length ? $elements: record.addedNodes;
+
+                // elements check needed if links are wrapped in an element
+                // other case is for directly added link
+            	updateLink($element);
+            	latestNodesAdded = record.addedNodes;
+            }
+      })
     }
+
 
 }( jQuery, window.self ) );
