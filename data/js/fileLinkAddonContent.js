@@ -6,8 +6,8 @@
 
     var fileLinkSelectors = [
             'a[href^="file://"]',
-            'a[href^="smb://"]',
-            'a[href^="afp://"]'
+            /*'a[href^="smb://"]',
+            'a[href^="afp://"]'*/
         ],
         $icon = $( "<i/>" )
             .addClass( "material-icons link-icon" ),
