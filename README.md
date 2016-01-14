@@ -4,7 +4,7 @@ Adds the behaviour to firefox to open local links file:/// style in windows expl
 # About this plugin
 It's similar to this [plugin](https://github.com/feinstaub/firefox_addon_local_filesystem_links). I've created it because the mentioned repo is difficult to read and I'd like to learn how to write firefox addons.
 
-The addon is working (locally tested with Windows 8.1 (64 bit) and Ubuntu 14.04 LTS (32 bit)). SMB protocol not working yet.
+The addon is working (locally tested with Windows 8.1 (64 bit) and Ubuntu 14.04 LTS (32 bit)). SMB protocol not working yet. Check feature branch smb links to see the current work (not working yet).
 
 # Features
 
@@ -13,7 +13,7 @@ The addon is working (locally tested with Windows 8.1 (64 bit) and Ubuntu 14.04 
 - Dynamic loaded content supported because link events are delegated with `$(document).on(...)`
 - Supports links with double and tripple slashes (e.g. file:// or file:///)
 - Right click context menu that opens a text selection that contains a file link + option to reveal the directory of a directly linked file.
-- Whitelist option to enable local links only at a specific url e.g. `*.trello` (not tested yet)
+- Whitelist option to enable local links only at a specific url e.g. `*.trello.com`
 
 # Installation
 
@@ -21,7 +21,7 @@ Clone the repositority and start firefox with `jpm run` in the root directory fo
 
 (If you don't have jpm installed use `npm install jpm -g`.)
 
-To run the tests you can use `jpm test`.
+To run the tests you can use `jpm test` (on windows). If you're testing on linux you can run `npm run jpmLinux`.
 
 # License
 GPL v2
@@ -41,5 +41,6 @@ Some parts of this repository are from Feinstaub's repository (see link above):
 - <del>Check why the preferences of the addon are not saved</del>
 - <del>Test whitelist setting (once the preferences are saved)</del>
 - Add unit tests
-- test code with validation tool from mozilla
-- check if I push this to the mozilla addon gallery
+- <del>test code with validation tool from mozilla</del>
+- <del>check if I push this to the mozilla addon gallery. I'll merge this repo into
+  feinstaub's repository.</del>
