@@ -8,4 +8,4 @@ author              contribution    role / contributions
 ----------------------------------------------------------------------------
 austrALIENsun       2011            project initiator and current maintainer
 sweoggy             2015            initial implementation of dynamic link scanning
-
+AWolf81             2016            code refactoring / cleaning / changed dynamic link scanning to jquery-observe
