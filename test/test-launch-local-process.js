@@ -5,8 +5,8 @@
 
 // SEE https://addons.mozilla.org/en-US/developers/docs/sdk/1.1/packages/api-utils/docs/unit-test.html
 
-const { Ci } = require( "chrome" );
-const localProcess = require( "../lib/launchExplorer" );
+const { Ci, Cc } = require( "chrome" );
+const localProcess = require( "../lib/launch-local-process" );
 
 exports.test_getEnvVar = function( test ) {
   let v1 = localProcess.getEnvironmentVariable( "WINDIR" );
@@ -19,8 +19,14 @@ exports.test_getEnvVar = function( test ) {
 };
 
 exports.test_pathExists = function( test ) {
-  test.assertEqual( localProcess.pathExists( "C:\\Windows\\explorer.exe" ), true );
-  test.assertEqual( localProcess.pathExists( "C:\\muh.exe" ), false );
+    var localFile = Cc[ "@mozilla.org/file/local;1" ]
+        .createInstance( Ci.nsILocalFile );
+
+    localFile.initWithPath("C:\\Windows\\explorer.exe");
+    test.assertEqual( localProcess.pathExists( localFile ), true );
+
+    localFile.initWithPath("C:\\muh.exe");
+    test.assertEqual( localProcess.pathExists( localFile ), false );
 };
 
 exports.test_getNsIFileFromPath = function( test ) {
