@@ -5,8 +5,10 @@ CHANGELOG
 CONTRIBUTORS
 doc/
 evalpage/
+intellij_module/
 *.md
 reviews/
+*.sh
 test/
 TODO
 *.xpi

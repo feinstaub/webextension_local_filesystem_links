@@ -1,41 +1,40 @@
 {
-  "title": "Local links Addon",
-  "name": "link-firefox-addon",
-  "version": "0.0.1",
-  "description": "Adds the behaviour to open local links file:/// style in windows explorer.",
-  "main": "lib/main.js",
-  "author": "A. Wolf <awolf2904@gmail.com>",
-  "scripts": {
-    "jpm": "jpm run",
-    "jpmLinux": "jpm run -b $(which firefox)"
-  },
-  "engines": {
-    "firefox": ">=38.0a1",
-    "fennec": ">=38.0a1"
-  },
-  "preferences": [{
-    "name": "whitelist",
-    "title": "Urls added to white-list will be clickable",
-    "description": "Any link that will be added to the white-list will be clickable. Empty or * will enable all. Multiple urls are space separated. Wildcards are allowed e.g. *.trello.com",
-    "type": "string",
-    "value": "*"
-  },
-  {
-    "name": "enableLinkIcons",
-    "title": "Enable link icons",
-    "description": "if checked there will be a link added to every local link",
-    "type": "bool",
-    "value": true
-  },
-  {
-    "description": "How many of them we have.",
-    "name": "myInteger",
-    "type": "integer",
-    "value": 8,
-    "title": "How Many?"
-  }],
-  "license": "MIT",
-  "keywords": [
-    "jetpack"
-  ]
+    "title": "Local Filesystem Links",
+    "name": "alien-local-filesystem-links",
+    "version": "0.99.41a",
+    "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
+    "main": "lib/main.js",
+    "main-NEW-later": "index.js",
+    "author": "austrALIENsun",
+    "scripts": {
+      "jpm": "jpm run",
+      "jpmLinux": "jpm run -b $(which firefox)"
+    },
+    "engines": {
+        "firefox": ">=38.0a1",
+        "fennec": ">=38.0a1"
+    },
+    "license": "MPL 1.1/GPL 3.0",
+    "id": "jid1-JAzC7z53jemo5Q@jetpack",
+    "preferences": [{
+      "name": "whitelist",
+      "title": "Urls added to white-list will be clickable",
+      "description": "Any link that will be added to the white-list will be clickable. Empty or * will enable all. Multiple urls are space separated. Wildcards are allowed e.g. *.trello.com",
+      "type": "string",
+      "value": "*"
+    },
+    {
+      "name": "enableLinkIcons",
+      "title": "Enable link icons",
+      "description": "if checked there will be a link added to every local link",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "description": "How many of them we have.",
+      "name": "myInteger",
+      "type": "integer",
+      "value": 8,
+      "title": "How Many?"
+    }]
 }

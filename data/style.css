@@ -1,0 +1,29 @@
+/*
+ * License: www.mozilla.org/MPL/
+ */
+.alien-lfl-href-buttonLink {
+        margin-left: 3px;
+        margin-bottom: -3px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background: url('icon-folder.png') bottom;
+}
+.alien-lfl-href-buttonLink:hover {
+      margin-bottom: -3px;
+        background: url('icon-folder-go.png') bottom;
+}      
+
+/* not used in production; for eval page */
+.myButtonLink2 {
+        margin-left: 3px;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: url('folder-grey.png') bottom;
+}
+
+/* not used in production; for eval page */
+.myButtonLink2:hover {
+        background: url('folder-green.png') bottom;
+}              

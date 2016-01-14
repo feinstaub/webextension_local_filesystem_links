@@ -1,0 +1,12 @@
+Your add-on, Local Filesystem Links 0.96, has been fully reviewed by an editor and is now available for download in our gallery at https://addons.mozilla.org/addon/local-filesystem-links/
+
+
+Reviewer:
+Kris Maglione
+
+Comments:
+This version has been approved for the public. Due to caching and mirroring on our site, it can take a few hours before this change is visible, so please be patient.
+
+However, I have the following issues which should be addressed before your next update:
+
+1) Please remove or comment the no longer used code in exports.showPathInWindowsExplorer which searches for the location of Windows Explorer and prepares for nsIProcess.

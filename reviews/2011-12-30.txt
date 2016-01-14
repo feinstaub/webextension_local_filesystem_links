@@ -1,0 +1,29 @@
+REVIEW
+------
+Mozilla Add-ons: Local Filesystem Links 0.64 Preliminary Reviewed
+[...]
+Reviewer:
+Kris Maglione
+
+Comments:
+Your preliminary review request has been approved. Due to caching and mirroring on our site, it can take a few hours before your add-on appears public, so please be patient.
+
+However, I have the following issues which should be addressed before your next update:
+
+1) You alter the markup of documents by textually modifying their innerHTML. This causes the entire document to be re-parsed, which aside from the inefficiency has critical drawbacks, including invalidating any JavaScript reference to replaced DOM nodes, clearing any JavaScript properties and event listeners on replaced DOM nodes, re-executing any script tags in the changed markup, and causing said scripts to fail if they rely on document.write. Please create and alter DOM nodes with DOM methods such as createElement and replaceChild, and the textContent rather than innerHTML property. 
+
+2) Generating script fragments such as event listeners and content scripts from unsanitized string data is error prone and poses a major risk of security vulnerabilities. For more information, please see https://developer.mozilla.org/en/XUL_School/DOM_Building_and_HTML_Insertion#listeners
+
+Thank you.
+[...]
+
+---------------------------------------------------------------------
+
+ACTIONS
+-------
+Commented out some code and made comments.
+
+
+OPEN ISSUES
+-----------
+Make sure all mentioned issues in the review were addressed.

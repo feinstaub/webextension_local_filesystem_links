@@ -1,0 +1,7 @@
+English (US)
+Name: Local Filesystem Links
+Add-on URL: local-filesystem-links
+Summary: Scans for local file system URIs (file:///) on any page. Click on the added icon to open the local link with the system's file browser (e. g. Windows Explorer). Alternatively select any text like the path "C:\tmp\cow 1.txt" and use the context menu.
+Tags: file, link, local
+Description: see AboutThisAddon.htm (only some html supported)
+Homepage: https://github.com/feinstaub/firefox_addon_local_filesystem_links

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -28,3 +29,31 @@ node_modules
 
 # moz packages
 *.xpi
+=======
+*~
+alien-lfl.xpi
+alien-local-filesystem-links-0.63/
+alien-local-filesystem-links.xpi
+alien-*.xpi
+build/
+/.directory
+.directory
+dist/
+/.idea/workspace.xml
+/jid1-JAzC7z53jemo5Q@jetpack-*.xpi
+.kateproject.d/notes.txt
+/.komodotools/
+/local-filesystem-links.xpi
+nbactions.xml
+nbbuild/
+nb-configuration.xml
+nbdist/
+.nb-gradle/
+/nbproject/
+_p1/
+_pr/
+_pt/
+_p_test/
+~testui/
+translator.xpi
+>>>>>>> origin/master

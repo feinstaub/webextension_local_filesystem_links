@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Local Filesystem Links - Options</title>
+    <link rel="shortcut icon" href="../addon_icon_16x16.png" type="image/x-icon"/>
+    <link type="text/css" href="../css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+    <link type="text/css" href="../jsdt/css/demo_table.css" rel="stylesheet"/>
+
+    <!--    <style type="text/css" title="currentStyle">
+          @import "../../media/css/demo_page.css";
+          @import "../../media/css/demo_table.css";
+        </style>
+    -->
+
+    <script type="text/javascript" src="../js/jquery-1.7.2.min.js"/>
+    <script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"/>
+    <script type="text/javascript" src="../jsdt/jquery.dataTables.js"/>
+
+    <script type="text/javascript">
+        <![CDATA[
+        // //documentReady(); // from content script; does not work
+        // $(document).ready(function(){
+        // $("a").button();
+        // });
+
+
+        var oTable;
+
+        $(document).ready(function() {
+        // /* Add a click handler to the rows - this could be used as a callback */
+        // $("#example tbody").click(function(event) {
+        // $(oTable.fnSettings().aoData).each(function (){
+        // $(this.nTr).removeClass('row_selected');
+        // });
+        // $(event.target.parentNode).addClass('row_selected');
+        // });
+        //
+        // /* Add a click handler for the delete row */
+        // $('#delete').click( function() {
+        // var anSelected = fnGetSelected( oTable );
+        // oTable.fnDeleteRow( anSelected[0] );
+        // } );
+
+        /* Init the table */
+        oTable = $('#example').dataTable( {
+        "bPaginate": false,
+        "aaSorting": [], // no default sort
+        "aoColumns": [
+        { "sTitle": "Enabled",
+        "sClass": "center",
+        "fnRender": function(obj) {
+        // create text box (and invisible text to have sorting)
+        var value = obj.aData[obj.iDataColumn];
+        var checked = value?' checked="yes" ' : '';
+        return '<input type="checkbox" id="checkboxUrlEnabled' + obj.iDataRow + '"' + checked + '/><div style="display: none">' + value + '</div>';
+        }
+        },
+        { "sTitle": "Url" },
+        { "sTitle": "" ,
+        "sClass": "center",
+        "bSortable": false,
+        "fnRender": function(obj) {
+        //alert(JSON.stringify(obj));
+        // TODO: show delete via hover
+        return '<a href="#delete(' + obj.iDataRow + ')">delete</a>';
+        }
+        }
+        ],
+        "aaData": [
+        /* Reduced data set */
+        [ true, "http://site", "" ],
+        [ true, "http://mylocalsite", "" ],
+        [ true, "http://site.company.com", "" ],
+        [ false, "https://testsite.ar", "" ],
+        [ true, "http://google.com", "" ],
+        [ false, "http://muli.nx", "" ]
+        ]
+
+        // columns
+        // ,
+        // { "sTitle": "Platform" },
+        // { "sTitle": "Version", "sClass": "center" },
+        // {
+        // "sTitle": "Grade",
+        // "sClass": "center",
+        // "fnRender": function(obj) {
+        // var sReturn = obj.aData[ obj.iDataColumn ];
+        // if ( sReturn == "A" ) {
+        // sReturn = "<b>A</b>";
+        // }
+        // return sReturn;
+        // }
+        // }
+        // ]
+        } );
+
+        // set min-height for all datatables http://www.datatables.net/styling/ids_classes
+        $('.dataTables_wrapper').css('min-height', '50px');
+
+        // to have the columns resize to a sensible size
+        // TODO: after loading the data dynamically
+        oTable.fnAdjustColumnSizing();
+        } );
+        ]]>
+    </script>
+
+    <style type="text/css">
+        /*demo page css*/
+        body{ font: 100% "Trebuchet MS", sans-serif; margin: 20px; max-width: 800px }
+    </style>
+</head>
+<body>
+<h2><img src="../addon_icon_64x64.png" alt="addon icon"/> Local Filesystem Links - Options</h2>
+
+<h3>Scope</h3>
+
+<p>Here you can define on which pages the automatic hyperlink scanning should be active.</p>
+
+<input type="checkbox" id="checkEnableScanning"/>
+<label for="checkEnableScanning"><b>Enable scanning</b></label>
+<small>Uncheck this to disable all the scanning. The new setting will be effective for all newly loaded pages.</small>
+
+<h3>Further options</h3>
+More options can be found in the Preferences of this Addon-on:
+<br/>
+Tools --> Add-ons --> Extensions --> Local Filesystem Links --> Preferences
+
+<!--
+TODO: bring this back in after the backend supports the operations
+
+  COMMENTED OUT (display none) for now:
+-->
+<div style="display: none">
+    <h3>Hyperlink scanning options</h3>
+
+    <p>Per default only "real" hyperlinks are scanned for local file links.</p>
+
+    <p>It is possible to also scan all text elements for potential local file links:</p>
+    <input type="checkbox" id="checkScanText"/>
+    <label for="checkScanText"><b>Scan text elements</b></label>
+    <small>(WARNING: SLOWs down page loading, experimental, not impleneted yet)</small>
+
+    <!--    <p><input type="text" name="a" value="test" /> </p>-->
+
+    <h3>Firefox Preferences</h3>
+
+    <p>For intranet sites it is often desirable to be able to open all kinds of hyperlinks
+        including those starting with file:// that are blocked by default.</p>
+
+    <p>This can be configured using
+        <a href="http://www.mozilla.org/projects/security/components/ConfigPolicy.html">Configurable Security
+            Policies</a>.
+        Up to date (2011/12) there is no known GUI to set these preferences.</p>
+
+    <p>Warning: the implementation is experimental. Only one policy name ('localfilelinks') is supported.</p>
+
+    <!-- SEE Google: "config:about not displaying capability.policy preferences" -->
+    <p>This is an example of a user prefs entry:</p>
+    <pre>
+    <code>
+        user_pref("capability.policy.localfilelinks.checkloaduri.enabled", "allAccess");
+        user_pref("capability.policy.localfilelinks.sites", "http://site http://mylocalsite http://site.company.com");
+        user_pref("capability.policy.policynames", "localfilelinks");
+    </code>
+    </pre>
+
+    <table class="display" id="example">
+    </table>
+</div>
+<!-- END COMMENT OUT -->
+
+<p> </p>
+<hr/>
+
+<!-- see $("a.button").button(); -->
+<p><a href="#" class="button" id="button_ok">Ok</a> <a href="#" class="button" id="button_cancel">Cancel</a></p>
+
+<!--    debug-->
+<!--    <script type="text/javascript" src="options-panel.js"></script>
+<script type="text/javascript">onLoad();</script>-->
+<!--    debug end -->
+</body>
+</html>

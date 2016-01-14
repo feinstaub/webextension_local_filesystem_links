@@ -1,0 +1,148 @@
+<html>
+  <head>
+    <script type="text/javascript" src="../data/jquery-1.6.4.js"></script>
+    <script type="text/javascript">
+      var c=0;
+      var t;
+      var timer_is_on=0;
+      
+      jsPatEval();
+      
+      function timedCount() {
+        var elem;
+        if (elem === undefined) {
+          elem = document.getElementById('txt');
+        }
+        elem.value = c;
+        c = c + 1;
+        t = setTimeout("timedCount()", 100);
+      }
+
+      function doTimer() {
+        if (!timer_is_on)
+        {
+          timer_is_on=1;
+          timedCount();
+        }
+      }
+
+      function stopCount() {
+        clearTimeout(t);
+        timer_is_on=0;
+      }
+      
+      function alterLinks() {
+        console.log("alterLinks");
+        var aList = $("a");
+        var aListLength = aList.length;
+        for (var i = 0; i < aListLength; i += 1) {
+          console.log(i);
+          var origHref = aList[i].href;
+          if (strStartsWith(origHref, "file:///")) {
+            console.log(origHref);
+            aList[i].addEventListener("click", hrefClickCallback);
+            aList[i].href = "#" + origHref;
+            aList[i].origHref = origHref; // set new attribute!
+          }
+        }
+      }
+      
+      function hrefClickCallback(mouseEvent) {
+        console.log(mouseEvent.currentTarget.origHref);
+      }
+      
+      function strStartsWith(str, prefix) {
+        return str.substring(0, prefix.length) === prefix;
+      }
+
+      function jsPatEval() {
+        var dog = { 
+          name: "Benji",
+          getName: function() {
+            return this.name;
+          }
+        };
+        
+        console.log(dog.getName());
+        
+        var test = 5;
+        
+        function hoistMe() {
+          console.log(typeof foo);
+          console.log(typeof bar);
+          console.log(test); // hoisting crazyness
+          
+          function foo() {
+            //
+          }
+          
+          var bar = function() {
+            //
+          };
+          
+          var test = 1; // overwrites higher scope test but has no value in console.log(test) !!!
+        }
+        
+        hoistMe();
+      }
+    </script>
+    
+    <link rel="stylesheet" href="../data/style.css"/>
+    
+  </head>
+
+  <body>
+    <div style="display: none">
+      <p id="_t">THIS IS THE TEMPLATE</p>
+      <a id="_t2"> [new]</a>
+    </div>
+    <form>
+      <input type="button" value="Start count!" onclick="doTimer()"/>
+      <input type="text" id="txt"/>
+      <input type="button" value="Stop count!" onclick="stopCount()"/>
+      <input type="button" value="Alter links" onclick="alterLinks()"/>
+    </form>
+
+    <p>No Frills is not possible in Confluence</p>
+
+    <!-- http://kyleschaeffer.com/best-practices/pure-css-image-hover/ -->
+    <p><a href="file://C:/Windows" class="external-link" rel="nofollow">C-Link with /</a> [<a class="myButtonLink" href="#LinkURL"></a>]</p>
+    
+    <p><a href="file://C:\\Windows\\Downloaded Program Files" class="external-link" rel="nofollow">C-Link with \ (file:// as is)</a><a class="myButtonLink2" href="#LinkURL"></a></p>
+    
+    <p><a href="C:\\Windows\\Downloaded Program Files" class="external-link" rel="nofollow">C-Link with \ (as is)</a></p>
+
+    <p><a href="file:///C:/" class="external-link" rel="nofollow">C-Link 3 slashes</a></p>
+
+    <p><a href="file://C:/" class="external-link" rel="nofollow">C-Link 2 slashes</a></p>
+    
+    <p><a href="http://www.wikipedia.de" class="external-link" rel="nofollow">Wikipedia</a></p>
+
+    <p><a href="file://C:/Windows/Downloaded%20Program%20Files" class="external-link" rel="nofollow">C-Link with spaces %20</a></p>
+
+    <p><a href="file://///localhost/upload/hallo" class="external-link" rel="nofollow">C-Link 5 slashes - network drive</a></p>
+
+
+    <p>"C:\Windows\Downloaded Program Files\desktop.ini"</p>
+
+    <p>"C:\Windows\Downloaded Program Files\"</p>
+    
+    <p>"C:\Windows\Downloaded Program Files"</p>
+
+    <p>C:\Windows</p>
+
+    <p>"C:\Windows"</p>
+    
+    <p id="_here">After this the stuff should be inserted: </p>
+
+  </body>
+  
+  <script type="text/javascript">
+      setTimeout(function jQueryEval() {
+        //$('#_template.p').insertAfter('a');
+        $('#_t').insertAfter('#_here');
+        $('a').after(" [<a href='hallo'>hallo</a>]")
+        // $('#_t2').insertAfter('a');
+      }, 1000); 
+  </script>
+</html>
