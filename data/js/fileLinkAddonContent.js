@@ -96,7 +96,7 @@
                 // check if icon is still there
                 //console.log('changed href', record, $icon.attr('class'));
                 if ( !$(record.target)
-                	.find('i').hasClass($icon.attr('class')) )							  												{
+                	.find('i').hasClass($icon.attr('class')) ) {
                     //console.log('changed link and removed icon');
                     updateLink(record.target);
                 }
