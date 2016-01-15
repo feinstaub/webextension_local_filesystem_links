@@ -21,6 +21,11 @@ Features
 - Right click context menu that opens a text selection that contains a file link + option to reveal the directory of a directly linked file.
 - Whitelist option to enable local links only at a specific url e.g. `*.trello.com`
 
+Screenshots
+--------
+![Addon at local test server](http://img.ctrlv.in/img/15/11/29/565a4e897bd41.png)
+![Context menu](http://img.ctrlv.in/img/15/11/29/565a4f43370b1.png)
+
 License
 -------
 GPLv3 or later
@@ -123,7 +128,3 @@ Create xpi file:
 ```
 cfx xpi
 ```
-
-# Screenshots
-![Addon at local test server](http://img.ctrlv.in/img/15/11/29/565a4e897bd41.png)
-![Context menu](http://img.ctrlv.in/img/15/11/29/565a4f43370b1.png)
