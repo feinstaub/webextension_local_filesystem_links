@@ -12,13 +12,8 @@ It contains:
 * tests (test/)
 * documentation (doc/)
 
-# About this plugin
-It's similar to this [plugin](https://github.com/feinstaub/firefox_addon_local_filesystem_links). I've created it because the mentioned repo is difficult to read and I'd like to learn how to write firefox addons.
-
-The addon is working (locally tested with Windows 8.1 (64 bit) and Ubuntu 14.04 LTS (32 bit)). SMB protocol not working yet. Check feature branch smb links to see the current work (not working yet).
-
-# Features
-
+Features
+--------
 - Adds a click event to every link that is including `file://` or `smb://` in `href` tag. (smb not working yet)
 - Shows a link icon close to the link. Requires an interval that checks every second if there is a new link. Can be disable in preferences.
 - Dynamic loaded content supported because link events are delegated with `$(document).on(...)`
