@@ -82,9 +82,16 @@ So there is something very wrong.
 
 ***Build xpi***
 Review package.json to have the correct version number.
+And make sure it is a NEWER version: see https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIVersionComparator (otherwise on AMO the new
+version is not accepted)
 
 ```
 jpm xpi
+```
+
+Run:
+```
+jpm run -b $(which firefox)
 ```
 
 
