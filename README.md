@@ -58,7 +58,13 @@ The following instructions are for UNIXoid system which are all summarized by th
 
 ***Install jpm***
 ```
-sudo npm install jpm -g
+npm install jpm
+```
+This will install jpm to node_modules/jpm/bin
+
+Add jpm to PATH:
+```
+export PATH=`pwd`/node_modules/jpm/bin:$PATH
 ```
 
 ***Run unit tests.***
