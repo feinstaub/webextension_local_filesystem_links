@@ -30,8 +30,8 @@ Screenshots
 
 License
 -------
-GPLv3 or later
-www.mozilla.org/MPL/ v2 or later
+* GPLv3 or later
+* www.mozilla.org/MPL/ v2 or later
 
 
 Start developing
