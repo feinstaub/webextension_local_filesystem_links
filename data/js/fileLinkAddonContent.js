@@ -10,29 +10,29 @@
             'a[href^="afp://"]'*/
         ],
         $icon = $( "<i/>" )
-            .addClass( "material-icons link-icon" ),
+            .addClass( "material-icons aliensun-link-icon" ),
         options = {
             enableLinkIcons: self.options.enableLinkIcons
         },
         tooltipFilemanagerText,
         appName,
         latestNodesAdded;
-
     /**
      * Activates the plugin - add icon after link and starts observer if enabled
      */
     function activate() {
+        // console.log(options);
         if ( options.enableLinkIcons ) {
             createObserver();
             updateLink($(fileLinkSelectors.join(', ')));
         }
     }
 
-    activate();
-
     // Get settings from addon
     self.port.on( "initSettings", function( data ) {
+        // console.log('init', data);
         options.enableLinkIcons = data.enableLinkIcons;
+        activate();
     } );
 
     // Get message texts from addon
@@ -42,15 +42,20 @@
     } );
 
     // Update settings on change of pref.
-    self.port.on( "prefChange", function( data ) {
+    self.port.on( "prefLinkIconChange", function( data ) {
         options.enableLinkIcons = data.enableLinkIcons;
-
+        // console.log('pref changed');
+        if ( !options.enableLinkIcons ) {
+            removeLinkIcons();
+        } else {
+            updateLink($(fileLinkSelectors.join(', ')));
+        }
     } );
 
     // Use delegate so the click event is also avaliable at newly added links
     $( document ).on( "click", fileLinkSelectors.join( ", " ), function( e ) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
-        console.log( "clicked file link: " + this.href );
+        // console.log( "clicked file link: " + this.href );
         self.postMessage( {
             action: "open",
             url: decodeURIComponent( this.href )
@@ -85,6 +90,19 @@
         $icon.clone().appendTo($element);
     }
 
+    /**
+      * Remove all link icons
+      * (needed for updating at icon pref. change)
+      */
+    function removeLinkIcons() {
+        var $icons = $('i')
+            .filter('.' +
+                $icon.attr('class').split(' ').join('.'));
+        // console.log('test',$icons);
+
+        $icons.remove();
+    }
+
     function createObserver() {
         // observe changes of file links
         // @todo: will fail if the link was added with ajax
@@ -94,7 +112,7 @@
                 function(record) {
                 // observe href change
                 // check if icon is still there
-                //console.log('changed href', record, $icon.attr('class'));
+                // console.log('changed href', record, $icon.attr('class'));
                 if ( !$(record.target)
                 	.find('i').hasClass($icon.attr('class')) ) {
                     //console.log('changed link and removed icon');
@@ -123,7 +141,7 @@
             //console.log(record);
             if (latestNodesAdded !== record.addedNodes) {
             	// new nodes
-                console.log('addedNodes', record.addedNodes);
+                // console.log('addedNodes', record.addedNodes);
                 var $elements = $(record.addedNodes)
                     .find(fileLinkSelectors.join(', ')),
                     $element = $elements.length ? $elements: record.addedNodes;
