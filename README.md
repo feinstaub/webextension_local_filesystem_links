@@ -24,8 +24,8 @@ Features
 
 Screenshots
 --------
-![Addon at local test server](http://img.ctrlv.in/img/15/11/29/565a4e897bd41.png)
-![Context menu](http://img.ctrlv.in/img/15/11/29/565a4f43370b1.png)
+![Addon at local test server](/doc/screenshots/addon_in_action.png)
+![Context menu](/doc/screenshots/addon_context_menu.png)
 
 
 License
