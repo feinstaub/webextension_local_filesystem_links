@@ -1,6 +1,13 @@
-NEXT
-----
-See https://github.com/feinstaub/firefox_addon_local_filesystem_links/issues?q=is%3Aopen+is%3Aissue+milestone%3Anext
+CODING STYLE
+------------
+We follow w3schools.com's style guide and coding conventions, see http://www.w3schools.com/js/js_conventions.asp.
+
+Additionally all pages are coded in order to conform with strict mode, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode.
+
+
+DOCUMENTATION
+-------------
+We use JSDoc for documentation, see http://code.google.com/p/jsdoc-toolkit/wiki/DocExamples
 
 
 WEB SERVER
@@ -11,30 +18,6 @@ Webserver can be started by executing: \test\webserver\start_test_server.cmd
 
 - Q: Why don't we use local html files?
 - A: Because they are treated differently (compared to remotely served files) by Firefox
-
-
-CODING STYLE
-------------
-We follow w3schools.com's style guide and coding conventions, see http://www.w3schools.com/js/js_conventions.asp.
-
-Additionally all pages are coded in order to conform with strict mode, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode.
-
-
-DESIGN DECISIONS
-----------------
-
-* Options Dialog
-** Grid:
-    - We do not use DataTables because the inline editing capablilities are limited
-      - Positive: can load JSON / JavaScript arrays
-      
-    - We use http://www.webismymind.be/editablegrid/ instead.
-      - Drawback: can only load XML (no JavaScript arrays)
-      
-      
-DOCUMENTATION
--------------
-We use JSDoc for documentation, see http://code.google.com/p/jsdoc-toolkit/wiki/DocExamples
 
 
 IDE HINTS

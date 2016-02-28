@@ -1,9 +1,10 @@
 Changelog for Local Filesystem Links
 ====================================
 
-v0.99.41a
----------
+v0.99.42
+--------
 * CLEANUP: remove jquery and other useless files, cleanup code
+* Major cleanup and rewrite by AWolf81
 
 
 v0.99.38

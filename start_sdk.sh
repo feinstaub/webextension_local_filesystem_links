@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 # call it with source (.)
 # e. g. $ . ./start_sdk.sh
@@ -6,9 +6,7 @@
 
 # see start_sdk.cmd
 
-cd ~/dev/share/addon-sdk-1.17/
-source bin/activate
-cd -
+# TODO: update this file to work again (moved from cfx to jpm)
 
 #########################
 # cfx run -p _p1

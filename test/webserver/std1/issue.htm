@@ -13,7 +13,7 @@
     </li>
     <li>
         <a href="file:///C:/tmp/non existing file.txt">C:/tmp/non existing file.txt</a>
-    </li>    
+    </li>
     <li>
         <a href="file://///server/folder/file.png">\\server\folder\file.png</a>
     </li>
@@ -21,7 +21,7 @@
         <a href="file://///FEINSTAUB-480/upload">\\FEINSTAUB-480\upload</a>
     </li>
     <li>
-        Linux: <a href="file:///tmp/">file:////tmp/</a> (3 slashes: works since v0.99.37)
+        Linux: <a href="file:///tmp/">file:////tmp/</a> (3 slashes: works with current devel with ubuntu 13.04 LTS)
     </li>
     <li>
         Linux: <a href="file:////tmp/">file:////tmp/</a> (4 slashes: works: 3 slashes for file:/// and 1 for root dir)
@@ -36,23 +36,29 @@
         Linux: <a href="file:///~/tmp/print.pdf">file:///~/tmp/print.pdf</a> (SHOULD open the pdf file directly)
     </li>
     <li>
-        Linux: <a href="file:///data">file:///data</a> (does not work)
+        Linux: <a href="file:///media">file:///media</a> (working)
     </li>
     <li>
         Linux: <a href="file:///~/data">file:///~/data</a> (works if path exists)
-    </li>        
+    </li>
     <li>
         Linux: <a href="file:///~/dev">file:///~/dev</a> (works if path exists)
-    </li>            
+    </li>
     <li>
-        Linux: <a href="dev">dev</a> (DEV)
-    </li>                
+        Linux: <a href="smb://diskstationwolf/photo/">smb://diskstationwolf/photo</a> (not working yet.)
+    </li>
     <li>
-        Linux: <a href="~/dev">~/dev</a> (DEV)
-    </li>            
+        Linux: <a href="afp://diskstationwolf/photo/">afp://diskstationwolf/photo</a> (not working yet.)
+    </li>
     <li>
-        Linux: <a href="/tmp">/tmp</a> (DEV)
-    </li>                
+        <del>Linux: <a href="dev">dev</a> (DEV, not possible because difference between file link and normal link not detectable)</del>
+    </li>
+    <li>
+        <del>Linux: <a href="~/dev">~/dev</a> (DEV, dito)</del>
+    </li>
+    <li>
+        <del>Linux: <a href="/tmp">/tmp</a> (DEV, dito)</del>
+    </li>
 </ul>
 </body>
 </html>

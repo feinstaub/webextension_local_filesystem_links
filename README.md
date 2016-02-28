@@ -7,17 +7,34 @@ This is the alien-local-filesystem-links add-on for Mozilla Firefox.
 
 It contains:
 
-* program (lib/main.js, data/)
+* program (lib/, data/)
 * tests (test/)
 * documentation (doc/)
 
+
+Features
+--------
+- Adds a click event to every link that is including `file://` or `smb://` in `href` tag. (smb not working yet)
+- Shows a link icon close to the link. Requires an interval that checks every second if there is a new link. Can be disable in preferences.
+- Dynamic loaded content supported because link events are delegated with `$(document).on(...)`
+- Supports links with double and tripple slashes (e.g. file:// or file:///)
+- Right click context menu that opens a text selection that contains a file link + option to reveal the directory of a directly linked file.
+- Whitelist option to enable local links only at a specific url e.g. `*.trello.com`
+
+
+Screenshots
+--------
+![Addon at local test server](/doc/screenshots/addon_in_action.png)
+![Context menu](/doc/screenshots/addon_context_menu.png)
+
+
 License
 -------
-GPLv3 or later
-www.mozilla.org/MPL/ v2 or later
+* GPLv3 or later
+* www.mozilla.org/MPL/ v2 or later
 
 
-Start developing [LINUX DOES NOT WORK YET, see next section about cxf]
+Start developing
 ----------------
 Based on https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
 
@@ -43,7 +60,13 @@ The following instructions are for UNIXoid system which are all summarized by th
 
 ***Install jpm***
 ```
-sudo npm install jpm -g
+npm install jpm
+```
+This will install jpm locally to node_modules/jpm/bin
+
+Add jpm to PATH:
+```
+export PATH=`pwd`/node_modules/jpm/bin:$PATH
 ```
 
 ***Run unit tests.***
@@ -51,7 +74,7 @@ sudo npm install jpm -g
 mkdir _pt           # once
 jpm test -p ./_pt   # don't forget the ./
 # or see https://github.com/mozilla/jpm/issues/287
-jpm -b /usr/lib64/firefox/firefox test -p ./_pt
+jpm -b -b $(which firefox) test -p ./_pt
 jpm -b ~/dev/share/firefox-42.0a1/firefox test -p ./_pt
 ```
 
@@ -61,36 +84,27 @@ So there is something very wrong.
 
 ***Build xpi***
 Review package.json to have the correct version number.
+And make sure it is a NEWER version: see https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsIVersionComparator (otherwise on AMO the new
+version is not accepted)
 
 ```
 jpm xpi
 ```
 
+Run:
 
-Developing with deprecated cxf [Only Linux]
-------------------------------
-
-Download SDK:
-https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Installation#Installation_on_OS_X_FreeBSD_Linux
-and save it so it can be found by start_sdk.sh (see there).
-
-Init SDK:
 ```
-. start_sdk.sh
-# There will be some greeting message
+jpm run -b $(which firefox)
 ```
 
-Run unit tests with currently installed Firefox:
-```
-cfx test -p _pt
-```
+see also start.sdk.sh
 
+
+Misc notes
+----------
 Run unit tests with nightly Firefox:
 Download from https://nightly.mozilla.org/ and extract
-Run, e.g.:
-```
-cfx test -p _pt -b ~/dev/share/firefox-42.0a1/firefox
-```
+Run jpm with -b option (see above)
 
 Run test webserver and run firefox with the addon to do integration tests.
 We need node to create a webserver because we cannot test properly with local websites.
@@ -99,17 +113,3 @@ cd test/webserver # because the node server definition uses relative paths
 node test-server.nodejs.js
 # show something like:
 # Server running at http://127.0.0.1:8125/
-
-```
-cfx run -p _pr
-# or:
-cfx run -p _pr -b ~/dev/share/firefox-42.0a1/firefox
-```
-# Firefox opens with the addon installed (in the addons page there will even be a Debug button)
-# Navigate to the url above.
-
-
-Create xpi file:
-```
-cfx xpi
-```

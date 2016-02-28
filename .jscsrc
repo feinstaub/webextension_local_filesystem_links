@@ -1,0 +1,4 @@
+{
+	"preset": "jquery",
+    "validateLineBreaks": "CRLF"
+}

@@ -1,25 +1,33 @@
 {
     "title": "Local Filesystem Links",
     "name": "alien-local-filesystem-links",
-    "version": "0.99.41a",
+    "version": "0.99.42",
     "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
     "main": "lib/main.js",
     "main-NEW-later": "index.js",
     "author": "austrALIENsun",
+    "scripts": {
+      "jpm": "jpm run",
+      "jpmLinux": "jpm run -b $(which firefox)"
+    },
     "engines": {
         "firefox": ">=38.0a1",
         "fennec": ">=38.0a1"
     },
     "license": "MPL 1.1/GPL 3.0",
     "id": "jid1-JAzC7z53jemo5Q@jetpack",
-
-    "preferences": [
-      {
-      "name": "excludeUrlStartsWithList",
-      "title": "Exclude 'Start with' URIs (space separated list)",
-      "description": "If the URI of the current page starts with one of the URIs listed here it will be ignored when scanning for filesystem links. For example if you put 'file:/// http://mozilla.org/about' in the text box then all local pages and all pages that start with 'http://mozilla.org/about' will be ignored.",
+    "preferences": [{
+      "name": "whitelist",
+      "title": "Urls added to white-list will be clickable",
+      "description": "Any link that will be added to the white-list will be clickable. Empty or * will enable all. Multiple urls are space separated. Wildcards are allowed e.g. *.trello.com",
       "type": "string",
-      "value": ""
-      }
-    ]
+      "value": "*"
+    },
+    {
+      "name": "enableLinkIcons",
+      "title": "Enable link icons",
+      "description": "if checked there will be a link added to every local link",
+      "type": "bool",
+      "value": true
+    }]
 }
