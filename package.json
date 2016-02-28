@@ -29,12 +29,5 @@
       "description": "if checked there will be a link added to every local link",
       "type": "bool",
       "value": true
-    },
-    {
-      "description": "How many of them we have.",
-      "name": "myInteger",
-      "type": "integer",
-      "value": 8,
-      "title": "How Many?"
     }]
 }
