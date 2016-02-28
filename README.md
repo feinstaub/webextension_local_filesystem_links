@@ -1,4 +1,3 @@
-=======
 local-filesystem-links
 ======================
 
@@ -8,9 +7,10 @@ This is the alien-local-filesystem-links add-on for Mozilla Firefox.
 
 It contains:
 
-* program (lib/main.js, data/)
+* program (lib/, data/)
 * tests (test/)
 * documentation (doc/)
+
 
 Features
 --------
@@ -21,10 +21,12 @@ Features
 - Right click context menu that opens a text selection that contains a file link + option to reveal the directory of a directly linked file.
 - Whitelist option to enable local links only at a specific url e.g. `*.trello.com`
 
+
 Screenshots
 --------
 ![Addon at local test server](http://img.ctrlv.in/img/15/11/29/565a4e897bd41.png)
 ![Context menu](http://img.ctrlv.in/img/15/11/29/565a4f43370b1.png)
+
 
 License
 -------
@@ -32,7 +34,7 @@ GPLv3 or later
 www.mozilla.org/MPL/ v2 or later
 
 
-Start developing [LINUX DOES NOT WORK YET, see next section about cxf]
+Start developing
 ----------------
 Based on https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
 
@@ -60,7 +62,7 @@ The following instructions are for UNIXoid system which are all summarized by th
 ```
 npm install jpm
 ```
-This will install jpm to node_modules/jpm/bin
+This will install jpm locally to node_modules/jpm/bin
 
 Add jpm to PATH:
 ```
@@ -72,7 +74,7 @@ export PATH=`pwd`/node_modules/jpm/bin:$PATH
 mkdir _pt           # once
 jpm test -p ./_pt   # don't forget the ./
 # or see https://github.com/mozilla/jpm/issues/287
-jpm -b /usr/lib64/firefox/firefox test -p ./_pt
+jpm -b -b $(which firefox) test -p ./_pt
 jpm -b ~/dev/share/firefox-42.0a1/firefox test -p ./_pt
 ```
 
@@ -90,35 +92,19 @@ jpm xpi
 ```
 
 Run:
+
 ```
 jpm run -b $(which firefox)
 ```
 
+see also start.sdk.sh
 
-Developing with deprecated cxf [Only Linux]
-------------------------------
 
-Download SDK:
-https://developer.mozilla.org/en-US/Add-ons/SDK/Tutorials/Installation#Installation_on_OS_X_FreeBSD_Linux
-and save it so it can be found by start_sdk.sh (see there).
-
-Init SDK:
-```
-. start_sdk.sh
-# There will be some greeting message
-```
-
-Run unit tests with currently installed Firefox:
-```
-cfx test -p _pt
-```
-
+Misc notes
+----------
 Run unit tests with nightly Firefox:
 Download from https://nightly.mozilla.org/ and extract
-Run, e.g.:
-```
-cfx test -p _pt -b ~/dev/share/firefox-42.0a1/firefox
-```
+Run jpm with -b option (see above)
 
 Run test webserver and run firefox with the addon to do integration tests.
 We need node to create a webserver because we cannot test properly with local websites.
@@ -127,17 +113,3 @@ cd test/webserver # because the node server definition uses relative paths
 node test-server.nodejs.js
 # show something like:
 # Server running at http://127.0.0.1:8125/
-
-```
-cfx run -p _pr
-# or:
-cfx run -p _pr -b ~/dev/share/firefox-42.0a1/firefox
-```
-# Firefox opens with the addon installed (in the addons page there will even be a Debug button)
-# Navigate to the url above.
-
-
-Create xpi file:
-```
-cfx xpi
-```
