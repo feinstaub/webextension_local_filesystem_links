@@ -74,7 +74,7 @@ export PATH=`pwd`/node_modules/jpm/bin:$PATH
 mkdir _pt           # once
 jpm test -p ./_pt   # don't forget the ./
 # or see https://github.com/mozilla/jpm/issues/287
-jpm -b -b $(which firefox) test -p ./_pt
+jpm -b $(which firefox) test -p ./_pt
 jpm -b ~/dev/share/firefox-42.0a1/firefox test -p ./_pt
 ```
 
