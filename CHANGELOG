@@ -5,6 +5,9 @@ v0.99.42
 --------
 * CLEANUP: remove jquery and other useless files, cleanup code
 * Major cleanup and rewrite by AWolf81
+* FEATURE: Click the hyperlink text as opposed to clicking the icon, #11
+* FEATURE: Optionally hide the icons, #36
+* FEATURE: Have both: "Open containing folder" and "Open file" #32
 
 
 v0.99.38
