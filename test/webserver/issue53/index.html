@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Issue 53 - Style improvement</title>
+        <style>
+            .links {
+                display: inline;
+            }
+
+            .links :after {
+                content: '\A';
+                white-space: pre;
+            }
+            .small {
+                font-size: 9px;
+            }
+            .medium {
+                font-size: 12px;
+            }
+            .normal {
+                font-size: 16px;
+            }
+            .large {
+                font-size: 32px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Add everything style related here (e.g. icon size)</h1>
+        <p class="links">
+            <a href="file://c:/" class="small">c:\ link small</a>
+            <a href="file://c:/" class="medium">c:\ link medium</a>
+            <a href="file://c:/" class="normal">c:\ link normal</a>
+            <a href="file://c:/" class="large">c:\ link large</a>
+        </p>
+    </body>
+</html>
