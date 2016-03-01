@@ -1,12 +1,13 @@
 .aliensun-link-icon {
-    line-height: 16px;
     padding-left: 2px;
     color: #fdd835;
+    font-size: 100% !important;
 }
 
 .aliensun-link-icon:after {
-    font-size: 16px;
     content: "folder";
+    font-size: 100% !important;
+    vertical-align: middle;
 }
 
 a:hover > .aliensun-link-icon:after{
