@@ -9,8 +9,11 @@
             /*'a[href^="smb://"]',
             'a[href^="afp://"]'*/
         ],
-        $icon = $( "<i/>" )
-            .addClass( "material-icons aliensun-link-icon" ),
+        $icon = $("<span/>")
+            .addClass("aliensun-link-circle").append(
+                $( "<i/>" )
+                    .addClass( "material-icons aliensun-link-icon" )
+            ),
         options = {
             enableLinkIcons: self.options.enableLinkIcons
         },
