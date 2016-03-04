@@ -5,7 +5,7 @@
     $.noConflict();
 
     var fileLinkSelectors = [
-            'a[href^="file://"]',
+            'a[href^="file:"]',
             /*'a[href^="smb://"]',
             'a[href^="afp://"]'*/
         ],
