@@ -3,7 +3,10 @@
 <body>
 <ul>
     <li>
-        <a href="file:///C:/tmp/existing_file - Kopie.txt">C:/tmp/existing_file - Kopie.txt</a>
+        <a href="file:///C:/tmp/existing_file - Kopie.txt">C:/tmp/existing_file - Kopie.txt (tripple slash - style file:///)</a>
+    </li>
+    <li>
+        <a href="file://C:/tmp/existing_file - Kopie.txt">C:/tmp/existing_file - Kopie.txt (double slash - style file://)</a>
     </li>
     <li>
         <a href="file:///C:/tmp/existing_file.txt">C:/tmp/existing_file.txt</a>
@@ -43,6 +46,12 @@
     </li>
     <li>
         Linux: <a href="file:///~/dev">file:///~/dev</a> (works if path exists)
+    </li>
+     <li>
+        Linux: <a href="file:///tmp/company/~Office/file.txt">file:///tmp/company/~Office/file.txt</a> (Symbol ~ allowed in path)
+    </li>
+    <li>
+        Linux: <a href="file:///tmp/company/~Office/~file.txt">file:///tmp/company/~Office/~file.txt</a> (Symbol ~ allowed in filename)
     </li>
     <li>
         Linux: <a href="smb://diskstationwolf/photo/">smb://diskstationwolf/photo</a> (not working yet.)
