@@ -11,7 +11,7 @@
         }
 
         function regexReplace(obj, regex, replaceVal) {
-            console.log('regexrepl', obj, regex, replaceVal);
+            // console.log('regexrepl', obj, regex, replaceVal);
             return obj.replace(regex, replaceVal);
         }
 
@@ -26,7 +26,7 @@
                 var $link = $(link),
                     href = $link.attr('href'),
                     linkText = $link.attr('text');
-                console.log('modify link', href, linkText);
+                // console.log('modify link', href, linkText);
                 $link
                     .attr('href', regexReplace(href, regex, newStyle))
                     .text(regexReplace(linkText, regex, newStyle));
