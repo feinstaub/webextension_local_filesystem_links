@@ -1,31 +1,13 @@
 .aliensun-link-icon {
     /*padding-left: 2px;*/
-    color: #fdd835;
+    color: orange; /*#F3C300;*/
     font-size: 100% !important;
+    text-shadow: 0.1em 0.1em 0.1em rgba(150, 150, 150, 1);
 }
 
 .aliensun-link-icon:after {
     content: "folder";
     font-size: 100% !important;
-    vertical-align: middle;
-}
-
-.aliensun-link-circle {
-    display: inline-block;
-    margin-left: 2px;
-    margin-top: 1px;
-    margin-bottom: 1px;
-    line-height: 1.5em;
-    width: 1.5em; height: 1.5em;
-    background: gray;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    text-align: center;
-}
-
-.aliensun-link-circle i {
-    padding-top: 0.2em;
 }
 
 a:hover .aliensun-link-icon:after{
