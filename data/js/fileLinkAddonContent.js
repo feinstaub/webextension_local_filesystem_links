@@ -9,8 +9,12 @@
             /*'a[href^="smb://"]',
             'a[href^="afp://"]'*/
         ],
-        $icon = $( "<i/>" )
-                    .addClass( "material-icons aliensun-link-icon" ),
+        $container = $('<div class="aliensun-link-icon"/>'),
+        $icon = $container.append($('<a href="#"/>')
+                        .attr("data-tooltip", "Open folder")
+                        .append($( "<i/>" )
+                            .addClass( "material-icons" ))
+                    ),
         options = {
             enableLinkIcons: self.options.enableLinkIcons
         },
@@ -62,6 +66,11 @@
         } );
     } );
 
+    // icon click handler
+    $( document ).on( "click", ".aliensun-link-icon>a", function( e ) {
+        //e.preventDefault();
+        console.log('hello', e);
+    });
 
     // -------------------------------------------------------------------------
     // add link icons (if enabled)
@@ -87,7 +96,7 @@
 
     function updateLink($element) {
         //console.log('updating', $element);
-        $icon.clone().appendTo($element);
+        $icon.clone().insertAfter($element);
     }
 
     /**
