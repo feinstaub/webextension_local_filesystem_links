@@ -13,6 +13,7 @@
     font-size: 100%;
     text-shadow: 0.1em 0.1em 0.1em rgba(150, 150, 150, 1);
     vertical-align: -0.2em; /* correction of y-position of icon */
+    cursor: pointer;
 }
 
 .aliensun-link-icon i:after {
