@@ -1,15 +1,25 @@
 .aliensun-link-icon {
-    /*padding-left: 2px;*/
+    display: inline-table;
+    padding-left: 0.1em;
+}
+
+.aliensun-link-icon a {
+    display: table-cell;
+    text-decoration: none;
+}
+
+.aliensun-link-icon i{
     color: orange; /*#F3C300;*/
-    font-size: 100% !important;
+    font-size: 100%;
     text-shadow: 0.1em 0.1em 0.1em rgba(150, 150, 150, 1);
+    vertical-align: -0.2em; /* correction of y-position of icon */
+    cursor: pointer;
 }
 
-.aliensun-link-icon:after {
+.aliensun-link-icon i:after {
     content: "folder";
-    font-size: 100% !important;
 }
 
-a:hover .aliensun-link-icon:after{
+.aliensun-link-icon i:hover:after{
     content: "folder_open";
 }

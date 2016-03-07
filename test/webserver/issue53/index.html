@@ -4,14 +4,6 @@
         <meta charset="utf-8">
         <title>Issue 53 - Style improvement</title>
         <style>
-            .links {
-                display: inline;
-            }
-
-            .links :after {
-                content: '\A';
-                white-space: pre;
-            }
             .small {
                 font-size: 9px;
             }
@@ -28,11 +20,11 @@
     </head>
     <body>
         <h1>Add everything style related here (e.g. icon size)</h1>
-        <p class="links">
-            <a href="file://c:/" class="small">c:\ link small</a>
-            <a href="file://c:/" class="medium">c:\ link medium</a>
-            <a href="file://c:/" class="normal">c:\ link normal</a>
-            <a href="file://c:/" class="large">c:\ link large</a>
+        <ul>
+            <li class="small"><a href="file://c:/">c:\ link small</a>Some text here</li>
+            <li class="medium"><a href="file://c:/">c:\ link medium</a>some text....</li>
+            <li class="normal"><a href="file://c:/">c:\ link normal</a>Some text here</li>
+            <li class="large"><a href="file://c:/">c:\ link large</a>some text....</li>
         </p>
     </body>
 </html>

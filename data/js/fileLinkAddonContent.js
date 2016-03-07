@@ -9,13 +9,17 @@
             /*'a[href^="smb://"]',
             'a[href^="afp://"]'*/
         ],
-        $icon = $( "<i/>" )
-                    .addClass( "material-icons aliensun-link-icon" ),
-        options = {
-            enableLinkIcons: self.options.enableLinkIcons
+        appTextMessages = {
+            // every constant text we're showing the user
+            // e.g. tooltip text constants
         },
-        tooltipFilemanagerText,
-        appName,
+        $container = $('<span class="aliensun-link-icon"/>'),
+        $icon = {}, // loading, see init
+        options = {
+            //enableLinkIcons: self.options.enableLinkIcons
+        },
+        tooltipFilemanagerText, // not used yet?
+        appName,            // where is it used?
         latestNodesAdded;
     /**
      * Activates the plugin - add icon after link and starts observer if enabled
@@ -26,25 +30,39 @@
             createObserver();
             updateLink($(fileLinkSelectors.join(', ')));
         }
+
+        // we could add a if case here to add tooltip disable pref.
+        $('a').filter(fileLinkSelectors.join(', '))
+            .attr('title', appTextMessages.tooltips.linkText);
     }
 
     // Get settings from addon
-    self.port.on( "initSettings", function( data ) {
-        // console.log('init', data);
-        options.enableLinkIcons = data.enableLinkIcons;
-        activate();
-    } );
+    self.port.on( "init", function( addonOptions, constants) {
+        // console.log('init', addonOptions, constants);
+        // load plugin options
+        options = addonOptions;
 
-    // Get message texts from addon
-    self.port.on( "textConstants", function( constants ) {
+        // load constant texts from addon
         tooltipFilemanagerText = constants.MESSAGES.FILEMANAGER;
         appName = constants.APP.name;
+        appTextMessages = constants.MESSAGES.USERMESSAGES;
+        // console.log('test', appTextMessages);
+        $icon = $container.append($( "<i/>" )
+                            .attr("title",
+                                appTextMessages.tooltips.openFolder)
+                            .addClass( "material-icons" )
+                    );
+
+        // now everything is ready to load
+        activate();
     } );
 
     // Update settings on change of pref.
     self.port.on( "prefLinkIconChange", function( data ) {
-        options.enableLinkIcons = data.enableLinkIcons;
-        // console.log('pref changed');
+        // options.enableLinkIcons = data.enableLinkIcons;
+        options = $.extend({}, options, data);
+
+        // console.log('pref changed', data, options);
         if ( !options.enableLinkIcons ) {
             removeLinkIcons();
         } else {
@@ -62,6 +80,26 @@
         } );
     } );
 
+    /*
+      Event for icon to reveal the folder directly
+    */
+    function openFolderHandler(e) {
+        var link = $(e.currentTarget).data('link');
+        e.preventDefault();
+
+        // we need to check if file has 2 slashes because ff won't fix it here
+        link = link.replace(/file:[\/]{2,3}/i, 'file:\/\/\/');
+        // console.log('clicked icon', link);
+        // alert('clicked icon');
+        self.postMessage( {
+            action: "reveal",
+            // url: decodeURIComponent( $(e.currentTarget).data('link'))
+            url: decodeURIComponent(link)
+        } );
+    }
+
+    // icon click handler
+    $( document ).on( "click", ".aliensun-link-icon", openFolderHandler);
 
     // -------------------------------------------------------------------------
     // add link icons (if enabled)
@@ -86,8 +124,19 @@
     // --> final solution: use jquery-observe that's simplyfing mutationObserver
 
     function updateLink($element) {
-        //console.log('updating', $element);
-        $icon.clone().appendTo($element);
+        // console.log('updating', $element);
+        $element.each(function(index, el) {
+            // console.log('el href = ', $(el).attr('href'));
+            $icon
+                .clone()
+                .data('link', $(el).attr('href')) // added to container
+                // .click(openFolderHandler)
+                .insertAfter($(el));
+        });
+        // $icon
+        //     .clone()
+        //     .data('link', $element.attr('href')) // added to container
+        //     .insertAfter($element);
     }
 
     /**
@@ -95,9 +144,7 @@
       * (needed for updating at icon pref. change)
       */
     function removeLinkIcons() {
-        var $icons = $('i')
-            .filter('.' +
-                $icon.attr('class').split(' ').join('.'));
+        var $icons = $('.aliensun-link-icon');
         // console.log('test',$icons);
 
         $icons.remove();
