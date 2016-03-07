@@ -16,6 +16,9 @@
     },
     "license": "MPL 1.1/GPL 3.0",
     "id": "jid1-JAzC7z53jemo5Q@jetpack",
+    "permissions": {
+        "multiprocess": true
+    },
     "preferences": [{
       "name": "whitelist",
       "title": "Urls added to white-list will be clickable",
