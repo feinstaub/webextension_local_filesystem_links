@@ -87,10 +87,8 @@
         var link = $(e.currentTarget).data('link');
         e.preventDefault();
 
-        // we need to check if file has 2 slashes because ff won't fix it here
-        link = link.replace(/file:[\/]{2,3}/i, 'file:\/\/\/');
         // console.log('clicked icon', link);
-        // alert('clicked icon');
+
         self.postMessage( {
             action: "reveal",
             // url: decodeURIComponent( $(e.currentTarget).data('link'))
@@ -130,13 +128,8 @@
             $icon
                 .clone()
                 .data('link', $(el).attr('href')) // added to container
-                // .click(openFolderHandler)
                 .insertAfter($(el));
         });
-        // $icon
-        //     .clone()
-        //     .data('link', $element.attr('href')) // added to container
-        //     .insertAfter($element);
     }
 
     /**
@@ -150,21 +143,22 @@
         $icons.remove();
     }
 
+    /**
+      * Create observers for file links
+      * Two observers - one for href attributes and another one for newly added file links
+      */
     function createObserver() {
         // observe changes of file links
-        // @todo: will fail if the link was added with ajax
-        // --> check if observing on document is possible
+
+        // create an observer if someone is changing an a-tag directly
         $(fileLinkSelectors.join(', '))
             .observe({ attributes: true, attributeFilter: ['href'] },
                 function(record) {
                 // observe href change
-                // check if icon is still there
-                // console.log('changed href', record, $icon.attr('class'));
-                if ( !$(record.target)
-                	.find('i').hasClass($icon.attr('class')) ) {
-                    //console.log('changed link and removed icon');
-                    updateLink(record.target);
-                }
+                //console.log('changed href', $(this), $icon.attr('class'));
+
+                $(this).next('.' + $icon.attr('class')).remove(); // remove previous icon
+                updateLink($(this)); // add new icons so we have the correct data at the icon
         });
 
         // observe newly added file links
@@ -185,19 +179,20 @@
             // these callbacks but I'm not sure how to fix.
             // --> asked if it could be fixed,
             //     see here https://github.com/kapetan/jquery-observe/issues/5
-            //console.log(record);
-            if (latestNodesAdded !== record.addedNodes) {
-            	// new nodes
-                // console.log('addedNodes', record.addedNodes);
-                var $elements = $(record.addedNodes)
-                    .find(fileLinkSelectors.join(', ')),
-                    $element = $elements.length ? $elements: record.addedNodes;
+            //
+            // Update: 09.03.2016
+            // We're getting only one observer callback for each added element.
+            // So we don't need to store the previous added node.
 
-                // elements check needed if links are wrapped in an element
-                // other case is for directly added link
-            	updateLink($element);
-            	latestNodesAdded = record.addedNodes;
-            }
+            //console.log('link added');
+            // console.log($(this).eq(0).html(), record); // this = addedNodes
+
+            // get elements that are with-out icon - avoid multiple icons
+            var $elements = $(this).filter(function(index, item) {
+                return !$(this).next().is('.aliensun-link-icon');
+            });
+
+            updateLink($elements);
       })
     }
 
