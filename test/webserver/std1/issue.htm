@@ -1,6 +1,48 @@
 <html>
 <head>
+    <script src="/js/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(function() {
+        var $style = $('#curStyle');
+        var curStyle = '/';
+
+        function updateStyleInfo(style) {
+            $style.text('Current link style: '+ curStyle);
+        }
+
+        function regexReplace(obj, regex, replaceVal) {
+            // console.log('regexrepl', obj, regex, replaceVal);
+            return obj.replace(regex, replaceVal);
+        }
+
+        updateStyleInfo();
+
+        $('#toggleStyle').click(function() {
+            var regex = /test/
+            var newStyle = ( curStyle == '/' ) ? '\\' : '/',
+                regex = new RegExp((curStyle == '/'? /\// : /\\/), 'g');
+
+            $('a[href^="file:"]').each(function(key, link) {
+                var $link = $(link),
+                    href = $link.attr('href'),
+                    linkText = $link.attr('text');
+                // console.log('modify link', href, linkText);
+                $link
+                    .attr('href', regexReplace(href, regex, newStyle))
+                    .text(regexReplace(linkText, regex, newStyle));
+            });
+
+            curStyle = newStyle;
+            updateStyleInfo()
+        });
+
+    });
+    </script>
+</head>
 <body>
+    <button id="toggleStyle">toggle slashes</button>
+    <p id="curStyle">
+    </p>
 <ul>
     <li>
         <a href="file:///C:/tmp/existing_file - Kopie.txt">C:/tmp/existing_file - Kopie.txt (tripple slash - style file:///)</a>
