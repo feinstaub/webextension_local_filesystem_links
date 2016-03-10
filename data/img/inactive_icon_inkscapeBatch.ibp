@@ -1,0 +1,45 @@
+
+//
+// File and path settings
+//
+PathExport 'D:\github\firefox_addon_local_filesystem_links\data\img\'
+PathClear false
+FileFormat png
+FilePrefix inactive_
+
+//
+// Export settings settings
+//
+ExportArea drawing
+ExportWidth 64
+ExportHeight 64
+
+//
+// Execute Converter
+//
+FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_red_48dp.svg'
+FileName 'icon_64'
+Convert
+
+ExportArea drawing
+ExportWidth 32
+ExportHeight 32
+
+//
+// Execute Converter
+//
+FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_red_48dp.svg'
+FileName 'icon_32'
+Convert
+
+ExportArea drawing
+ExportWidth 16
+ExportHeight 16
+
+//
+// Execute Converter
+//
+FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_red_48dp.svg'
+FileName 'icon_16'
+Convert
+

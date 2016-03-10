@@ -16,7 +16,10 @@
    id="svg3605"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="folder_image.svg">
+   sodipodi:docname="folder_image_red.svg"
+   inkscape:export-filename="D:\github\firefox_addon_local_filesystem_links\data\img\inactive-icon-64.png"
+   inkscape:export-xdpi="32.511997"
+   inkscape:export-ydpi="32.511997">
   <defs
      id="defs3607">
     <linearGradient
@@ -304,6 +307,53 @@
        xlink:href="#linearGradient4191"
        y1="336.3714"
        y2="327.80692" />
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Colorize"
+       id="filter5170">
+      <feComposite
+         in2="SourceGraphic"
+         operator="arithmetic"
+         k1="2.77556e-017"
+         k2="1"
+         result="composite1"
+         id="feComposite5172" />
+      <feColorMatrix
+         in="composite1"
+         values="1"
+         type="saturate"
+         result="colormatrix1"
+         id="feColorMatrix5174" />
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(255,0,0)"
+         result="flood1"
+         id="feFlood5176" />
+      <feBlend
+         in="flood1"
+         in2="colormatrix1"
+         mode="darken"
+         result="blend1"
+         id="feBlend5178" />
+      <feBlend
+         in2="blend1"
+         mode="multiply"
+         result="blend2"
+         id="feBlend5180" />
+      <feColorMatrix
+         in="blend2"
+         values="1"
+         type="saturate"
+         result="colormatrix2"
+         id="feColorMatrix5182" />
+      <feComposite
+         in="colormatrix2"
+         in2="SourceGraphic"
+         operator="in"
+         k2="1"
+         result="composite2"
+         id="feComposite5184" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -312,14 +362,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="307.66137"
-     inkscape:cy="146.97626"
+     inkscape:zoom="0.175"
+     inkscape:cx="390.74332"
+     inkscape:cy="-1652.2706"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
-     inkscape:window-height="1051"
+     inkscape:window-height="1001"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1" />
@@ -331,7 +381,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -342,7 +392,8 @@
      transform="translate(0,-875.19685)">
     <g
        transform="matrix(1.2939852,0,0,1.2939852,1105.8922,1567.3636)"
-       id="g85">
+       id="g85"
+       style="filter:url(#filter5170)">
       <g
          transform="matrix(0.7671,0,0,1,-460.18604,-404.17569)"
          id="g87">
