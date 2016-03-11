@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Issue 16 - executable links</title>
+    </head>
+    <body>
+        <h1>Test cases for whitelist settings of executable files. (Prevent denial of service attacks)</h1>
+        <p>
+            setting for Windows tests
+            whitelist exe entry = cmd.exe wordpad.exe
+        </p>
+        <p>
+            settings for Ubuntu tests (not tested yet)
+            usr/bin/sublime
+        </p>
+        <p>
+            Additional test open containing folder should always work.
+        </p>
+        <a href="file://c:/windows/sysWOW64/cmd.exe">file://c:/windows/sysWOW64/cmd.exe (Windows command prompt)</a><br/>
+        <a href="file://C:/Program Files (x86)/Windows NT/Accessories/wordpad.exe">wordpad.exe (Windows wordpad editor)</a><br/>
+        <a href="file://usr/bin/sublime">file://usr/bin/sublime (Linux open to sublime editor)</a><br/>
+
+    </body>
+</html>

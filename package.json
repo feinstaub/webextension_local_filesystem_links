@@ -27,10 +27,18 @@
       "value": "*"
     },
     {
+      "name": "whitelistExecutables",
+      "title": "Add executable files that are allowed for opening",
+      "description": "Any progam file you add to this whitelist (space separated) are enabled for opening by the addon (empty means all executables blocked, add * to allow all executables)",
+      "type": "string",
+      "value": ""
+    },
+    {
       "name": "enableLinkIcons",
       "title": "Enable link icons",
       "description": "if checked there will be a link added to every local link",
       "type": "bool",
       "value": true
-    }]
+    }
+]
 }
