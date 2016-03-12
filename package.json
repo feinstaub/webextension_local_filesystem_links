@@ -27,11 +27,11 @@
       "value": "*"
     },
     {
-      "name": "whitelistExecutables",
-      "title": "Add executable files that are allowed for opening",
-      "description": "Any progam file you add to this whitelist (space separated) are enabled for opening by the addon (empty means all executables blocked, add * to allow all executables)",
-      "type": "string",
-      "value": ""
+      "name": "enableExecutables",
+      "title": "Enable links to local executable files",
+      "description": "if enabled any progam file can be launched by the addon. (Attention! A malicious site could use this for denial-of-service attack!)",
+      "type": "bool",
+      "value": false
     },
     {
       "name": "enableLinkIcons",
