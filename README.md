@@ -15,7 +15,7 @@ It contains:
 Features
 --------
 - Adds a click event to every link that is including `file://` or `smb://` in `href` tag. (smb not working yet)
-- Shows a link icon close to the link. Requires an interval that checks every second if there is a new link. Can be disable in preferences.
+- Shows a link icon close to the link. Icon can be disabled in preferences.
 - Dynamic loaded content supported because link events are delegated with `$(document).on(...)`
 - Supports links with double and tripple slashes (e.g. file:// or file:///)
 - Right click context menu that opens a text selection that contains a file link + option to reveal the directory of a directly linked file.
