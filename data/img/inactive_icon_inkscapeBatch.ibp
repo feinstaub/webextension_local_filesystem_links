@@ -17,7 +17,7 @@ ExportHeight 64
 //
 // Execute Converter
 //
-FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_red_48dp.svg'
+FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_gray_48dp.png'
 FileName 'icon_64'
 Convert
 
@@ -28,7 +28,7 @@ ExportHeight 32
 //
 // Execute Converter
 //
-FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_red_48dp.svg'
+FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_gray_48dp.png'
 FileName 'icon_32'
 Convert
 
@@ -39,7 +39,7 @@ ExportHeight 16
 //
 // Execute Converter
 //
-FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_red_48dp.svg'
+FileSvg 'D:\github\firefox_addon_local_filesystem_links\data\img\folder_gray_48dp.png'
 FileName 'icon_16'
 Convert
 
