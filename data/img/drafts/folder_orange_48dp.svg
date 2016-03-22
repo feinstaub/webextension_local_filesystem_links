@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg5245"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="192"
+   height="192"
+   viewBox="0 0 192 192"
+   sodipodi:docname="folder_orange_48dp.svg">
+  <metadata
+     id="metadata5251">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs5249">
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Colorize"
+       id="filter5287">
+      <feComposite
+         in2="SourceGraphic"
+         operator="arithmetic"
+         k1="2.77556e-017"
+         k2="2"
+         result="composite1"
+         id="feComposite5289" />
+      <feColorMatrix
+         in="composite1"
+         values="1"
+         type="saturate"
+         result="colormatrix1"
+         id="feColorMatrix5291" />
+      <feFlood
+         flood-opacity="1"
+         flood-color="rgb(255,165,0)"
+         result="flood1"
+         id="feFlood5293" />
+      <feBlend
+         in="flood1"
+         in2="colormatrix1"
+         mode="normal"
+         result="blend1"
+         id="feBlend5295" />
+      <feBlend
+         in2="blend1"
+         mode="normal"
+         result="blend2"
+         id="feBlend5297" />
+      <feColorMatrix
+         in="blend2"
+         values="1"
+         type="saturate"
+         result="colormatrix2"
+         id="feColorMatrix5299" />
+      <feComposite
+         in="colormatrix2"
+         in2="SourceGraphic"
+         operator="in"
+         k2="1"
+         result="composite2"
+         id="feComposite5301" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     id="namedview5247"
+     showgrid="false"
+     inkscape:zoom="1.2291667"
+     inkscape:cx="96"
+     inkscape:cy="226.16949"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5245" />
+  <image
+     width="192"
+     height="192"
+     preserveAspectRatio="none"
+     xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAQAAAD41aSMAAACXElEQVR4Ae3dT05TbRjG4XsENcAK
+TEygzExkGa4AgpsxjoiQOC8p+3AJTTpBHLkBMQ34v4Dtp+L4S4xCz6lPSK/r3sHzO4N3QEoWFAAA
+AAAAAAAAAAAAsJYn6WeY80xzPec9y/+wmaNcNjioBA10st/wm5eggfW8ynXRJMjDnJadX4I8yNu6
+40uwlGHl6SV4Wnl2Ce7nqvLoEryoPLgESzmvPLcEj2uPLcHz2lNL8LL20BK8qT2zBKelJ5bgL28g
+m+Ysw/Szm7XMxXtHvuEucpTN2gA2zUE6tQHsJN3aADbKVlrzwUFnStCtDWAn6dQGsP3aADZNtzaA
+9dOCjw4588ZZrQ1gO7UBrFcbwAa1AWyUxj45Y4NNigOYAALc6QkgwGdHFEAAE6BmAgjwxREFEGBh
+J4AAXx1RAAFMgJoJIMDYEQUQwAQQwGoCXDiiAAKYAAJYTYBLRxRAABNAAKsJcOWIAghgAixsgG+O
+KIAAJoAAVhNg4ogCCGACCGA1AaaOKIAAJoAAVhPgP0cUQAATQACrCfDdEQUQwARY2AA/HFEAAUwA
+AawmwE9HFEAAE0AAKwnghHcpgAkggAkggAkggAngj3NtksbOnLHBRmls6IwNNkhjfWdssF4a23XG
+BttOY2t+O3fmjbOSFhw55Yw7TCs2PUVn2iQbacmBc86wvbTmXl476C13nOW0qJuRo95i77Kelm3d
+IoHzP8ocdHPiuDfYcdYzJ53sexH9cZPsZTlz1U3f/xb77cY5zEb+idXspJdBRpn45jPKIL1sZyUL
+CQAAAAAAAAAAAAAA+AUIB1nK8lwvNgAAAABJRU5ErkJggg==
+"
+     id="image5253"
+     x="0"
+     y="0"
+     style="filter:url(#filter5287)" />
+</svg>
