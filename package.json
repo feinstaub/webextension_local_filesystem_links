@@ -27,10 +27,18 @@
       "value": "*"
     },
     {
+      "name": "enableExecutables",
+      "title": "Enable links to local executable files",
+      "description": "if enabled any progam file can be launched by the addon. (Attention! A malicious site could use this for denial-of-service attack!)",
+      "type": "bool",
+      "value": false
+    },
+    {
       "name": "enableLinkIcons",
       "title": "Enable link icons",
       "description": "if checked there will be a link added to every local link",
       "type": "bool",
       "value": true
-    }]
+    }
+]
 }
