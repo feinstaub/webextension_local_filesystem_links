@@ -48,11 +48,18 @@ function onAttach( worker ) {
     */
     worker.on( "message", function( actionObj ) {
 
-        switch ( actionObj.action ) {
+        if ( actionObj.backslashReplaceRequired ) {
+            // special handling required at icon click
+            actionObj.url = actionObj.url.replace(/\\/g, '/'); // replace backslashes
 
+            // we need to check if file has 2 slashes because ff won't fix it
+            actionObj.url = actionObj.url.replace(/file:[\/]{2,3}/i, 'file:\/\/\/');
+        }
+
+        switch ( actionObj.action ) {
             // Actions from content-script
             case "open":
-                launcher.start( actionObj.url );
+                launcher.start( actionObj.url );    
             break;
 
             case "reveal":
@@ -80,10 +87,11 @@ function onAttach( worker ) {
         newEmitObj[ prefName ] = prefs.options[ prefName ];
 
         // console.log('pref link change', newEmitObj, prefName);
-        worker.port.emit( "prefLinkIconChange", newEmitObj );
+        worker.port.emit( "prefChange:" + prefName, newEmitObj );
     }
 
     prefs.addPrefChangeHandler( "enableLinkIcons", onPrefLinkChange );
+    prefs.addPrefChangeHandler( "revealOpenOption", onPrefLinkChange );
 }
 
 /**
@@ -154,7 +162,7 @@ function main() {
     prefs.addPrefChangeHandler( "whitelist", onWhitelistChange );
 }
 
-//tabs.open( "http://jsfiddle.net/awolf2904/tefcs74q/" ); // Debugging tab
+tabs.open( "http://jsfiddle.net/awolf2904/tefcs74q/" ); // Debugging tab
 //tabs.open( "127.0.0.1:3000" ); // Debugging tab
 
 function getAttached() {

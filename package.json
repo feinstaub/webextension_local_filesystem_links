@@ -38,6 +38,23 @@
       "description": "if checked there will be a link added to every local link",
       "type": "bool",
       "value": true
+    },
+    {
+      "name": "revealOpenOption",
+      "type": "radio",
+      "title": "Default link text click behaviour",
+      "description": "Changes the default click behaviour of file-links. Default = direct file link open.",
+      "value": "O",
+      "options": [
+          {
+              "value": "O",
+              "label": "Open"
+          },
+          {
+              "value": "R",
+              "label": "Reveal"
+          }
+      ]
     }
 ]
 }

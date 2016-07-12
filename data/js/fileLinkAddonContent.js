@@ -13,43 +13,59 @@
             // every constant text we're showing the user
             // e.g. tooltip text constants
         },
-        $container = $('<span class="aliensun-link-icon"/>'),
+        $container = $('<span/>'), //$('<span class="aliensun-link-icon"/>'),
         $icon = {}, // loading, see init
         options = {
             //enableLinkIcons: self.options.enableLinkIcons
         },
         tooltipFilemanagerText, // not used yet?
         appName,            // where is it used?
-        latestNodesAdded;
+        latestNodesAdded,
+        currentIconClass; // folder or arrow?
+
+    function updateLinkTooltip() {
+        var tooltipText = options.revealOpenOption == "O" ?
+            appTextMessages.tooltips.linkText:
+            appTextMessages.tooltips.openFolder;
+
+        $('a').filter(fileLinkSelectors.join(', '))
+            .attr('title', tooltipText);
+    }
+
     /**
      * Activates the plugin - add icon after link and starts observer if enabled
      */
     function activate() {
         // console.log(options);
         if ( options.enableLinkIcons ) {
+            currentIconClass = "aliensun-link-icon" + 
+                ( options.revealOpenOption == "R"? "-arrow": "" );
+
             createObserver();
+            $container.addClass(currentIconClass);
+
             updateLink($(fileLinkSelectors.join(', ')));
         }
 
         // we could add a if case here to add tooltip disable pref.
-        $('a').filter(fileLinkSelectors.join(', '))
-            .attr('title', appTextMessages.tooltips.linkText);
+        updateLinkTooltip();
     }
 
     // Get settings from addon
     self.port.on( "init", function( addonOptions, constants) {
         // console.log('init', addonOptions, constants);
+        appTextMessages = constants.MESSAGES.USERMESSAGES;
+
         // load plugin options
         options = addonOptions;
 
         // load constant texts from addon
         tooltipFilemanagerText = constants.MESSAGES.FILEMANAGER;
         appName = constants.APP.name;
-        appTextMessages = constants.MESSAGES.USERMESSAGES;
         // console.log('test', appTextMessages);
         $icon = $container.append($( "<i/>" )
-                            .attr("title",
-                                appTextMessages.tooltips.openFolder)
+                            // .attr("title",
+                            //     iconTooltip)
                             .addClass( "material-icons" )
                     );
 
@@ -58,24 +74,27 @@
     } );
 
     // Update settings on change of pref.
-    self.port.on( "prefLinkIconChange", function( data ) {
-        // options.enableLinkIcons = data.enableLinkIcons;
+    function updateIcons(data) {
         options = $.extend({}, options, data);
 
         // console.log('pref changed', data, options);
-        if ( !options.enableLinkIcons ) {
-            removeLinkIcons();
-        } else {
+        removeLinkIcons();
+        updateLinkTooltip();
+        
+        if ( options.enableLinkIcons ) {
             updateLink($(fileLinkSelectors.join(', ')));
         }
-    } );
+    }
+
+    self.port.on( "prefChange:enableLinkIcons", updateIcons);
+    self.port.on( "prefChange:revealOpenOption", updateIcons);
 
     // Use delegate so the click event is also avaliable at newly added links
     $( document ).on( "click", fileLinkSelectors.join( ", " ), function( e ) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
-        // console.log( "clicked file link: " + this.href );
+        //console.log( "clicked file link: " + this.href, options.revealOpenOption);
         self.postMessage( {
-            action: "open",
+            action: options.revealOpenOption == "O" ? "open": "reveal",
             url: decodeURIComponent( this.href )
         } );
     } );
@@ -87,17 +106,20 @@
         var link = $(e.currentTarget).data('link');
         e.preventDefault();
 
-        // console.log('clicked icon', link);
+        // console.log('clicked icon', link, options.revealOpenOption);
 
         self.postMessage( {
-            action: "reveal",
+            action: options.revealOpenOption == "O" ? "reveal": "open",
             // url: decodeURIComponent( $(e.currentTarget).data('link'))
-            url: decodeURIComponent(link)
+            url: decodeURIComponent(link),
+            backslashReplaceRequired: true // @todo check Linux too
         } );
     }
 
     // icon click handler
-    $( document ).on( "click", ".aliensun-link-icon", openFolderHandler);
+    $( document ).on( "click", 
+        "[class^='aliensun-link-icon']", // folder or arrow
+        openFolderHandler);
 
     // -------------------------------------------------------------------------
     // add link icons (if enabled)
@@ -123,9 +145,21 @@
 
     function updateLink($element) {
         // console.log('updating', $element);
+        var iconTooltip = options.revealOpenOption == "O" ? 
+            appTextMessages.tooltips.openFolder :
+            appTextMessages.tooltips.linkText;
+
+        // update class (folder or arrow)
+        currentIconClass = "aliensun-link-icon" + 
+                ( options.revealOpenOption == "R"? "-arrow": "" );
+
+        $container.removeClass();
+        $container.addClass(currentIconClass);
+
         $element.each(function(index, el) {
             // console.log('el href = ', $(el).attr('href'));
             $icon
+                .attr("title", iconTooltip)
                 .clone()
                 .data('link', $(el).attr('href')) // added to container
                 .insertAfter($(el));
@@ -137,7 +171,7 @@
       * (needed for updating at icon pref. change)
       */
     function removeLinkIcons() {
-        var $icons = $('.aliensun-link-icon');
+        var $icons = $('.aliensun-link-icon, .aliensun-link-icon-arrow');
         // console.log('test',$icons);
 
         $icons.remove();
@@ -189,7 +223,8 @@
 
             // get elements that are with-out icon - avoid multiple icons
             var $elements = $(this).filter(function(index, item) {
-                return !$(this).next().is('.aliensun-link-icon');
+                return !$(this)
+                    .next().is('.aliensun-link-icon,.aliensun-link-icon-arrow');
             });
 
             updateLink($elements);
