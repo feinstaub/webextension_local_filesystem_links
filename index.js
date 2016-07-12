@@ -1,16 +1,16 @@
 var self = require( "sdk/self" ),
     pageMod = require( "sdk/page-mod" ),
     array = require( "sdk/util/array" ),
-    launcher = require( "./launch-local-process" ),
-    prefs = require( "./common/preferences" ),
-    CONST = require( "./common/constants" ),
+    launcher = require( "./lib/launch-local-process" ),
+    prefs = require( "./lib/common/preferences" ),
+    CONST = require( "./lib/common/constants" ),
     workers = [],
     attachedCM = false, // Check if context menu is attached.
     mod = {},
     attached = false,
-    statusIcon = require('./toolbar/statusIcon').create(false),
+    statusIcon = require('./lib/toolbar/statusIcon').create(false),
     tabs = require( "sdk/tabs" ),
-    { isUriIncluded } = require('./utils/matchUrl');
+    { isUriIncluded } = require('./lib/utils/matchUrl');
 
 var jqueryScript = "js/jquery-1.11.3.min.js",
     jqueryObserveScript = "js/jquery-observe.js";
@@ -30,7 +30,7 @@ function onAttach( worker ) {
     if ( !attachedCM ) {
 
         // Add context menu (only if include matches, that's why requiring here)
-        require( "./contextMenu" )( function( path, reveal ) { // Callback
+        require( "./lib/contextMenu" )( function( path, reveal ) { // Callback
             launcher.start( path, reveal );
         } );
 

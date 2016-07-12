@@ -3,8 +3,7 @@
     "name": "alien-local-filesystem-links",
     "version": "0.99.42",
     "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
-    "main": "lib/main.js",
-    "main-NEW-later": "index.js",
+    "main": "index.js",
     "author": "austrALIENsun",
     "scripts": {
       "jpm": "jpm run",
