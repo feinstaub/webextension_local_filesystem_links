@@ -87,7 +87,10 @@ function onAttach( worker ) {
         newEmitObj[ prefName ] = prefs.options[ prefName ];
 
         // console.log('pref link change', newEmitObj, prefName);
-        worker.port.emit( "prefChange:" + prefName, newEmitObj );
+        if ( worker && ( worker.port.emit !== undefined ) ) {
+            //console.log('worker', worker);
+            worker.port.emit( "prefChange:" + prefName, newEmitObj );
+        }
     }
 
     prefs.addPrefChangeHandler( "enableLinkIcons", onPrefLinkChange );
@@ -162,7 +165,7 @@ function main() {
     prefs.addPrefChangeHandler( "whitelist", onWhitelistChange );
 }
 
-tabs.open( "http://jsfiddle.net/awolf2904/tefcs74q/" ); // Debugging tab
+//tabs.open( "http://jsfiddle.net/awolf2904/tefcs74q/" ); // Debugging tab
 //tabs.open( "127.0.0.1:3000" ); // Debugging tab
 
 function getAttached() {
