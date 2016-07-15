@@ -2,7 +2,7 @@ var self = require( "sdk/self" ),
     pageMod = require( "sdk/page-mod" ),
     array = require( "sdk/util/array" ),
     launcher = require( "./lib/launch-local-process" ),
-    prefs = require( "./lib/common/preferences" ),
+    simplePrefs = require( "sdk/simple-prefs" ),
     CONST = require( "./lib/common/constants" ),
     workers = [],
     attachedCM = false, // Check if context menu is attached.
@@ -48,11 +48,18 @@ function onAttach( worker ) {
     */
     worker.on( "message", function( actionObj ) {
 
-        switch ( actionObj.action ) {
+        if ( actionObj.backslashReplaceRequired ) {
+            // special handling required at icon click
+            actionObj.url = actionObj.url.replace(/\\/g, '/'); // replace backslashes
 
+            // we need to check if file has 2 slashes because ff won't fix it
+            actionObj.url = actionObj.url.replace(/file:[\/]{2,3}/i, 'file:\/\/\/');
+        }
+
+        switch ( actionObj.action ) {
             // Actions from content-script
             case "open":
-                launcher.start( actionObj.url );
+                launcher.start( actionObj.url );    
             break;
 
             case "reveal":
@@ -62,7 +69,7 @@ function onAttach( worker ) {
 
     } );
 
-    worker.port.emit( "init", prefs.options, CONST );
+    worker.port.emit( "init", simplePrefs.prefs, CONST );
 
     // Pageshow / pagehide not needed but we could remove workers if page is hidden
     // could be useful for context menus. --> not needed here
@@ -73,17 +80,24 @@ function onAttach( worker ) {
     // Clean worker if it is detached
     worker.on( "detach", function() {
         array.remove( workers, this );
+
+        // remove prefChangeHandlers
+        simplePrefs.removeListener( "enableLinkIcons", onPrefLinkChange );
+        simplePrefs.removeListener( "revealOpenOption", onPrefLinkChange );
     } );
 
     function onPrefLinkChange( prefName ) {
         var newEmitObj = {};
-        newEmitObj[ prefName ] = prefs.options[ prefName ];
+        newEmitObj[ prefName ] = simplePrefs.prefs[ prefName ];
 
-        // console.log('pref link change', newEmitObj, prefName);
-        worker.port.emit( "prefLinkIconChange", newEmitObj );
+        // @info: no checks if worker exists needed here because we're
+        //        removing the prefChange Listener with worker detach event.
+        worker.port.emit( "prefChange:" + prefName, newEmitObj );
     }
 
-    prefs.addPrefChangeHandler( "enableLinkIcons", onPrefLinkChange );
+    // register simplePref events
+    simplePrefs.on( "enableLinkIcons", onPrefLinkChange );
+    simplePrefs.on( "revealOpenOption", onPrefLinkChange );
 }
 
 /**
@@ -92,7 +106,7 @@ function onAttach( worker ) {
  */
 function createMod() {
 
-    var whitelist = prefs.options.whitelist || "*";
+    var whitelist = simplePrefs.prefs.whitelist || "*";
 
     mod = pageMod.PageMod( {
         include: whitelist.split( /\s+/ ),
@@ -100,7 +114,7 @@ function createMod() {
         //AttachTo: 'top', // multiple attachments needed if there are iframes
                            // pageMod can be attached multiple times!!!
         contentScriptOptions: {
-            enableLinkIcons: prefs.options.enableLinkIcons
+            enableLinkIcons: simplePrefs.prefs.enableLinkIcons
         },
         contentScriptFile: [
 
@@ -151,7 +165,7 @@ function main() {
         createMod();
     }
 
-    prefs.addPrefChangeHandler( "whitelist", onWhitelistChange );
+    simplePrefs.on( "whitelist", onWhitelistChange );
 }
 
 //tabs.open( "http://jsfiddle.net/awolf2904/tefcs74q/" ); // Debugging tab

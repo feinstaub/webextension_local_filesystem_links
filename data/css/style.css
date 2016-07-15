@@ -1,14 +1,14 @@
-.aliensun-link-icon {
+.aliensun-link-icon, .aliensun-link-icon-arrow {
     display: inline-table;
     padding-left: 0.1em;
 }
 
-.aliensun-link-icon a {
+.aliensun-link-icon a, .aliensun-link-icon-arrow a {
     display: table-cell;
     text-decoration: none;
 }
 
-.aliensun-link-icon i{
+.aliensun-link-icon i, .aliensun-link-icon-arrow i {
     color: orange; /*#F3C300;*/
     font-size: 100%;
     text-shadow: 0.1em 0.1em 0.1em rgba(150, 150, 150, 1);
@@ -22,4 +22,12 @@
 
 .aliensun-link-icon i:hover:after{
     content: "folder_open";
+}
+
+.aliensun-link-icon-arrow i:after {
+    content: "label";
+}
+
+.aliensun-link-icon-arrow i:hover:after {
+    content: "label_outline";
 }
