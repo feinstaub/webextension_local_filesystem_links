@@ -1,6 +1,21 @@
 Changelog for Local Filesystem Links
 ====================================
 
+v0.99.45
+--------
+* IMPROVED: Better link scanning with jQuery Observe
+            Trello links are working now. See issue #56
+* FIX: Non standard backslash links are working now. See issue #57
+* CHECKED: Addon is multi-process compatible, see issue #48
+* SECURITY: Added option to enable links to executable files (default is disabled)
+            See issue #16
+* CHANGE:  New icon style with scaling to text - see issue #53 / #63
+* FEATURE: Added Addonbar icon for easier access to config & to visualize if current tab is whitelisted
+* FEATURE: Added localization (languages English, German & Russian)
+           Russian translation contributed by lmaodzedun 
+* FEATURE: New option to change default text link click behaviour (open/reveal)
+
+
 v0.99.42
 --------
 * CLEANUP: remove jquery and other useless files, cleanup code
