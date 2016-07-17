@@ -92,11 +92,14 @@
     // Use delegate so the click event is also avaliable at newly added links
     $( document ).on( "click", fileLinkSelectors.join( ", " ), function( e ) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
-        //console.log( "clicked file link: " + this.href, options.revealOpenOption);
-        self.postMessage( {
-            action: options.revealOpenOption == "O" ? "open": "reveal",
-            url: decodeURIComponent( this.href )
-        } );
+        // console.log( "clicked file link: " + this.href, options.revealOpenOption);
+        
+        self.postMessage({ 
+            action: "open",
+            // removed decodeURIComponent because env. var. failed
+            url: this.href, //decodeURIComponent(this.href),
+            reveal: options.revealOpenOption == "O" ? false: true
+        });
     } );
 
     /*
@@ -108,16 +111,17 @@
 
         // console.log('clicked icon', link, options.revealOpenOption);
 
-        self.postMessage( {
-            action: options.revealOpenOption == "O" ? "reveal": "open",
-            // url: decodeURIComponent( $(e.currentTarget).data('link'))
-            url: decodeURIComponent(link),
-            backslashReplaceRequired: true // @todo check Linux too
-        } );
+        self.postMessage({ 
+            action: "open",
+            // removed decodeURIComponent because env. var. failed
+            url: link, //decodeURIComponent(link),
+            reveal: options.revealOpenOption == "O" ? true: false,
+            backslashReplaceRequired: true
+        });
     }
 
     // icon click handler
-    $( document ).on( "click", 
+    $(document).on("click", 
         "[class^='aliensun-link-icon']", // folder or arrow
         openFolderHandler);
 

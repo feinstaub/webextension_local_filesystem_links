@@ -10,7 +10,9 @@ var self = require( "sdk/self" ),
     attached = false,
     statusIcon = require('./lib/toolbar/statusIcon').create(false),
     tabs = require( "sdk/tabs" ),
-    { isUriIncluded } = require('./lib/utils/matchUrl');
+    { isUriIncluded } = require('./lib/utils/matchUrl'),
+    sysEnv = require('./lib/system-env-vars'),
+    curSysEnv = sysEnv();
 
 var jqueryScript = "js/jquery-1.11.3.min.js",
     jqueryObserveScript = "js/jquery-observe.js";
@@ -48,6 +50,7 @@ function onAttach( worker ) {
     */
     worker.on( "message", function( actionObj ) {
 
+        // console.log('onMessage', actionObj);
         if ( actionObj.backslashReplaceRequired ) {
             // special handling required at icon click
             actionObj.url = actionObj.url.replace(/\\/g, '/'); // replace backslashes
@@ -59,11 +62,12 @@ function onAttach( worker ) {
         switch ( actionObj.action ) {
             // Actions from content-script
             case "open":
-                launcher.start( actionObj.url );    
-            break;
+                // check if link contains a window path variable
+                // later add a option to enable env. paths vars?
+                // console.log('checklink', actionObj);
+                var replacedLink = curSysEnv.checkLink(actionObj.url);
 
-            case "reveal":
-                launcher.start( actionObj.url, true);
+                launcher.start(replacedLink, actionObj.reveal);
             break;
         }
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Issue 22 - Windows / Linux path variables</title>
+    </head>
+    <body>
+        <h1>Test if we can open links with environment path variables e.g. %HOMEPATH%</h1>
+        <p>Why are three slashes required file:///%HOMEDRIVE%? With only two it will be relpace to file:///</p>
+        <p>Probably FF will remove %HOMEDRIVE% because it is not a valid uri.</p>
+        <h2>Info to env. var</h2>
+        <p>Windows list all env. variables with <strong>SET</strong> command.</p>
+        <p>Linux list all env. variables with <strong>printenv</strong> command.</p>
+        Windows setting: SET name=c:\<br/>
+        Linux setting: export name=/tmp<br/>
+        <h2>Windows</h2>
+        <ul>
+            <li><a href="file:///%HOMEDRIVE%%HOMEPATH%/">%HOMEPATH%/</a></li>
+            <li><a href="file://%HOMEDRIVE%%HOMEPATH%/">%HOMEPATH% with only two slashes file:// (not working)/</a></li>
+            <li><a href="file:///%LOCALAPPDATA%/">%LOCALAPPDATA%/</a></li>
+            <li><a href="file:///%LOCALAPPDATA%/blank in path/test.txt">%LOCALAPPDATA% with blanks in path C:\Users\%USERNAME%\AppData\Local\blank in path\test.txt/</a></li>
+        </ul>
+        <h2>Linux</h2>
+        <ul>
+            <li><a href="file:///$HOME$/">$HOME$/</a></li>
+            <li><a href="file:///$HOME$/path with space">$HOME$/path with space</a></li>
+            <li><a href="file:///$TMPDIR$/">$TMPDIR$ set with export TMPDIR="/tmp"</a></li>
+            <li><a href="file:///$TMPDIR$/$TEST$/test.txt">$TMPDIR$ $TEST set with export TEST="test" (combined $TMPDIR$TEST/test.txt)</a></li>
+        </ul>
+        </p>
+    </body>
+</html>
