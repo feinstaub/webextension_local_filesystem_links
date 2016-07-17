@@ -1,0 +1,19 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 5,
+        "sourceType": "module",
+    },
+    "extends": "defaults/configurations/google",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "no-console": "off",
+        "no-invalid-this": 0,
+        "new-cap": [0, {newIsCap: false}]
+    },
+    "globals": {
+        "jQuery": true
+    }
+}

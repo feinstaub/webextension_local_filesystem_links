@@ -1,24 +1,25 @@
 {
-    "title": "Local Filesystem Links",
-    "name": "alien-local-filesystem-links",
-    "version": "0.99.42",
-    "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
-    "main": "index.js",
-    "author": "austrALIENsun",
-    "scripts": {
-      "jpm": "jpm run",
-      "jpmLinux": "jpm run -b $(which firefox)"
-    },
-    "engines": {
-        "firefox": ">=38.0a1",
-        "fennec": ">=38.0a1"
-    },
-    "license": "MPL 1.1/GPL 3.0",
-    "id": "jid1-JAzC7z53jemo5Q@jetpack",
-    "permissions": {
-        "multiprocess": true
-    },
-    "preferences": [{
+  "title": "Local Filesystem Links",
+  "name": "alien-local-filesystem-links",
+  "version": "0.99.42",
+  "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
+  "main": "index.js",
+  "author": "austrALIENsun",
+  "scripts": {
+    "jpm": "jpm run",
+    "jpmLinux": "jpm run -b $(which firefox)"
+  },
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "license": "MPL 1.1/GPL 3.0",
+  "id": "jid1-JAzC7z53jemo5Q@jetpack",
+  "permissions": {
+    "multiprocess": true
+  },
+  "preferences": [
+    {
       "name": "whitelist",
       "title": "Urls added to white-list will be clickable",
       "description": "Any link that will be added to the white-list will be clickable. Empty or * will enable all. Multiple urls are space separated. Wildcards are allowed e.g. *.trello.com",
@@ -46,15 +47,23 @@
       "description": "Changes the default click behaviour of file-links. Default = direct file link open.",
       "value": "O",
       "options": [
-          {
-              "value": "O",
-              "label": "Open"
-          },
-          {
-              "value": "R",
-              "label": "Reveal"
-          }
+        {
+          "value": "O",
+          "label": "Open"
+        },
+        {
+          "value": "R",
+          "label": "Reveal"
+        }
       ]
     }
-]
+  ],
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.1.0",
+    "eslint-config-defaults": "^9.0.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-watch": "^4.3.8"
+  }
 }

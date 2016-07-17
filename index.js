@@ -1,158 +1,158 @@
-var self = require( "sdk/self" ),
-    pageMod = require( "sdk/page-mod" ),
-    array = require( "sdk/util/array" ),
-    launcher = require( "./lib/launch-local-process" ),
-    simplePrefs = require( "sdk/simple-prefs" ),
-    CONST = require( "./lib/common/constants" ),
-    workers = [],
-    attachedCM = false, // Check if context menu is attached.
-    mod = {},
-    attached = false,
-    statusIcon = require('./lib/toolbar/statusIcon').create(false),
-    tabs = require( "sdk/tabs" ),
-    { isUriIncluded } = require('./lib/utils/matchUrl'),
-    sysEnv = require('./lib/system-env-vars'),
-    curSysEnv = sysEnv();
+var self = require('sdk/self'),
+  pageMod = require('sdk/page-mod'),
+  array = require('sdk/util/array'),
+  launcher = require('./lib/launch-local-process'),
+  simplePrefs = require('sdk/simple-prefs'),
+  CONST = require('./lib/common/constants'),
+  workers = [],
+  attachedCM = false, // Check if context menu is attached.
+  mod = {},
+  attached = false,
+  statusIcon = require('./lib/toolbar/statusIcon').create(false),
+  tabs = require('sdk/tabs'),
+  {isUriIncluded} = require('./lib/utils/matchUrl'),
+  sysEnv = require('./lib/system-env-vars'),
+  curSysEnv = sysEnv();
 
-var jqueryScript = "js/jquery-1.11.3.min.js",
-    jqueryObserveScript = "js/jquery-observe.js";
+var jqueryScript = 'js/jquery-1.11.3.min.js',
+  jqueryObserveScript = 'js/jquery-observe.js';
 
-/**
- * Pagemode onAttach handler (communication handling to content script
- * and for launching/opening files)
- */
-function onAttach( worker ) {
+/*
+* Pagemode onAttach handler (communication handling to content script
+* and for launching/opening files)
+*/
+function onAttach(worker) {
 
-    attached = true; // For unit testing to see that the pageMod is attached
+  attached = true; // For unit testing to see that the pageMod is attached
 
-    // statusIcon.changeState(true); // change status icon to active
+  // statusIcon.changeState(true); // change status icon to active
 
-    array.add( workers, worker );
+  array.add(workers, worker);
 
-    if ( !attachedCM ) {
+  if (!attachedCM) {
+    // Add context menu (only if include matches, that's why requiring here)
+    require('./lib/contextMenu')(function(path, reveal) { // Callback
+      launcher.start(path, reveal);
+    });
 
-        // Add context menu (only if include matches, that's why requiring here)
-        require( "./lib/contextMenu" )( function( path, reveal ) { // Callback
-            launcher.start( path, reveal );
-        } );
+    // // add icon to display that we have enabled links on page
+    // statusIcon.changeState(true);
+    attachedCM = true; // Needed because onAttach
+                       // can be executed multiple times
+  }
 
-        // // add icon to display that we have enabled links on page
-        // statusIcon.changeState(true);
-        attachedCM = true; // Needed because onAttach
-                           // can be executed multiple times
+  // Worker events
+  /**
+  * Contentscript message
+  * check action:
+  *   - open: starts windows explorer with a fixed path (no file:// etc)
+  */
+  worker.on('message', function(actionObj) {
+
+    // console.log('onMessage', actionObj);
+    if (actionObj.backslashReplaceRequired) {
+      // special handling required at icon click
+      actionObj.url = actionObj.url.replace(/\\/g, '/'); // replace backslashes
+
+      // we need to check if file has 2 slashes because ff won't fix it
+      actionObj.url = actionObj.url.replace(/file:[\/]{2,3}/i, 'file:\/\/\/');
     }
 
-    // Worker events
-    /**
-    * Contentscript message
-    * check action:
-    *   - open: starts windows explorer with a fixed path (no file:// etc)
-    */
-    worker.on( "message", function( actionObj ) {
+    switch (actionObj.action) {
+    // Actions from content-script
+    case 'open':
+      // check if link contains a window path variable
+      // later add a option to enable env. paths vars?
+      // console.log('checklink', actionObj);
+      var replacedLink = curSysEnv.checkLink(actionObj.url);
 
-        // console.log('onMessage', actionObj);
-        if ( actionObj.backslashReplaceRequired ) {
-            // special handling required at icon click
-            actionObj.url = actionObj.url.replace(/\\/g, '/'); // replace backslashes
+      launcher.start(replacedLink, actionObj.reveal);
+      break;
 
-            // we need to check if file has 2 slashes because ff won't fix it
-            actionObj.url = actionObj.url.replace(/file:[\/]{2,3}/i, 'file:\/\/\/');
-        }
-
-        switch ( actionObj.action ) {
-            // Actions from content-script
-            case "open":
-                // check if link contains a window path variable
-                // later add a option to enable env. paths vars?
-                // console.log('checklink', actionObj);
-                var replacedLink = curSysEnv.checkLink(actionObj.url);
-
-                launcher.start(replacedLink, actionObj.reveal);
-            break;
-        }
-
-    } );
-
-    worker.port.emit( "init", simplePrefs.prefs, CONST );
-
-    // Pageshow / pagehide not needed but we could remove workers if page is hidden
-    // could be useful for context menus. --> not needed here
-    /*Worker.on('pageshow', function() { array.add(workers, this); });
-      worker.on('pagehide', function() { array.remove(workers, this); });
-      */
-
-    // Clean worker if it is detached
-    worker.on( "detach", function() {
-        array.remove( workers, this );
-
-        // remove prefChangeHandlers
-        simplePrefs.removeListener( "enableLinkIcons", onPrefLinkChange );
-        simplePrefs.removeListener( "revealOpenOption", onPrefLinkChange );
-    } );
-
-    function onPrefLinkChange( prefName ) {
-        var newEmitObj = {};
-        newEmitObj[ prefName ] = simplePrefs.prefs[ prefName ];
-
-        // @info: no checks if worker exists needed here because we're
-        //        removing the prefChange Listener with worker detach event.
-        worker.port.emit( "prefChange:" + prefName, newEmitObj );
+    default:
+      // not handled action
+      break;
     }
+  });
 
-    // register simplePref events
-    simplePrefs.on( "enableLinkIcons", onPrefLinkChange );
-    simplePrefs.on( "revealOpenOption", onPrefLinkChange );
+  worker.port.emit('init', simplePrefs.prefs, CONST);
+
+  // Pageshow / pagehide not needed but we could remove workers if page is hidden
+  // could be useful for context menus. --> not needed here
+  /*Worker.on('pageshow', function() { array.add(workers, this); });
+  worker.on('pagehide', function() { array.remove(workers, this); });
+  */
+
+  // Clean worker if it is detached
+  worker.on('detach', function() {
+    array.remove(workers, worker); //this);
+
+    // remove prefChangeHandlers
+    simplePrefs.removeListener('enableLinkIcons', onPrefLinkChange);
+    simplePrefs.removeListener('revealOpenOption', onPrefLinkChange);
+  });
+
+  function onPrefLinkChange(prefName) {
+    var newEmitObj = {};
+
+    newEmitObj[ prefName ] = simplePrefs.prefs[ prefName ];
+
+    // @info: no checks if worker exists needed here because we're
+    //        removing the prefChange Listener with worker detach event.
+    worker.port.emit('prefChange:' + prefName, newEmitObj);
+  }
+
+  // register simplePref events
+  simplePrefs.on('enableLinkIcons', onPrefLinkChange);
+  simplePrefs.on('revealOpenOption', onPrefLinkChange);
 }
 
-/**
- * Creates a new pageMod.
- * Required as a function so we can re-create the pageMod on whitelist preference changes.
- */
+/*
+* Creates a new pageMod.
+* Required as a function so we can re-create the pageMod on whitelist preference changes.
+*/
 function createMod() {
 
-    var whitelist = simplePrefs.prefs.whitelist || "*";
+  var whitelist = simplePrefs.prefs.whitelist || '*';
 
-    mod = pageMod.PageMod( {
-        include: whitelist.split( /\s+/ ),
+  mod = pageMod.PageMod({
+    include: whitelist.split(/\s+/),
+    //AttachTo: 'top', // multiple attachments needed if there are iframes
+    // pageMod can be attached multiple times!!!
+    contentScriptOptions: {
+      enableLinkIcons: simplePrefs.prefs.enableLinkIcons
+    },
+    contentScriptFile: [
+      // Vendor scripts
+      self.data.url(jqueryScript),
 
-        //AttachTo: 'top', // multiple attachments needed if there are iframes
-                           // pageMod can be attached multiple times!!!
-        contentScriptOptions: {
-            enableLinkIcons: simplePrefs.prefs.enableLinkIcons
-        },
-        contentScriptFile: [
+      // jquery plugin
+      self.data.url(jqueryObserveScript),
 
-            // Vendor scripts
-            self.data.url( jqueryScript ),
+      // Custom scripts
+      self.data.url('js/fileLinkAddonContent.js')
+    ],
+    contentStyleFile: [
+      // Custom styles
+      './css/style.css',
 
-            // jquery plugin
-            self.data.url( jqueryObserveScript ),
-
-            // Custom scripts
-            self.data.url( "js/fileLinkAddonContent.js" )
-        ],
-        contentStyleFile: [
-
-            // Custom styles
-            "./css/style.css",
-
-            // Css libs
-            "./css/self-hosted-materialize.css"
-        ],
-        onAttach: onAttach
-    } );
+      // Css libs
+      './css/self-hosted-materialize.css'
+    ],
+    onAttach: onAttach
+  });
 }
 
-/**
- * Tab event handler for status icon
- * state = true --> green icon = links active in current tab
- * state = false --> red icon = links active in current tab
- */
+/*
+* Tab event handler for status icon
+* state = true --> green icon = links active in current tab
+* state = false --> red icon = links active in current tab
+*/
 function checkStatus() {
-    // if uri matches include change state to true
-    // console.log('checkStatus: ', tabs.activeTab.url, mod.include);
-    statusIcon.changeState(isUriIncluded(mod.include,
-        tabs.activeTab.url));
+// if uri matches include change state to true
+// console.log('checkStatus: ', tabs.activeTab.url, mod.include);
+  statusIcon.changeState(isUriIncluded(mod.include,
+    tabs.activeTab.url));
 }
 
 // register event handlers for statusIcon
@@ -160,23 +160,23 @@ tabs.on('activate', checkStatus);
 tabs.on('pageshow', checkStatus);
 
 function main() {
-    createMod(); //First init
+  createMod(); //First init
 
-    function onWhitelistChange( prefName ) {
-        // mod.include = prefs.options[prefName].split( /\s+/ ); // update incl.
-        // updating would be OK but pageMod keeps active after removal from wl.
-        mod.destroy();
-        createMod();
-    }
+  function onWhitelistChange(/* prefName */) {
+    // mod.include = prefs.options[prefName].split(/\s+/); // update incl.
+    // updating would be OK but pageMod keeps active after removal from wl.
+    mod.destroy();
+    createMod();
+  }
 
-    simplePrefs.on( "whitelist", onWhitelistChange );
+  simplePrefs.on('whitelist', onWhitelistChange);
 }
 
-//tabs.open( "http://jsfiddle.net/awolf2904/tefcs74q/" ); // Debugging tab
-//tabs.open( "127.0.0.1:3000" ); // Debugging tab
+//tabs.open('http://jsfiddle.net/awolf2904/tefcs74q/'); // Debugging tab
+//tabs.open('127.0.0.1:3000'); // Debugging tab
 
 function getAttached() {
-    return attached;
+  return attached;
 }
 
 exports.isAttached = getAttached;
