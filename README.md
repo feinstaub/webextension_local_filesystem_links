@@ -20,6 +20,9 @@ Features
 - Supports links with double and tripple slashes (e.g. file:// or file:///)
 - Right click context menu that opens a text selection that contains a file link + option to reveal the directory of a directly linked file.
 - Whitelist option to enable local links only at a specific url e.g. `*.trello.com`
+- Statusbar icon for displaying if links are active for current tab & for easier access to addon settings
+- Option to change the default text link behaviour (open or reveal)
+- Localization (current languages German, English, Russian)
 
 
 Screenshots
@@ -48,6 +51,15 @@ In Node.js command prompt:
 ```
 npm install jpm -g
 ```
+
+***Install npm dependencies***
+`npm install`
+
+If gulp is required globally use `npm install gulp -g`.
+
+***Linting your code***
+Running `gulp` will watch all js files and repeats linting on change.
+With `gulp lint` you can do a one time lint.
 
 ***Run various jpm commands.***
 
