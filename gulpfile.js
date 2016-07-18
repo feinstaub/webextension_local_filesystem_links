@@ -4,7 +4,7 @@ var eslint = require('gulp-eslint');
  
 var sourceFiles = [
     'index.js', 
-    'lib/js/*.js', 
+    'lib/**/*.js', 
     '!data/js/jquery*.js',
     '!data/js/jquery-observe.js',
     'data/js/*.js'

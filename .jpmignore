@@ -13,3 +13,5 @@ node_modules/
 reviews/
 test/
 TODO
+.eslintrc
+gulpfile.js
