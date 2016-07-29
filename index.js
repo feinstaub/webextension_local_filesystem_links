@@ -9,7 +9,7 @@ var self = require('sdk/self'),
     mod = {},
     attached = false,
     statusIcon = require('./lib/toolbar/statusIcon').create(false),
-    tabs = require( "sdk/tabs" ),
+    tabs = require('sdk/tabs'),
     {isUriIncluded} = require('./lib/utils/matchUrl'),
     {env} = require('sdk/system/environment'),
     strUtils = require('./lib/utils/string-util');
@@ -53,14 +53,16 @@ function onAttach(worker) {
 
         // prepare linux path with ~/ to a correct url that FF can handle
         // info: windows path e.g. c:\~\temp is no problem because only file:///~/ will be replaced
-        actionObj.url = actionObj.url.replace(/file:[\/]+~\//, strUtils.strFormat('file:///{0}/', [env['HOME']]));
+        actionObj.url = actionObj.url.
+            replace(/file:[\/]+~\//, strUtils.
+                strFormat('file:///{0}/', [env['HOME']]));
         //console.log(env['HOME'], actionObj.url);
 
-        if (simplePrefs.prefs.revealOpenOption === 'D' && 
+        if (simplePrefs.prefs.revealOpenOption === 'D' &&
             actionObj.action === 'open') {
             tabs.open(replacedLink);
         } else {
-            if ( actionObj.backslashReplaceRequired ) {
+            if (actionObj.backslashReplaceRequired) {
                 // special handling required at icon click
                 replacedLink = replacedLink.replace(/\\/g, '/'); // replace backslashes
 
@@ -69,17 +71,17 @@ function onAttach(worker) {
             }
 
             // check if default is open or reveal
-            if (simplePrefs.prefs.revealOpenOption === 'R' && 
+            if (simplePrefs.prefs.revealOpenOption === 'R' &&
                 simplePrefs.prefs.revealOpenOption !== 'D') {
                 // change logic
                 if (actionObj.action === 'open') {
                     actionObj.action = 'reveal';
                 } else {
                     actionObj.action = 'open';
-                } 
+                }
             }
 
-            switch ( actionObj.action ) {
+            switch (actionObj.action) {
                 // Actions from content-script
                 case "open":
                     launcher.start( replacedLink );    
@@ -90,7 +92,7 @@ function onAttach(worker) {
                 break;
             }
         }
-    } );
+    });
 
     // Pageshow / pagehide not needed but we could remove workers if page is
     // hidden could be useful for context menus. --> not needed here

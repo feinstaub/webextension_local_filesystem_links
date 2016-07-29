@@ -25,22 +25,21 @@
 
         if (options.revealOpenOption === 'D') {
             tooltipText = appTextMessages.tooltips.openInBrowser;
-        }
-        else {
+        } else {
             tooltipText = options.revealOpenOption === 'O' ?
-                appTextMessages.tooltips.linkText:
+                appTextMessages.tooltips.linkText :
                 appTextMessages.tooltips.openFolder;
         }
-        
-        $('a').filter(fileLinkSelectors.join(', '))
-            .attr('title', tooltipText);
+
+        $('a').filter(fileLinkSelectors.join(', ')).
+            attr('title', tooltipText);
     }
 
     /*
     * Activates the plugin - add icon after link and starts observer if enabled
     */
     function activate() {
-        // console.log(options);
+        console.log(options);
         if (options.enableLinkIcons) {
             currentIconClass = 'aliensun-link-icon' +
             (options.revealOpenOption == 'R' ? '-arrow' : '');
@@ -49,6 +48,7 @@
             $container.addClass(currentIconClass);
 
             updateLink($(fileLinkSelectors.join(', ')));
+            console.log('adding link icons now...', $(fileLinkSelectors.join(', ')));
         }
 
         // we could add a if case here to add tooltip disable pref.
@@ -66,6 +66,7 @@
         // console.log('test', appTextMessages);
         $icon = $container.append($('<i/>').addClass('material-icons'));
 
+        console.log('init addon');
         // now everything is ready to load
         activate();
     });
@@ -90,11 +91,11 @@
     $(document).on('click', fileLinkSelectors.join(', '), function(e) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
         //console.log( "clicked file link: " + this.href, options.revealOpenOption);
-        self.postMessage( {
+        self.postMessage({
             action: 'open',
-            url: decodeURIComponent( this.href )
-        } );
-    } );
+            url: decodeURIComponent(this.href)
+        });
+    });
 
     /*
     Event for icon to reveal the folder directly
@@ -105,12 +106,12 @@
         e.preventDefault();
         // console.log('clicked icon', link, options.revealOpenOption);
 
-        self.postMessage( {
+        self.postMessage({
             action: 'reveal',
             // url: decodeURIComponent( $(e.currentTarget).data('link'))
             url: decodeURIComponent(link),
             backslashReplaceRequired: true // @todo check Linux too
-        } );
+        });
     }
 
     // icon click handler
@@ -153,7 +154,7 @@
         if (options.revealOpenOption === 'D') {
             iconTooltip = appTextMessages.tooltips.openFolder;
         } else {
-            iconTooltip = options.revealOpenOption == "O" ? 
+            iconTooltip = options.revealOpenOption == 'O' ?
                 appTextMessages.tooltips.openFolder :
                 appTextMessages.tooltips.linkText;
         }

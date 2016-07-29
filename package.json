@@ -48,30 +48,18 @@
       "description": "Changes the default click behaviour of file-links. Default = direct file link open.",
       "value": "O",
       "options": [
-<<<<<<< c90eda264839c463bbbc84127069da3b242d45d8
-        {
-          "value": "O",
-          "label": "Open"
-        },
-        {
-          "value": "R",
-          "label": "Reveal"
-        }
-=======
-          {
-              "value": "O",
-              "label": "Open"
-          },
-          {
-              "value": "R",
-              "label": "Reveal"
-          },
-          {
-              "value": "D",
-              "label": "Direct"
-          }
->>>>>>> feature is working. Tested with Windows. Next test Linux.
-      ]
+      {
+        "value": "O",
+        "label": "Open"
+      },
+      {
+        "value": "R",
+        "label": "Reveal"
+      },
+      {
+        "value": "D",
+        "label": "Direct"
+      }]
     }
   ],
   "devDependencies": {
