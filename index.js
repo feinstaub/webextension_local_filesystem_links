@@ -94,6 +94,7 @@ function onAttach(worker) {
         }
     });
 
+    worker.port.emit('init', simplePrefs.prefs, CONST);
     // Pageshow / pagehide not needed but we could remove workers if page is
     // hidden could be useful for context menus. --> not needed here
     /*Worker.on('pageshow', function() { array.add(workers, this); });
