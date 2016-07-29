@@ -159,9 +159,9 @@
         $element.each(function(index, el) {
             // console.log('el href = ', $(el).attr('href'));
             $icon.
-            attr('title', iconTooltip).
-            clone().data('link', $(el).attr('href')). // added to container
-            insertAfter($(el));
+                attr('title', iconTooltip).
+                clone().data('link', $(el).attr('href')). // added to container
+                insertAfter($(el));
         });
     }
 
@@ -185,50 +185,51 @@
         // observe changes of file links
         // create an observer if someone is changing an a-tag directly
         $(fileLinkSelectors.join(', ')).
-        observe({attributes: true, attributeFilter: ['href']},
-        function(/* record */) {
-            // observe href change
-            //console.log('changed href', $(this), $icon.attr('class'));
+            observe({attributes: true, attributeFilter: ['href']},
+                function(/* record */) {
+                    // observe href change
+                    //console.log('changed href', $(this), $icon.attr('class'));
 
-            // remove previous icon
-            $(this).next('.' + $icon.attr('class')).remove();
-            // add new icons so we have the correct data at the icon
-            updateLink($(this));
-        });
+                    // remove previous icon
+                    $(this).next('.' + $icon.attr('class')).remove();
+                    // add new icons so we have the correct data at the icon
+                    updateLink($(this));
+                });
 
         // observe newly added file links
         $(document).
-        observe('added', fileLinkSelectors.join(', '),
-        function(/* record */) {
-            // Observe if elements matching 'a[href^="file://"]' have been added
-            //
-            // there can be multiple observer callbacks attached now!!
-            // --> if you add three links you'll get three callback events
-            //     with the same elements
-            //     --> store elements in first observer,
-            //         so next observer callback detect that there is
-            //         nothing new
-            //
-            // Info:
-            // That's working but it would be better to not trigger
-            // these callbacks but I'm not sure how to fix.
-            // --> asked if it could be fixed,
-            //     see here https://github.com/kapetan/jquery-observe/issues/5
-            //
-            // Update: 09.03.2016
-            // We're getting only one observer callback for each added element.
-            // So we don't need to store the previous added node.
+            observe('added', fileLinkSelectors.join(', '),
+            function(/* record */) {
+                // Observe if elements matching 'a[href^="file://"]' have been added
+                //
+                // there can be multiple observer callbacks attached now!!
+                // --> if you add three links you'll get three callback events
+                //     with the same elements
+                //     --> store elements in first observer,
+                //         so next observer callback detect that there is
+                //         nothing new
+                //
+                // Info:
+                // That's working but it would be better to not trigger
+                // these callbacks but I'm not sure how to fix.
+                // --> asked if it could be fixed,
+                //     see here https://github.com/kapetan/jquery-observe/issues/5
+                //
+                // Update: 09.03.2016
+                // We're getting only one observer callback for each added element.
+                // So we don't need to store the previous added node.
 
-            //console.log('link added');
-            // console.log($(this).eq(0).html(), record); // this = addedNodes
+                //console.log('link added');
+                // console.log($(this).eq(0).html(), record); // this = addedNodes
 
-            // get elements that are with-out icon - avoid multiple icons
-            var $elements = $(this).filter(function(/* index, item */) {
-                return !$(this).
-                next().is('.aliensun-link-icon,.aliensun-link-icon-arrow');
+                // get elements that are with-out icon - avoid multiple icons
+                var $elements = $(this).filter(function(/* index, item */) {
+                    return !$(this).
+                        next().
+                        is('.aliensun-link-icon,.aliensun-link-icon-arrow');
+                });
+
+                updateLink($elements);
             });
-
-            updateLink($elements);
-        });
     }
 }(jQuery, window.self));
