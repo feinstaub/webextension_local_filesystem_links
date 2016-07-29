@@ -21,18 +21,25 @@
         currentIconClass; // folder or arrow?
 
     function updateLinkTooltip() {
-        var tooltipText = options.revealOpenOption == 'O' ?
-        appTextMessages.tooltips.linkText :
-        appTextMessages.tooltips.openFolder;
+        var tooltipText;
 
-        $('a').filter(fileLinkSelectors.join(', ')).attr('title', tooltipText);
+        if (options.revealOpenOption === 'D') {
+            tooltipText = appTextMessages.tooltips.openInBrowser;
+        } else {
+            tooltipText = options.revealOpenOption === 'O' ?
+                appTextMessages.tooltips.linkText :
+                appTextMessages.tooltips.openFolder;
+        }
+
+        $('a').filter(fileLinkSelectors.join(', ')).
+            attr('title', tooltipText);
     }
 
     /*
     * Activates the plugin - add icon after link and starts observer if enabled
     */
     function activate() {
-        // console.log(options);
+        //console.log(options);
         if (options.enableLinkIcons) {
             currentIconClass = 'aliensun-link-icon' +
             (options.revealOpenOption == 'R' ? '-arrow' : '');
@@ -49,7 +56,7 @@
 
     // Get settings from addon
     self.port.on('init', function(addonOptions, constants) {
-        // console.log('init', addonOptions, constants);
+        //console.log('init', addonOptions, constants);
         appTextMessages = constants.MESSAGES.USERMESSAGES;
 
         // load plugin options
@@ -81,13 +88,10 @@
     // Use delegate so the click event is also avaliable at newly added links
     $(document).on('click', fileLinkSelectors.join(', '), function(e) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
-        // console.log( "clicked file link: " + this.href, options.revealOpenOption);
-
+        //console.log( "clicked file link: " + this.href, options.revealOpenOption);
         self.postMessage({
             action: 'open',
-            // removed decodeURIComponent because env. var. failed
-            url: this.href, //decodeURIComponent(this.href),
-            reveal: options.revealOpenOption == 'O' ? false : true
+            url: decodeURIComponent(this.href)
         });
     });
 
@@ -101,11 +105,10 @@
         // console.log('clicked icon', link, options.revealOpenOption);
 
         self.postMessage({
-            action: 'open',
-            // removed decodeURIComponent because env. var. failed
-            url: link, //decodeURIComponent(link),
-            reveal: options.revealOpenOption == 'O' ? true : false,
-            backslashReplaceRequired: true
+            action: 'reveal',
+            // url: decodeURIComponent( $(e.currentTarget).data('link'))
+            url: decodeURIComponent(link),
+            backslashReplaceRequired: true // @todo check Linux too
         });
     }
 
@@ -144,9 +147,15 @@
 
     function updateLink($element) {
         // console.log('updating', $element);
-        var iconTooltip = options.revealOpenOption == 'O' ?
-        appTextMessages.tooltips.openFolder :
-        appTextMessages.tooltips.linkText;
+        var iconTooltip;
+
+        if (options.revealOpenOption === 'D') {
+            iconTooltip = appTextMessages.tooltips.openFolder;
+        } else {
+            iconTooltip = options.revealOpenOption == 'O' ?
+                appTextMessages.tooltips.openFolder :
+                appTextMessages.tooltips.linkText;
+        }
 
         // update class (folder or arrow)
         currentIconClass = 'aliensun-link-icon' +
