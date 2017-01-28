@@ -7,7 +7,8 @@
   "author": "austrALIENsun",
   "scripts": {
     "jpm": "jpm run",
-    "jpmLinux": "jpm run -b $(which firefox)"
+    "jpmLinux": "jpm run -b $(which firefox)",
+    "lint": "gulp"
   },
   "engines": {
     "firefox": ">=38.0a1",
@@ -64,6 +65,6 @@
     "eslint-config-defaults": "^9.0.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
-    "gulp-watch": "^4.3.8"
+    "gulp-plumber": "^1.1.0"
   }
 }
