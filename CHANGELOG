@@ -1,7 +1,7 @@
 Changelog for Local Filesystem Links
 ====================================
 
-v0.99.45-2
+v0.99.46
 --------
 * IMPROVED: Better link scanning with jQuery Observe
             Trello links are working now. See issue #56
@@ -16,7 +16,7 @@ v0.99.45-2
 * FEATURE: Environment path variables are now possible - see issue #22
 * FEATURE: Added Addonbar icon for easier access to config & to visualize if current tab is whitelisted
 * FEATURE: Added localization (languages English, German & Russian)
-           Russian translation contributed by lmaodzedun 
+           Russian translation contributed by lmaodzedun
 * FEATURE: New option to change default text link click behaviour (open/reveal)
 
 
