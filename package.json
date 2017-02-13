@@ -22,22 +22,22 @@
   "preferences": [
     {
       "name": "whitelist",
-      "title": "Urls added to white-list will be clickable",
-      "description": "Any link that will be added to the white-list will be clickable. Empty or * will enable all. Multiple urls are space separated. Wildcards are allowed e.g. *.trello.com",
+      "title": "Enable file link addon for whitelisted URLs",
+      "description": "Any URL that's in the whitelist will enable local file links if you're browsing to that address. Empty or * will enable all. Multiple URLs are space separated. Wildcards are allowed e.g. *.trello.com",
       "type": "string",
       "value": "*"
     },
     {
       "name": "enableExecutables",
       "title": "Enable links to local executable files",
-      "description": "if enabled any progam file can be launched by the addon. (Attention! A malicious site could use this for denial-of-service attack!)",
+      "description": "If enabled any progam file can be launched by the addon. (Attention! A malicious site could use this for denial-of-service attack!)",
       "type": "bool",
       "value": false
     },
     {
       "name": "enableLinkIcons",
       "title": "Enable link icons",
-      "description": "if checked there will be a link added to every local link",
+      "description": "If checked there will be a link added to every local link",
       "type": "bool",
       "value": true
     },
