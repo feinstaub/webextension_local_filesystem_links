@@ -14,7 +14,7 @@ var self = require('sdk/self'),
     sysEnv = require('./lib/system-env-vars'),
     curSysEnv = sysEnv();
 
-var jqueryScript = 'js/jquery-1.11.3.min.js',
+var jqueryScript = 'js/jquery-2.2.4.min.js',
     jqueryObserveScript = 'js/jquery-observe.js';
 
 /*
