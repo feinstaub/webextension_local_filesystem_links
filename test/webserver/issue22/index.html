@@ -13,7 +13,29 @@
         <p>Linux list all env. variables with <strong>printenv</strong> command.</p>
         Windows setting: SET name=c:\<br/>
         Linux setting: export name=/tmp<br/>
+
+        <p>Encoding issue: % in uri is a problem - interference with decodeUriComponent that is required for accents in urls. <br/>
+            with-out decodeUriComponent the links are working as commented below. <br/>
+            Temporary work-around manually encoding in links with env. vars required %25 for % for windows and %24 for $ in Linux
+        </p>
         <h2>Windows</h2>
+        <ul>
+            <li><a href="file:///%25HOMEDRIVE%25%25HOMEPATH%25/">%HOMEPATH%/</a></li>
+            <li><a href="file://%25HOMEDRIVE%%HOMEPATH%25/">%HOMEPATH% with only two slashes file:// (not working)/</a></li>
+            <li><a href="file:///%25LOCALAPPDATA%25/">%LOCALAPPDATA%/</a></li>
+            <li><a href="file:///%25LOCALAPPDATA%25/blank in path/test.txt">%LOCALAPPDATA% with blanks in path C:\Users\%USERNAME%\AppData\Local\blank in path\test.txt/</a></li>
+        </ul>
+        <h2>Linux</h2>
+        <ul>
+            <li><a href="file:///%24HOME%24/">$HOME$/</a></li>
+            <li><a href="file:///%24HOME%24/path with space">$HOME$/path with space</a></li>
+            <li><a href="file:///%24TMPDIR%24/">$TMPDIR$ set with export TMPDIR="/tmp"</a></li>
+            <li><a href="file:///%24TMPDIR%24/%24TEST%24/test.txt">$TMPDIR$ $TEST set with export TEST="test" (combined $TMPDIR$TEST/test.txt)</a></li>
+        </ul>
+        <!--
+            the following would be better but couldn't find a way to implement it
+        -->
+        <!--<h2>Windows</h2>
         <ul>
             <li><a href="file:///%HOMEDRIVE%%HOMEPATH%/">%HOMEPATH%/</a></li>
             <li><a href="file://%HOMEDRIVE%%HOMEPATH%/">%HOMEPATH% with only two slashes file:// (not working)/</a></li>
@@ -26,7 +48,7 @@
             <li><a href="file:///$HOME$/path with space">$HOME$/path with space</a></li>
             <li><a href="file:///$TMPDIR$/">$TMPDIR$ set with export TMPDIR="/tmp"</a></li>
             <li><a href="file:///$TMPDIR$/$TEST$/test.txt">$TMPDIR$ $TEST set with export TEST="test" (combined $TMPDIR$TEST/test.txt)</a></li>
-        </ul>
+        </ul>-->
         </p>
     </body>
 </html>

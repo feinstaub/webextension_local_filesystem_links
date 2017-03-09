@@ -32,6 +32,7 @@ function onAttach(worker) {
     if (!attachedCM) {
         // Add context menu (only if include matches, that's why requiring here)
         require('./lib/contextMenu')(function(path, reveal) { // Callback
+            // console.log('launcher start - context menu', path);
             launcher.start(path, reveal);
         });
 
@@ -67,6 +68,7 @@ function onAttach(worker) {
             // later add a option to enable env. paths vars?
             // console.log('checklink', actionObj);
             var replacedLink = curSysEnv.checkLink(actionObj.url);
+            // var replacedLink = actionObj.url;
 
             launcher.start(replacedLink, actionObj.reveal);
             break;
