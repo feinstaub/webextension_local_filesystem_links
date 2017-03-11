@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Issue 84 - European accents</title>
+    </head>
+    <body>
+        <h1>In version 0.99.46 - European accents can't be opened!</h1>
+        <p>decodeURIComponent is important for direct link click to make these characters work
+        - side effect env. var not working with it (work-around needed for env. var)</p>
+        <h2>Windows</h2>
+        <a href="file://c:/tmp/áéíóú.txt">c:/tmp/áéíóú.txt</a><br/>
+        <a href="file://c:/tmp/áéíóú/áéíóú.txt">c:/tmp/áéíóú/áéíóú.txt</a><br/>
+        <h2>Linux</h2>
+        <a href="file:///~/tmp/áéíóú.txt">/~/tmp/áéíóú.txt</a><br/>
+        <a href="file:///~/tmp/áéíóú/áéíóú.txt">/~/tmp/áéíóú/áéíóú.txt</a><br/>
+    </body>
+</html>

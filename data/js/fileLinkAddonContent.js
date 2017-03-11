@@ -81,12 +81,13 @@
     // Use delegate so the click event is also avaliable at newly added links
     $(document).on('click', fileLinkSelectors.join(', '), function(e) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
-        // console.log( "clicked file link: " + this.href, options.revealOpenOption);
-
+        // console.log( "clicked file link: " + decodeURIComponent(this.href), options.revealOpenOption);
         self.postMessage({
             action: 'open',
             // removed decodeURIComponent because env. var. failed
-            url: this.href, //decodeURIComponent(this.href),
+            // --> encoding required for special chars like accents - implement env. var differently
+            // url: this.href, //decodeURIComponent(this.href),
+            url: decodeURIComponent(this.href),
             reveal: options.revealOpenOption == 'O' ? false : true
         });
     });
@@ -98,13 +99,12 @@
         var link = $(e.currentTarget).data('link');
 
         e.preventDefault();
-
         // console.log('clicked icon', link, options.revealOpenOption);
 
         self.postMessage({
             action: 'open',
             // removed decodeURIComponent because env. var. failed
-            url: link, //decodeURIComponent(link),
+            url: decodeURIComponent(link),
             reveal: options.revealOpenOption == 'O' ? true : false,
             backslashReplaceRequired: true
         });
