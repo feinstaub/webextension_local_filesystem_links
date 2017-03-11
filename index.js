@@ -11,8 +11,10 @@ var self = require('sdk/self'),
     statusIcon = require('./lib/toolbar/statusIcon').create(false),
     tabs = require('sdk/tabs'),
     {isUriIncluded} = require('./lib/utils/matchUrl'),
-    sysEnv = require('./lib/system-env-vars'),
-    curSysEnv = sysEnv();
+    {env} = require('sdk/system/environment'),
+    strUtils = require('./lib/utils/string-util'),
+    sysenv = require('./lib/system-env-vars'),
+    curSysEnv = sysenv();
 
 var jqueryScript = 'js/jquery-2.2.4.min.js',
     jqueryObserveScript = 'js/jquery-observe.js';
@@ -49,38 +51,55 @@ function onAttach(worker) {
     *   - open: starts windows explorer with a fixed path (no file:// etc)
     */
     worker.on('message', function(actionObj) {
+        var replacedLink = curSysEnv.checkLink(actionObj.url);
 
-        // console.log('onMessage', actionObj);
-        if (actionObj.backslashReplaceRequired) {
-            // special handling required at icon click
-            actionObj.url = actionObj.
-                url.replace(/\\/g, '/'); // replace backslashes
+        // prepare linux path with ~/ to a correct url that FF can handle
+        // info: windows path e.g. c:\~\temp is no problem because only file:///~/ will be replaced
+        actionObj.url = actionObj.url.
+            replace(/file:[\/]+~\//, strUtils.
+                strFormat('file:///{0}/', [env['HOME']]));
+        //console.log(env['HOME'], actionObj.url);
 
-            // we need to check if file has 2 slashes because ff won't fix it
-            actionObj.url = actionObj.
-                url.replace(/file:[\/]{2,3}/i, 'file:\/\/\/');
-        }
+        if (simplePrefs.prefs.revealOpenOption === 'D' &&
+            actionObj.action === 'open') {
+            tabs.open(replacedLink);
+        } else {
+            if (actionObj.backslashReplaceRequired) {
+                // special handling required at icon click
+                replacedLink = replacedLink.replace(/\\/g, '/'); // replace backslashes
 
-        switch (actionObj.action) {
-        // Actions from content-script
-        case 'open':
-            // check if link contains a window path variable
-            // later add a option to enable env. paths vars?
-            // console.log('checklink', actionObj);
-            var replacedLink = curSysEnv.checkLink(actionObj.url);
-            // var replacedLink = actionObj.url;
+                // we need to check if file has 2 slashes because ff won't fix it
+                replacedLink = replacedLink.replace(/file:[\/]{2,3}/i,
+                    'file:\/\/\/');
+            }
 
-            launcher.start(replacedLink, actionObj.reveal);
-            break;
+            // check if default is open or reveal
+            if (simplePrefs.prefs.revealOpenOption === 'R' &&
+                simplePrefs.prefs.revealOpenOption !== 'D') {
+                // change logic
+                if (actionObj.action === 'open') {
+                    actionObj.action = 'reveal';
+                } else {
+                    actionObj.action = 'open';
+                }
+            }
 
-        default:
-            // not handled action
-            break;
+            switch (actionObj.action) {
+            // Actions from content-script
+            case 'open':
+                launcher.start(replacedLink);
+                break;
+
+            case 'reveal':
+                launcher.start(replacedLink, true);
+                break;
+            default:
+                break;
+            }
         }
     });
 
     worker.port.emit('init', simplePrefs.prefs, CONST);
-
     // Pageshow / pagehide not needed but we could remove workers if page is
     // hidden could be useful for context menus. --> not needed here
     /*Worker.on('pageshow', function() { array.add(workers, this); });
