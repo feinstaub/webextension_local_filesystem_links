@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Issue 65 - Direct open option</title>
+    </head>
+    <body>
+        <h1>open files directly in FF instead of opening in File explorer.</h1>
+        <p>e.g. open image, PDF in browser with right click open in browser</p>
+        <p>also there is a new option to open link in FF by default</p>
+        <h2>Windows</h2>
+        <ul>
+            <li><a href="file://c:/tmp/content/addon_icon_64x64.png">file://c:/tmp/content/addon_icon_64x64.png</a></li>
+            <li><a href="file://c:\tmp\content\addon_icon_64x64.png">file://c:\tmp\content\addon_icon_64x64.png(backslash link test)</a></li>
+            <li><a href="file://c:/tmp/content/pdf-test.pdf">c:\tmp\content\pdf-test.pdf</a></li>
+        </ul>
+        <h2>Linux</h2>
+        <ul>
+            <li><a href="file:///~/tmp/content/addon_icon_64x64.png">\~\tmp\content\addon_icon_64x64.png</a></li>
+            <li><a href="file:///~/tmp/content/pdf-test.pdf">\~\tmp\content\pdf-test.pdf</a></li>
+        </ul>
+    </body>
+</html>

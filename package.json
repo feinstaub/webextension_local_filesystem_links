@@ -48,15 +48,18 @@
       "description": "Changes the default click behaviour of file-links. Default = direct file link open.",
       "value": "O",
       "options": [
-        {
-          "value": "O",
-          "label": "Open"
-        },
-        {
-          "value": "R",
-          "label": "Reveal"
-        }
-      ]
+      {
+        "value": "O",
+        "label": "Open"
+      },
+      {
+        "value": "R",
+        "label": "Reveal"
+      },
+      {
+        "value": "D",
+        "label": "Direct"
+      }]
     }
   ],
   "devDependencies": {
