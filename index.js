@@ -12,7 +12,9 @@ var self = require('sdk/self'),
     tabs = require('sdk/tabs'),
     {isUriIncluded} = require('./lib/utils/matchUrl'),
     {env} = require('sdk/system/environment'),
-    strUtils = require('./lib/utils/string-util');
+    strUtils = require('./lib/utils/string-util'),
+    sysenv = require('./lib/system-env-vars'),
+    curSysEnv = sysenv();
 
 var jqueryScript = 'js/jquery-2.2.4.min.js',
     jqueryObserveScript = 'js/jquery-observe.js';
@@ -67,7 +69,8 @@ function onAttach(worker) {
                 replacedLink = replacedLink.replace(/\\/g, '/'); // replace backslashes
 
                 // we need to check if file has 2 slashes because ff won't fix it
-                replacedLink = replacedLink.replace(/file:[\/]{2,3}/i, 'file:\/\/\/');
+                replacedLink = replacedLink.replace(/file:[\/]{2,3}/i,
+                    'file:\/\/\/');
             }
 
             // check if default is open or reveal
@@ -82,13 +85,15 @@ function onAttach(worker) {
             }
 
             switch (actionObj.action) {
-                // Actions from content-script
-                case "open":
-                    launcher.start( replacedLink );    
+            // Actions from content-script
+            case 'open':
+                launcher.start(replacedLink);
                 break;
 
-                case "reveal":
-                    launcher.start( replacedLink, true);
+            case 'reveal':
+                launcher.start(replacedLink, true);
+                break;
+            default:
                 break;
             }
         }
