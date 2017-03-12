@@ -51,13 +51,14 @@ function onAttach(worker) {
     *   - open: starts windows explorer with a fixed path (no file:// etc)
     */
     worker.on('message', function(actionObj) {
-        var replacedLink = curSysEnv.checkLink(actionObj.url);
-
         // prepare linux path with ~/ to a correct url that FF can handle
         // info: windows path e.g. c:\~\temp is no problem because only file:///~/ will be replaced
         actionObj.url = actionObj.url.
             replace(/file:[\/]+~\//, strUtils.
                 strFormat('file:///{0}/', [env['HOME']]));
+
+        var replacedLink = curSysEnv.checkLink(actionObj.url);
+
         //console.log(env['HOME'], actionObj.url);
 
         if (simplePrefs.prefs.revealOpenOption === 'D' &&

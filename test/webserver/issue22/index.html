@@ -12,7 +12,10 @@
         <p>Windows list all env. variables with <strong>SET</strong> command.</p>
         <p>Linux list all env. variables with <strong>printenv</strong> command.</p>
         Windows setting: SET name=c:\<br/>
-        Linux setting: export name=/tmp<br/>
+        Linux setting: <br/>
+            add the following lines to the end of your ~/.bashrc file and re-login into your account (test.txt file in /tmp/test/test.txt):<br/>
+            export TMPDIR=/tmp<br/>
+            export TEST=test<br/>
 
         <p>Encoding issue: % in uri is a problem - interference with decodeUriComponent that is required for accents in urls. <br/>
             with-out decodeUriComponent the links are working as commented below. <br/>
