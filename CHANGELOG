@@ -1,6 +1,19 @@
 Changelog for Local Filesystem Links
 ====================================
 
+v0.99.47
+--------
+* FIX: Issue #84 - Accents are working now. Re-added decodeURIComponent. Changed env. var handling (improve later)
+* IMPROVED: 
+    Performance improvement, Issue #74, now 800 or more local file links in a page are supported -
+    Links are still added to invisible links because handling of later addition seems too complicated.
+* NEW: Direct open in browser 
+    Files like jpg, txt, pdf, etc. can be directly opened in browser - accessible with context menu or
+    by default link behaviour change
+* NEW: Environment path variables are supported e.g. %HOMEDRIVE% for Windows and $HOME$ for Linux - 
+    Note: Links with env. var needs to use %25 for % and %24 for $ in href attr. (will be improved later)
+          e.g. for Windows <a href="file:///%25HOMEDRIVE%25%25HOMEPATH%25/">%HOMEPATH%/</a>
+
 v0.99.46
 --------
 * IMPROVED: Better link scanning with jQuery Observe
