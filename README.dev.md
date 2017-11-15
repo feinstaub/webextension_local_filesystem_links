@@ -1,6 +1,32 @@
 local-filesystem-links DEVELOPMENT
 ==================================
 
+Todos:
+
+- [ ] add test folder + webserver for test cases (later, for now I'm starting the test server in a separate working copy)
+- [ ] Icon adding not working properly
+- [ ] Native message installer required (later, batch file for development OK)
+- [ ] Check why native messaging is not working at the moment
+- [ ] Create Extension settings page - options.html (uses Vue for view handling)
+- [ ] Add "addon bar" icon to display activity of Extension on current tab
+- [ ] Implement localization
+
+
+Todos README:
+
+- [ ] Remove everything jpm related
+- [ ] Changed linting from gulp to eslint directly
+
+
+# Usage
+First run `npm install`.
+
+## Start dev server for FF
+`npm run dev:FF`
+
+## Start firefox with webextension loaded
+`npm start` to start web-ext start with dist folder.
+
 Based on https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
 
 ### Linux ###

@@ -1,0 +1,9 @@
+{
+  "name": "webextension_local_filesystem_links",
+  "description": "Chrome Native Messaging API Example Host",
+  "path": "native-messaging-example-host.bat",
+  "type": "stdio",
+  "allowed_extensions": [
+    "webextension_local_filesystem_links@example.org"
+  ]
+}
