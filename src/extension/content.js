@@ -1,7 +1,6 @@
 'use strict';
 
-(function fileLinkAddon($, self) {
-
+(function fileLinkAddon($) {
     console.log('content script started...');
     $.noConflict();
 
@@ -15,7 +14,7 @@
             // e.g. tooltip text constants
         },
         $container = $('<span/>'), //$('<span class="aliensun-link-icon"/>'),
-        $icon = {}, // loading, see init
+        $icon = undefined, // loading, see init
         options = {
             //enableLinkIcons: self.options.enableLinkIcons
         },
@@ -33,13 +32,14 @@
     * Activates the plugin - add icon after link and starts observer if enabled
     */
     function activate() {
-        // console.log(options);
+        console.log('activate', options);
         if (options.enableLinkIcons) {
             currentIconClass = 'aliensun-link-icon' +
             (options.revealOpenOption == 'R' ? '-arrow' : '');
 
             createObserver();
             $container.addClass(currentIconClass);
+            console.log('added class', $container);
 
             updateLink($(fileLinkSelectors.join(', ')));
         }
@@ -49,28 +49,34 @@
     }
 
     // Get settings from addon
+
     browser.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
             // console.log(sender.tab ?
             //             "from a content script:" + sender.tab.url :
             //             "from the extension");
-            console.log('init', sender.tab);
+            // console.log('init', sender.tab, request.data, request); // sender.tab);
             switch(request.action) {
             case 'init':
-                if (request.data !== undefined) { // --> maybe we can improve this
-                    // todo app messages not loaded yet
-                    console.log('init', request.data);
-                    appTextMessages = request.data.constants.MESSAGES.
-                      USERMESSAGES;
-                    options = request.data.options; // load options
+                console.log('init content script', request);
+                appTextMessages = request.data.constants.MESSAGES.
+                  USERMESSAGES;
+                options = request.data.options; // load options
 
+                if (!$icon) {
                     $icon = $container.append($('<i/>').
                         addClass('material-icons'));
-
-                    // now everything is ready to load
-                    activate();
-                    sendResponse({feedback: 'initDone'});
                 }
+
+                // port = browser.runtime.connect();
+                // console.log('port open', port);
+                // now everything is ready to load
+                activate();
+                sendResponse({feedback: 'initDone'});
+                break;
+            case 'update':
+                console.log('update icons', request.data.options);
+                updateIcons(); // request.data.options);
                 break;
             default:
             }
@@ -93,7 +99,7 @@
     function updateIcons(data) {
         options = $.extend({}, options, data);
 
-        // console.log('pref changed', data, options);
+        console.log('pref changed', data, options);
         removeLinkIcons();
         updateLinkTooltip();
 
@@ -110,7 +116,7 @@
         e.preventDefault(); // prevent default to avoid browser to launch smb://
         console.log('clicked file link: ' +
           this.href, options.revealOpenOption);
-
+        // console.log('port', port);
         // self.postMessage({
         //     action: 'open',
         //     // removed decodeURIComponent because env. var. failed
@@ -118,6 +124,7 @@
         //     reveal: options.revealOpenOption == 'O' ? false : true
         // });
         browser.runtime.sendMessage({
+        // port.sendMessage({
             action: 'open',
             // removed decodeURIComponent because env. var. failed
             message: 'hello',
@@ -148,13 +155,14 @@
         //     backslashReplaceRequired: true
         // });
         browser.runtime.sendMessage({
+        // port.sendMessage({
             action: 'open',
             // removed decodeURIComponent because env. var. failed
             message: 'hello',
             url: link, //decodeURIComponent(this.href),
             reveal: options.revealOpenOption == 'O' ? true : false
         }).then(function(response) {
-            console.log(response);
+            console.log('response');
         }).catch(function(err) {
             console.log('error', err);
         });
@@ -194,7 +202,7 @@
     // --> final solution: use jquery-observe that's simplyfing mutationObserver
 
     function updateLink($element) {
-        // console.log('updating', $element);
+        console.log('updating', $element);
         var iconTooltip = options.revealOpenOption == 'O' ?
           appTextMessages.tooltips.openFolder :
           appTextMessages.tooltips.linkText;
@@ -207,11 +215,17 @@
         $container.addClass(currentIconClass);
 
         $element.each(function(index, el) {
-            // console.log('el href = ', $(el).attr('href'));
-            $icon.
-                attr('title', iconTooltip).
-                clone().data('link', $(el).attr('href')). // added to container
-                insertAfter($(el));
+            console.log('el href = ', $(el).attr('href'));
+            console.log('icon already added?', $(el).next().
+            is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
+            if (!$(el).next().
+              is('.aliensun-link-icon,.aliensun-link-icon-arrow')) {
+                // icon not added
+                $icon.
+                  attr('title', iconTooltip).
+                  clone().data('link', $(el).attr('href')). // added to container
+                  insertAfter($(el));
+            }
         });
     }
 
@@ -221,7 +235,8 @@
     */
     function removeLinkIcons() {
         var $icons = $('.aliensun-link-icon, .aliensun-link-icon-arrow');
-        // console.log('test',$icons);
+
+        console.log('test',$icons);
 
         $icons.remove();
     }
@@ -274,12 +289,25 @@
 
                 // get elements that are with-out icon - avoid multiple icons
                 var $elements = $(this).filter(function(/* index, item */) {
+                    console.log('filter next element', $(this).
+                        next().
+                        is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
                     return !$(this).
                         next().
                         is('.aliensun-link-icon,.aliensun-link-icon-arrow');
                 });
 
-                updateLink($elements);
+                if ($elements.length > 0) {
+                    updateLink($elements);
+                }
             });
+
+        // suspend not supported in FF
+        // function handleSuspend() {
+        //     console.log('Suspending event page');
+        //     // handle cleanup
+        //     $.observe.disconnect();
+        // }
+        // browser.runtime.onSuspend.addListener(handleSuspend);
     }
-}(jQuery, window.self));
+}(jQuery));

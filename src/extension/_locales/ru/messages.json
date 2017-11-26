@@ -1,0 +1,119 @@
+{
+  "whitelist_title": {
+    "message": "URL-адреса, добавленные в White List, будут кликабельными",
+    "description": "Settings title for whitelist"
+  },
+  "whitelist_description": {
+    "message": "По-умолчанию кликабельны все ссылки, которые распознает дополнение, но вы можете добавить нераспознанные URL-адреса вручную, разделяя их пробелом. Допускается использование подстановочных знаков, например, *.trello.com",
+    "description": "Settings description for whitelist"
+  },
+  "enableExecutables_title": {
+    "message": "Разрешить ссылки на исполняемые файлы",
+    "description": "Settings title for enable of executable files"
+  },
+  "enableExecutables_description": {
+    "message": "Если включить эту опцию, URL-адреса на исполняемые файлы станут кликабельными. Будьте осторожны, это не всегда безопасно!",
+    "description": "Settings description for executable files"
+  },
+  "enableLinkIcons_title":  {
+    "message": "Отображать иконки возле ссылок",
+    "description": "Settings title for enable link icons"
+  },
+  "enableLinkIcons_description": {
+    "message": "Если включить эту опцию, то напротив каждой локальной ссылки будет отображаться иконка",
+    "description": "Settings description for link icons"
+  },
+  "revealOpenOption_title": {
+    "message": "Default link text click behaviour",
+    "description": "Settings title for default link click behaviour"
+  },
+  "revealOpenOption_description": {
+    "message": " Changes the default click behaviour of file-links. Default = direct file link open.",
+    "description": "Settings description for default click behaviour"
+  },
+  "revealOpenOption_options.Open": {
+    "message": "Open link directly",
+    "description": "Setting open link directly"
+  },
+  "revealOpenOption_options.Reveal": {
+    "message": "Reveal link (open containing folder)",
+    "description": "Setting reveal link"
+  },
+  "revealOpenOption_options.Direct": {
+    "message": "Open link directly in browser",
+    "description": "Setting direct open"
+  },
+  "ERROR_EXECTUBALES_NOT_ENABLED": {
+    "message": "Открытие исполняемых файлов отключено в настройках дополнения. Пожалуйста, включите эту опцию и попробуйте снова.",
+    "description": "Error message EXE not enabled"
+  },
+  "ERROR_BAD_LINK": {
+    "message": "Невозможно открыть файл $URL$",
+    "description": "Error message bad link",
+    "placeholders": {
+      "url" : {
+        "content" : "$1",
+        "example" : "file://"
+      }
+    }
+  },
+  "INFO_CONFIG_CHANGED_SMB": {
+    "message": "Заработали ссылки на SMB-ресурсы!",
+    "description": "Info message SMB configured (not used yet)"
+  },
+  "LABEL_CONTEXT_MENU_OPEN_LINK": {
+    "message": "Открыть ссылку",
+    "description": "Label text open link"
+  },
+  "LABEL_CONTEXT_MENU_OPEN_CONTAINING": {
+    "message": "Открыть содержащую папку",
+    "description": "Label text open containing folder"
+  },
+  "LABEL_CONTEXT_MENU_OPEN_DIRECT": {
+    "message": "Open in browser",
+    "description": "Label text open in browser"
+  },
+
+  "LABEL_CONTEXT_SUB_SELECTION_TITLE": {
+    "message": "Открыть выбранное",
+    "description": "Label text selection in context menu"
+  },
+
+  "LABEL_CONTEXT_SUB_LINK_TITLE": {
+    "message": "Link addon",
+    "description": "Label text context menu item"
+  },
+
+  "LABEL_ADDONBAR_ICON_HOVER": {
+    "message": "Локальные ссылки $ACTIVE$ в текущей вкладке.",
+    "description": "Status icon hover text",
+    "placeholders": {
+      "active" : {
+        "content" : "$1",
+        "example" : "active"
+      }
+    }
+  },
+
+  "LABEL_ADDONBAR_HOVER_STATE_active": {
+    "message": "включены",
+    "description": "Status text active hover"
+  },
+  "LABEL_ADDONBAR_HOVER_STATE_inactive": {
+    "message": "выключены",
+    "description": "Status text inactive hover"
+  },
+
+  "TOOLTIP_OPEN_FOLDER": {
+    "message": "Открыть папку",
+    "description": "Tooltip text open folder"
+  },
+  "TOOLTIP_OPEN_LINK": {
+    "message": "Перейти по ссылке",
+    "description": "Tooltip text open link"
+  },
+  "TOOLTIP_OPEN_IN_BROWSER": {
+    "message": "Open link in browser",
+    "description": "Tooltip text open in browser"
+  }
+}

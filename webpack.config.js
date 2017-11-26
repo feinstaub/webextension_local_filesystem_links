@@ -11,11 +11,12 @@ var FF = process.env.BROWSER === 'Firefox'; // needed for custom stuff in manife
 // console.log(process.env.NODE_ENV);
 
 const manifestAdditionsFF = {
-    'applications': {
-        'gecko': {
-            'id': 'webextension_local_filesystem_links@example.org'
-        }
-    }
+    // added to manifest.json --> maybe we need that later
+    // 'applications': {
+    //     'gecko': {
+    //         'id': 'webextension_local_filesystem_links@example.org'
+    //     }
+    // }
 };
 
 module.exports = {
@@ -84,8 +85,15 @@ module.exports = {
                 from: 'src/host/',
                 to: 'host/'
             },
+            { // copy locale
+                from: 'src/extension/_locales',
+                to: '_locales'
+            },
             {
                 from: 'src/static'
+            },
+            {
+                from: 'src/assets'
             },
             // {output}/file.txt
             {

@@ -6,8 +6,8 @@
         type="text"
         class="detail-row-value"
         name="whitelist"
-        :value="settings.whitelist"
-        @input="updateSetting">
+        v-model="settings.whitelist"
+        @input="updateSetting" />
       </label>
       <p v-if="statusMsg"><strong>{{statusMsg}}</strong></p>
       <pre>{{settings}}</pre>
@@ -16,9 +16,7 @@
 
 <script>
   import _ from 'lodash';
-  const defaultSettings = {
-    whitelist: '',
-  };
+  import {defaultSettings} from '../common/constants';
 
   const DEBOUNCE_TIME = 500; // delay saving by 500ms (reduce saving as you type)
   const STATUS_TIME = 1000; // flash duration
@@ -47,16 +45,20 @@
       },
 
       save (e) {
-        this.settings[e.target.name] = e.target.value;
-        console.log('saving', this.settings, this.getObj(this.settings));
+        //this.settings[e.target.name] = e.target.value;
+        //console.log('saving', this.settings, this.getObj(this.settings));
         // chrome.storage.sync.set(this.colorSettings, () => {
         // const update = {};
         // update[SETTINGS_KEY] = this.colorSettings;
 
         browser.storage.local.set(this.getObj(this.settings)).then(() => {
           // Update status to let user know options were saved.
-          console.log('saved', chrome.storage.local);
+          console.log('saved!', browser.storage.local);
           this.statusMsg = 'Options saved.';
+          browser.runtime.sendMessage({
+            action: 'updateContentPages'
+          });
+
           setTimeout(() => {
             this.statusMsg = '';
           }, STATUS_TIME);

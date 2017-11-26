@@ -1,18 +1,20 @@
 local-filesystem-links DEVELOPMENT
 ==================================
 
+jsfiddle for some whitelist testing: http://jsfiddle.net/awolf2904/tefcs74q/
+
 Todos:
 
-- [ ] add test folder + webserver for test cases (later, for now I'm starting the test server in a separate working copy)
+- [x] add test folder + webserver for test cases (later, for now I'm starting the test server in a separate working copy) --> integrated separate repo
 - [ ] Icon adding not working properly
 - [ ] Native message installer required (later, batch file for development OK)
-- [ ] Check why native messaging is not working at the moment
-- [ ] Create Extension settings page - options.html (uses Vue for view handling)
+- [x] Check why native messaging is not working at the moment - just a installation issue? Problem was that the application id is required otherwise we received something like "can't postMessage to disconnected port"
+- [x] Create Extension settings page - options.html (uses Vue for view handling)
 - [ ] Add "addon bar" icon to display activity of Extension on current tab
-- [ ] Implement localization
+- [x] Implement localization (locale switching difficult - need to install FF nightly with different language)
+- [ ] Loading/Activation on tab is over-enhancing the page - duplicated icons
 
-
-Todos README:
+Todos for README:
 
 - [ ] Remove everything jpm related
 - [ ] Changed linting from gulp to eslint directly

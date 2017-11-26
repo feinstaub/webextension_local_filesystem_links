@@ -3,6 +3,11 @@
   "options_ui": {
     "page": "options.html"
   },
+  "applications": {
+    "gecko": {
+      "id": "webextension_local_filesystem_links@example.org"
+    }
+  },
   "default_locale": "en",
   "background": {
     "page": "background.html",
@@ -21,7 +26,6 @@
     "activeTab",
     "contextMenus",
     "notifications",
-    "background",
     "tabs",
     "alarms",
     "nativeMessaging"

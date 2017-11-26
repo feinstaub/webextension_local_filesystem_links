@@ -3,5 +3,6 @@
 :: found in the LICENSE file.
 
 :: Deletes the entry created by install_host.bat
-REG DELETE "HKCU\Software\Google\Chrome\NativeMessagingHosts\com.google.chrome.example.echo" /f
-REG DELETE "HKLM\Software\Google\Chrome\NativeMessagingHosts\com.google.chrome.example.echo" /f
+REG DELETE "HKCU\Software\Mozilla\NativeMessagingHosts\webextension_local_filesystem_links" /f
+:: REG DELETE "HKCU\Software\Google\Chrome\NativeMessagingHosts\com.google.chrome.example.echo" /f
+:: REG DELETE "HKLM\Software\Google\Chrome\NativeMessagingHosts\com.google.chrome.example.echo" /f
