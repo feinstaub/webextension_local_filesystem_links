@@ -8,7 +8,7 @@
     "description": "Settings title for whitelist"
   },
   "whitelist_description": {
-    "message": "Any URLs that are added to the whitelist will enable local file links if you're browsing to that address. Empty or * will enable all. Multiple URLs are space separated. Wildcards are allowed e.g. *.trello.com",
+    "message": "Any URLs that are added to the whitelist will enable local file links if you're browsing to that address. * will enable all. Empty will disable all. Multiple URLs are space separated. Wildcards are allowed e.g. *://*.trello.com/*",
     "description": "Settings description for whitelist"
   },
   "enableExecutables_title": {
@@ -32,18 +32,18 @@
     "description": "Settings title for default link click behaviour"
   },
   "revealOpenOption_description": {
-    "message": " Changes the default click behaviour of file-links. Default = direct file link open.",
+    "message": "Changes the default click behaviour of file-links. Default = direct file link open.",
     "description": "Settings description for default click behaviour"
   },
-  "revealOpenOption_options.Open": {
+  "revealOpenOption_options.o": {
     "message": "Open link directly",
     "description": "Setting open link directly"
   },
-  "revealOpenOption_options.Reveal": {
+  "revealOpenOption_options.r": {
     "message": "Reveal link (open containing folder)",
     "description": "Setting reveal link"
   },
-  "revealOpenOption_options.Direct": {
+  "revealOpenOption_options.d": {
     "message": "Open link directly in browser",
     "description": "Setting direct open"
   },

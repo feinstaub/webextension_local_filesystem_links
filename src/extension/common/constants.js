@@ -20,4 +20,7 @@ export const MESSAGES = {
 
 export const defaultSettings = {
     whitelist: '*',
+    enableExecutables: false,
+    revealOpenOption: 'O', // default = open link
+    enableLinkIcons: true
 };

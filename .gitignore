@@ -1,6 +1,7 @@
 # hot module reloads in dist folder
 
-dist/*.hot-update.js.*
+dist/*.hot-update.js
+dist/*.hot-update.js.map
 dist/*.hot-update.json
 
 # Logs

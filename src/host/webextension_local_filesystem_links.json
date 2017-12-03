@@ -1,9 +1,9 @@
 {
   "name": "webextension_local_filesystem_links",
-  "description": "Chrome Native Messaging API Example Host",
+  "description": "Local file links Native Messaging API Host",
   "path": "HOST_PATH",
   "type": "stdio",
   "allowed_extensions": [
-    "webextension_local_filesystem_links@example.org"
+    "jid1-JAzC7z53jemo5Q@jetpack"
   ]
 }

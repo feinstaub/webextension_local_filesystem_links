@@ -75,7 +75,7 @@
                 sendResponse({feedback: 'initDone'});
                 break;
             case 'update':
-                console.log('update icons', request.data.options);
+                console.log('update icons', request, sender);
                 updateIcons(); // request.data.options);
                 break;
             default:
@@ -129,7 +129,8 @@
             // removed decodeURIComponent because env. var. failed
             message: 'hello',
             url: this.href, //decodeURIComponent(this.href), // this.href
-            reveal: options.revealOpenOption == 'O' ? false : true
+            reveal: options.revealOpenOption == 'O' ? false : true,
+            directOpen: options.revealOpenOption == 'D'
         }).then(function(response) {
             console.log(response);
         }).catch(function(error) {

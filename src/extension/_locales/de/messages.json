@@ -4,7 +4,7 @@
     "description": "Settings title for whitelist"
   },
   "whitelist_description": {
-    "message": "Jede URL, die in der White-list aufgeführt ist, aktiviert Links zu lokalen Dateien auf Webseiten mit diesen Adressen. Leer oder * lässt jede Url zu. Mehrere URLs werden mit Leerzeichen getrennt. Wildcards sind zuläassig z.B. *.trello.com",
+    "message": "Jede URL, die in der White-list aufgeführt ist, aktiviert Links zu lokalen Dateien auf Webseiten mit diesen Adressen. * lässt jede Url zu. Leer lässt keine Url zu. Mehrere URLs werden mit Leerzeichen getrennt. Wildcards sind zuläassig z.B. *://*.trello.com/*",
     "description": "Settings description for whitelist"
   },
   "enableExecutables_title": {

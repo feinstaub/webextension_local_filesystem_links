@@ -12,7 +12,7 @@ console.log('hello from background');
 
 var CAKE_INTERVAL = 0.1;
 var cakeNotification = 'webextension-local-filesystem-links-notification';
-
+var glbSettings = {};
 // browser.alarms.create('', {periodInMinutes: CAKE_INTERVAL});
 // notify(undefined, 'just a test');
 
@@ -30,8 +30,8 @@ function checkUrls() {
 
     function onSettingsLoaded(settings) {
         console.log('settings loaded', settings);
-        const whitelist = prepareWhitelist(settings.whitelist ||
-          defaultSettings.whitelist);
+        glbSettings = settings;
+        const whitelist = prepareWhitelist(settings.whitelist);
 
         console.log('whitelist loaded', whitelist, CONSTANTS.MESSAGES);
 
@@ -90,8 +90,10 @@ function checkUrls() {
                                 action: 'init',
                                 data: {
                                     options: {
-                                        enableLinkIcons: true,
-                                        revealOpenOption: 'O'
+                                        enableLinkIcons: settings.
+                                          enableLinkIcons,
+                                        revealOpenOption: settings.
+                                          revealOpenOption
                                     },
                                     constants: CONSTANTS
                                 }
@@ -107,11 +109,11 @@ function checkUrls() {
     }
 }
 
-function sendMessageToTabs(tabs) {
+function sendMessageToTabs(tabs, whitelist) {
     for (let tab of tabs) {
         browser.tabs.sendMessage(
             tab.id,
-            {action: 'update'}
+            {action: 'update', whitelist}
         ).then(response => {
             console.log('Message from the content script:');
             console.log(response.response);
@@ -142,19 +144,33 @@ browser.runtime.onMessage.addListener(
             // console.log('sendNativeMessage...', {
             //     'url': uri, 'reveal': request.reveal, 'exeAllowed': 0});
             // browser.extension.sendNativeMessage( // direct sending --> opens port to native app
-            browser.runtime.sendNativeMessage( // direct sending --> opens port to native app
-                'webextension_local_filesystem_links',
-                {'url': uri, 'reveal': request.reveal, 'exeAllowed': 0}).
-                // {'url': uri, 'reveal': 0, 'exeAllowed': 0},
-                    then(function(response) {
-                        if (response && response.error) {
-                            const msg = browser.i18n.
-                              getMessage(response.error);
+            if(request.directOpen) {
+                // setting commented at the moment --> re-add later
+                browser.tabs.create({
+                    active: true,
+                    url: window.decodeURI(uri) // illegal URL --> not priveleged to add file:// - fix later
+                });
+            } else {
+                browser.runtime.sendNativeMessage( // direct sending --> opens port to native app
+                    'webextension_local_filesystem_links',
+                    {
+                        'url': uri, 'reveal': request.reveal,
+                        'exeAllowed': glbSettings.enableExecutables
+                    }).
+                  // {'url': uri, 'reveal': 0, 'exeAllowed': 0},
+                      then(function(response) {
+                          console.log('response', response);
+                          if (response && response.error) {
+                              const msg = browser.i18n.
+                                getMessage(response.error,
+                                  window.decodeURI(response.url));
 
-                            console.log('Received response - ', response, msg);
-                            notify('Error', msg); // only NotFound error at the moment
-                        }
-                    }).catch(onError);
+                              console.log('Received response - ',
+                                response, msg);
+                              notify('Error', msg); // only NotFound error at the moment
+                          }
+                      }).catch(onError);
+            }
             //launcher.start(request.url, false);
             break;
         case 'updateContentPages':
@@ -162,7 +178,9 @@ browser.runtime.onMessage.addListener(
             browser.tabs.query({
                 currentWindow: true,
                 //active: true
-            }).then(sendMessageToTabs).catch(onError);
+            }).
+            then((tabs) => sendMessageToTabs(tabs, request.whitelist)).
+            catch(onError);
             break;
         default:
         }

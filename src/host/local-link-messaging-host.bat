@@ -3,4 +3,4 @@
 :: Use of this source code is governed by a BSD-style license that can be
 :: found in the LICENSE file.
 
-python "%~dp0/native-messaging-example-host" %*
+python "%~dp0/local-link-messaging-host" %*
