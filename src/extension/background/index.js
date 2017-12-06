@@ -1,4 +1,6 @@
-import * as CONSTANTS from './common/constants';
+import * as CONSTANTS from '../constants';
+import checkInstallation, {showInstallationTab} from './checkInstallation';
+import notify from './notify';
 const matchPattern = require('match-pattern');
 // const CONSTANTS = require('./common/constants');
 
@@ -8,13 +10,57 @@ const {defaultSettings} = CONSTANTS;
 let activeTab = null;
 let injectedTabs = false; // check if we injected content scripts before
 
-console.log('hello from background');
+// let notifyCount = 0;
+// const CAKE_INTERVAL = 0.1;
+// const cakeNotification = 'webextension-local-filesystem-links-notification';
+//
+// function notify(title, message) {
+//     notifyCount++;
+//     const id = `${cakeNotification}-${notifyCount}`;
+//
+//     console.log('notify', id);
+//     browser.notifications.create(
+//         id,
+//         {
+//             'type': 'basic',
+//             'iconUrl': browser.extension.getURL('img/active_icon_64.png'),
+//             'title': title || browser.runtime.getManifest().name,
+//             'message': message
+//         }).then(() => {
+//             // console.log('cake created', arguments);
+//             setTimeout(() => {
+//                 // console.log('cake cleared');
+//                 browser.notifications.clear(id);
+//             }, 2000);
+//         });
+// }
+// console.log('hello from background');
 
-var CAKE_INTERVAL = 0.1;
-var cakeNotification = 'webextension-local-filesystem-links-notification';
 var glbSettings = {};
+
 // browser.alarms.create('', {periodInMinutes: CAKE_INTERVAL});
-// notify(undefined, 'just a test');
+// console.log('background started', notify);
+// notify('dummy', 'just a test');
+
+function updateAddonbarIcon(status) {
+    // todo move to separate file as helper (less code here)
+    const filePrefix = status ? 'active' : 'inactive';
+    const i18nKey = 'LABEL_ADDONBAR_HOVER_STATE_' + filePrefix;
+    const statusText = browser.i18n.getMessage(i18nKey);
+
+    // update title
+    browser.browserAction.setTitle({
+        title: browser.i18n.getMessage('LABEL_ADDONBAR_ICON_HOVER', statusText)
+    });
+
+    // update icon
+    browser.browserAction.setIcon({
+        path: {
+            '16': 'img/' + filePrefix + '_icon_16.png',
+            '32': 'img/' + filePrefix + '_icon_32.png',
+        }
+    });
+}
 
 function checkUrls() {
     browser.storage.local.get().then(onSettingsLoaded);
@@ -30,10 +76,10 @@ function checkUrls() {
 
     function onSettingsLoaded(settings) {
         console.log('settings loaded', settings);
-        glbSettings = settings;
-        const whitelist = prepareWhitelist(settings.whitelist);
+        glbSettings = Object.assign({}, defaultSettings, settings);
+        const whitelist = prepareWhitelist(glbSettings.whitelist);
 
-        console.log('whitelist loaded', whitelist, CONSTANTS.MESSAGES);
+        console.log('whitelist loaded', glbSettings, CONSTANTS.MESSAGES);
 
         browser.tabs.query({
             active: true,
@@ -51,6 +97,8 @@ function checkUrls() {
                     return; // no tab active --> e.g. about:addons
                 }
 
+                // show enhancement at addon bar icon
+                updateAddonbarIcon(true);
                 console.log('stored tabs', injectedTabs);
                 if (!injectedTabs) {
                     // launching content script
@@ -90,9 +138,9 @@ function checkUrls() {
                                 action: 'init',
                                 data: {
                                     options: {
-                                        enableLinkIcons: settings.
+                                        enableLinkIcons: glbSettings.
                                           enableLinkIcons,
-                                        revealOpenOption: settings.
+                                        revealOpenOption: glbSettings.
                                           revealOpenOption
                                     },
                                     constants: CONSTANTS
@@ -125,6 +173,10 @@ function sendMessageToTabs(tabs, whitelist) {
 browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         switch(request.action) {
+        case 'showInstallInfoTab':
+            showInstallationTab();
+            sendResponse({info: 'tab created'});
+            break;
         case 'open':
             console.log('Last error:', browser.runtime.lastError);
             // console.log(sender.tab ?
@@ -134,16 +186,8 @@ browser.runtime.onMessage.addListener(
             console.log('reveal', request.reveal ? 1 : 0);
             var uri = request.url;
 
-            notify(undefined, 'Clicked url: ' + request.url); // todo --> not translated yet
-            // if (request.greeting == 'hello') {
-            //   sendResponse({farewell: 'goodbye'});
-            //   // return true;
-            // }
-            // sendNativeMessage(request.url); // with open connection
+            // notify(undefined, 'Clicked url: ' + request.url); // just for debugging
 
-            // console.log('sendNativeMessage...', {
-            //     'url': uri, 'reveal': request.reveal, 'exeAllowed': 0});
-            // browser.extension.sendNativeMessage( // direct sending --> opens port to native app
             if(request.directOpen) {
                 // setting commented at the moment --> re-add later
                 browser.tabs.create({
@@ -171,7 +215,6 @@ browser.runtime.onMessage.addListener(
                           }
                       }).catch(onError);
             }
-            //launcher.start(request.url, false);
             break;
         case 'updateContentPages':
             console.log('trigger content page update');
@@ -187,33 +230,11 @@ browser.runtime.onMessage.addListener(
     });
 
 browser.tabs.onActivated.addListener(() => {
+    // notify('dummy', 'just a test');
     console.log('tab activated');
+    updateAddonbarIcon(false); // always toggle to inactive
     checkUrls();
 });
-
-let notifyCount = 0;
-
-function notify(title, message) {
-    notifyCount++;
-    const id = `${cakeNotification}-${notifyCount}`;
-
-    // console.log(id, title, message,
-    //   browser.extension.getURL('img/active_icon_64.png'));
-    browser.notifications.create(
-        id,
-        {
-            'type': 'basic',
-            'iconUrl': browser.extension.getURL('img/active_icon_64.png'),
-            'title': title || browser.i18n.getMessage('app_name'),
-            'message': message
-        }).then(() => {
-            // console.log('cake created', arguments);
-            setTimeout(() => {
-                // console.log('cake cleared');
-                browser.notifications.clear(id);
-            }, 2000);
-        });
-}
 
 // browser.tabs.onActivated.addListener((activeInfo) => {
 //     console.log('active tab changed', activeInfo);
@@ -225,7 +246,7 @@ function notify(title, message) {
 let urlMap = [];
 
 browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    console.log('on update', changeInfo);
+    // console.log('on update', changeInfo);
     injectedTabs = false;
     // if (changeInfo.status && changeInfo.status === 'loading' &&
     //   changeInfo.url !== undefined) {
@@ -236,7 +257,7 @@ browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (changeInfo.status && changeInfo.status === 'complete' &&
       tab.active) {
         // urlMap[tabId] = false;
-        notify(null, 'loaded tab');
+        // notify(null, 'loaded tab'); // just for debugging
         checkUrls();
     }
 //     // if (changeInfo.status === 'loading') {
@@ -267,6 +288,9 @@ browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
 function onError(err) {
     console.log('error handler:', err);
+    notify('error', 'An error occured. Please check that you ' +
+      'have installed the native app. See installation guide in addon-bar' +
+      'menu.');
 }
 
 // messaging to native app for launching file explorer
@@ -307,3 +331,10 @@ function onError(err) {
 //     if (!port) connect();
 //   }, 0);
 // });
+
+browser.runtime.onInstalled.addListener((details) => {
+    // console.log('details', details);
+    // notify(null, details.reason);
+    // notify('test', checkInstallation);
+    checkInstallation(details, notify);
+});

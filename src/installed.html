@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Successfully installed - Local Filesystem Links</title>
+    <link rel="stylesheet" href="installed.css">
+  </head>
+  <body>
+    <header>
+      <div class="content-wrap">
+        <h1>Thank you for installing</h1>
+        <img src="img/addon_icon_48.png" width="48" height="48"/>
+        <h1 class="app-name">Local Filesystem Links Extension</h1>
+      </div>
+    </header>
+    <main class="content-wrap">
+      <h2><span class="important">Important!</span> Next steps required for the extension to work</h2>
+      <ol>
+        <li>Download and install the native application for your system.<br/>
+          <a href="/host/windows/native-app-setup.exe" download>Windows</a>
+          <a href="#">Linux (not ready yet)</a>
+        </li>
+        <li>
+          Check and modify whitelist settings by clicking at the addon icon in then addon bar.
+          By default all pages are allowed but it's recommended to limit the pages where the addon can add the local link behaviour.
+        </li>
+        <li>
+          Test the addon at your pages or at this <a href="http://jsfiddle.net/awolf2904/tefcs74q/" target="_blank">Jsfiddle</a>.
+        </li>
+      </ol>
+      <hr/>
+      <h3>Additional information</h3>
+      <h4>Why do I need to install a program? <a href="#" id="toggleInfo">Show answer</a></h4>
+      <div id="info">
+        <p>
+          In previous versions of Firefox (before FF 57) it was possible to access the
+          local filesystem with the browser API. That's not supported anymore and it
+          is similar to other browsers (e.g. Chrome has also this restriction).
+        </p>
+        <p>
+          To make this extension possible we need a way to interact with the file system again.
+          This is possible with a native application that can communicate with the browser with an API. It's called native messaging.
+          The application will use the system file explorer (e.g. on Windows - it's Windows Explorer)
+          to open the application in your linked application.
+        </p>
+      </div>
+    </main>
+    <script src="installed.js"></script>
+  </body>
+</html>

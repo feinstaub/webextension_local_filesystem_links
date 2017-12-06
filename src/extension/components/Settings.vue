@@ -12,7 +12,7 @@
           v-model="settings.whitelist" />
       </div>
 
-      <hr/>
+      <!-- <hr/> -->
       <!-- Enable executables -->
       <label class="title" for="enableExe">{{enableExecutablesTitle}}</label>
       <div class="container">
@@ -24,7 +24,7 @@
             <span @click="toggleExecutables()">{{enableExecutablesDescription}}</span>
         </p>
       </div>
-      <hr/>
+      <!-- <hr/> -->
 
       <!-- Enable link icons -->
       <label class="title" for="enableLinkIcons">{{enableLinkIconsTitle}}</label>
@@ -37,7 +37,7 @@
             <span @click="toggleLinkIcon()">{{enableLinkIconsDescription}}</span>
         </p>
       </div>
-      <hr/>
+      <!-- <hr/> -->
 
       <!-- Default link click behaviour -->
       <label class="title" for="revealOpenOption">{{revealOpenOptionTitle}}</label>
@@ -73,14 +73,14 @@
         </p>
       </div>
       <p v-if="statusMsg"><strong>{{statusMsg}}</strong></p>
-      <pre>{{settings}}</pre>
-      <hr/>
+      <!-- <pre>{{settings}}</pre> -->
+      <!-- <hr/> -->
     </div>
 </template>
 
 <script>
   import _ from 'lodash';
-  import {defaultSettings} from '../common/constants';
+  import {defaultSettings} from '../constants';
 
   const DEBOUNCE_TIME = 500; // delay saving by 500ms (reduce saving as you type)
   const STATUS_TIME = 2000; // flash duration
@@ -182,26 +182,29 @@
   /* globals for the component */
   input[type="text"] {
     width: 100%;
+    padding: 5px;
+    margin-top: 16px;
   }
 
-  label {
-    display: block;
+  input[type="radio"] {
+    margin-bottom: 6px;
   }
 
-  hr {
-    margin: 10px 0;
+  p {
+    margin: 0;
   }
-
   // setting styles
   .title {
     font-size: 20px;
     font-weight: bold;
+    padding: 6px;
   }
   .description {
     font-size: 14px;
-    padding-top: 5px;
   }
   .container {
     margin-left: $indent;
+    padding-top: 8px;
+    margin-bottom: 16px;
   }
 </style>

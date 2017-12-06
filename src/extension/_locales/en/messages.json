@@ -1,8 +1,4 @@
 {
-  "app_name": {
-    "message": "Local link extension",
-    "description": "Name of application (no translation required)"
-  },
   "whitelist_title": {
     "message": "Enable file link addon for whitelisted URLs",
     "description": "Settings title for whitelist"

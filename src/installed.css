@@ -1,0 +1,53 @@
+html, body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  background: #f1f4fb;
+}
+.content-wrap {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 15px;
+}
+header {
+  background: #817f82;
+  padding: 30px;
+}
+
+h1 {
+  margin: 0;
+  padding: 15px;
+}
+h2 {
+  padding-top: 15px;
+}
+
+h4 {
+  margin-bottom: 5px;
+}
+
+#info {
+  display: none;
+  margin-left: 15px;
+  background: rgb(235, 243, 255);
+}
+
+.important {
+  color: rgb(255, 98, 98);
+}
+
+p {
+  padding: 15px;
+  margin-top: 0;
+}
+
+li {
+  padding: 16px;
+}
+img {
+  float: left;
+  padding-right: 15px;
+}
+
+.app-name {
+  font-size: 1.4em;
+}

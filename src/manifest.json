@@ -1,5 +1,5 @@
 {
-  "name": "Firefox WebExtension Local Filesystem Links",
+  "name": "Local Filesystem Links",
   "options_ui": {
     "page": "options.html"
   },
@@ -8,16 +8,23 @@
       "id": "jid1-JAzC7z53jemo5Q@jetpack"
     }
   },
+  "icons": {
+    "48": "img/addon_icon_48.png",
+    "96": "img/addon_icon_96.png"
+  },
   "default_locale": "en",
   "background": {
-    "page": "background.html",
-    "persistent": false
+    "page": "background.html"
   },
   "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "img/inactive_icon_16.png",
+      "32": "img/inactive_icon_32.png"
+    },
     "default_popup": "index.html"
   },
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "web_accessible_resources": ["css/*.css"],
   "permissions": [
     "<all_urls>",
@@ -27,7 +34,6 @@
     "contextMenus",
     "notifications",
     "tabs",
-    "alarms",
     "nativeMessaging"
    ]
 }

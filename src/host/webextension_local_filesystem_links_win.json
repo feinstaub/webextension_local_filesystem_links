@@ -1,7 +1,7 @@
 {
   "name": "webextension_local_filesystem_links",
-  "description": "Chrome Native Messaging API Example Host",
-  "path": "local-link-messaging-host.bat",
+  "description": "Local file links Native Messaging API Host",
+  "path": "local-link-messaging-host.exe",
   "type": "stdio",
   "allowed_extensions": [
     "jid1-JAzC7z53jemo5Q@jetpack"

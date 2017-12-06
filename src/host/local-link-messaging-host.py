@@ -39,6 +39,7 @@ if currentOS == "win32":
   def is_exe(fpath):
     # just msi files are still executed - com, exe, bat files are blocked
     # send_message('{"debug": "hello"}')
+    # helpful resource http://timgolden.me.uk/python/win32_how_do_i/tell-if-a-file-is-executable.html
     try:
       # print "Looking at", filePath
       r, executable = win32api.FindExecutable(fpath)

@@ -5,7 +5,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var WriteFilePlugin = require('write-file-webpack-plugin');
 var FriendlyErrors = require('friendly-errors-webpack-plugin');
 
-var FF = process.env.BROWSER === 'Firefox'; // needed for custom stuff in manifest for Firefox
+// var FF = process.env.BROWSER === 'Firefox'; // needed for custom stuff in manifest for Firefox
 
 // console.log(process.env.BROWSER)
 // console.log(process.env.NODE_ENV);
@@ -22,7 +22,7 @@ const manifestAdditionsFF = {
 module.exports = {
     entry: {
         app: './src/main.js',
-        background: './src/extension/background.js',
+        background: './src/extension/background/index.js',
         options: './src/extension/options.js',
         content: './src/extension/content.js'
     },
@@ -95,6 +95,10 @@ module.exports = {
             {
                 from: 'src/assets'
             },
+            {
+                from: 'src/installed.*',
+                flatten: true
+            },
             // {output}/file.txt
             {
                 from: 'src/manifest.json',
@@ -102,9 +106,9 @@ module.exports = {
                     // add description & version from package.json
                     let json = JSON.parse(content.toString('utf8'));
 
-                    if (FF) {
-                        Object.assign(json, manifestAdditionsFF);
-                    }
+                    // if (FF) {
+                    //     Object.assign(json, manifestAdditionsFF);
+                    // }
 
                     return JSON.stringify(
                         Object.assign({}, json, {

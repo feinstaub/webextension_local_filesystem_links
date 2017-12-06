@@ -1,6 +1,6 @@
 // Constants.js
-var pkg = require('../../../package.json'),
-    osFileManagerName = require('../utils/os-util').getFileManagerDisplayName;
+var pkg = require('../../package.json'),
+    osFileManagerName = require('./utils/os-util').getFileManagerDisplayName;
 
 export const APP = {
     name: pkg.name,

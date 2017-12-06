@@ -13,7 +13,7 @@ var getOsStringTag = function() {
     //     getService(Ci.nsIXULRuntime);
 
     // see https://developer.mozilla.org/en/OS_TARGET
-    return chrome.runtime.getPlatformInfo(function(info) {
+    return browser.runtime.getPlatformInfo(function(info) {
         // Display host OS in the console
         console.log(info.os);
         return info.os;
