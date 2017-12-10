@@ -3,24 +3,27 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+# see https://github.com/passff/passff/blob/master/src/host/install_host_app.sh
+# for installer for multiple browsers --> for now just firefox
+
 set -e
 
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 if [ "$(uname -s)" = "Darwin" ]; then
   if [ "$(whoami)" = "root" ]; then
-    TARGET_DIR="/Library/Google/Chrome/NativeMessagingHosts"
+    TARGET_DIR="/Library/Application Support/Mozilla/NativeMessagingHosts"
   else
-    TARGET_DIR="$HOME/Library/Application Support/Google/Chrome/NativeMessagingHosts"
+    TARGET_DIR="$HOME/Library/Application Support/Mozilla/NativeMessagingHosts"
   fi
 else
   if [ "$(whoami)" = "root" ]; then
-    TARGET_DIR="/etc/opt/chrome/native-messaging-hosts"
+    TARGET_DIR="/usr/lib/mozilla/native-messaging-hosts"
   else
-    TARGET_DIR="$HOME/.config/google-chrome/NativeMessagingHosts"
+    TARGET_DIR="$HOME/.mozilla/native-messaging-hosts"
   fi
 fi
 
-HOST_NAME=webextension_local_filesystem_links
+HOST_NAME="webextension_local_filesystem_links"
 
 # Create directory to store native messaging host.
 mkdir -p "$TARGET_DIR"
@@ -29,7 +32,7 @@ mkdir -p "$TARGET_DIR"
 cp "$DIR/$HOST_NAME.json" "$TARGET_DIR"
 
 # Update host path in the manifest.
-HOST_PATH=$DIR/native-messaging-example-host
+HOST_PATH=$DIR/local-link-messaging-host.py
 ESCAPED_HOST_PATH=${HOST_PATH////\\/}
 sed -i -e "s/HOST_PATH/$ESCAPED_HOST_PATH/" "$TARGET_DIR/$HOST_NAME.json"
 

@@ -18,6 +18,22 @@ import re
 
 currentOS = sys.platform
 
+fileExplorers = {
+  "win32": {
+    "open": r'explorer',
+    "reveal": r'explorer /select'
+  },
+  "linux": {
+    "open": r'xdg-open',
+    "reveal": {
+      "cmd": r'nautilus', # not perfect to use directly nautilus but xdg-open is not supporting select option
+      "arg": r'--select'
+    } 
+  }
+}
+
+fileExplorer = fileExplorers['linux'] # default to linux
+
 # def my_handler(type, value, tb):
 #     send_message("Uncaught exception: {0}".format(str(value)))
 
@@ -35,6 +51,8 @@ if currentOS == "win32":
 
   msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
   msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
+  
+  fileExplorer = fileExplorers['win32']
 
   def is_exe(fpath):
     # just msi files are still executed - com, exe, bat files are blocked
@@ -55,6 +73,10 @@ else:
   def is_exe(fpath):
     return os.path.exists(fpath) and os.access(fpath, os.X_OK) and os.path.isfile(fpath)
 
+  if sys.platform.startswith('linux'):
+    fileExplorer = fileExplorers['linux']
+
+
 # Helper function that sends a message to the webapp.
 def send_message(message):
    # Write message size.
@@ -63,23 +85,29 @@ def send_message(message):
   sys.stdout.write(message)
   sys.stdout.flush()
 
-# print 'test message'
-# Helper for check if path or file exists
-def checkPath(pathStr):
-  # todo refactor file:// removal --> duplicated code
-  pathStr = re.sub(r'file:[\/\\]{2,3}', '', pathStr) # remove file://
+def preparePath(pathStr):
+  # pathStr = re.sub(r'file:[\/\\]{2,3}', '', pathStr) # remove file://  -- org
+  pathStr = re.sub(r'file:[\/\\]{2}', '', pathStr) # remove file://
 
   pathStr = urllib.unquote(pathStr).decode('utf8')
-  # send_message('{"text": "check: %s"}' % pathStr)
+  if sys.platform.startswith('linux'):
+    # hack to have ~ path working in Linux
+    # one or two slashes before ~ // stop at first / after ~
+    # unixPath = unixPath.replace(/(\/){1,2}~\//, '~/');  # code from previous addon
+    pathStr = re.sub(r'[/]{1,2}~/', '~/', pathStr)
+    pathStr = os.path.expanduser(pathStr) # expand ~ to home/username
+    # send_message('{"text": "check: %s"}' % pathStr)
+  
+  pathStr = os.path.normpath(pathStr) # normalize slashes
+  return pathStr
+
+# Helper for check if path or file exists
+def checkPath(pathStr):
+  pathStr = preparePath(pathStr)
   return os.path.exists(pathStr)
 
 def getFilePath(program, exeAllowed):
-  filePath = re.sub(r'file:[\/\\]{2,3}', '', program) # remove file://
-
-  filePath = urllib.unquote(filePath) # decode special characters
-  filePath = os.path.normpath(filePath) # normalize slahses
-  # send_message('{"text": "check: %s"}' % urllib.quote(filePath))
-  # return filePath
+  filePath = preparePath(program)
 
   if is_exe(filePath) is True and exeAllowed is False:
     # print "executable" # just msi files are still executed - com, exe, bat files are blocked
@@ -89,6 +117,13 @@ def getFilePath(program, exeAllowed):
     return filePath
     #send_message('{"debug": "is no exe file: %s -- %s"}' % (urllib.quote(executable), urllib.quote(filePath)))
     # print "document"
+
+def createResponse(process):
+  # process returns None if it's still active
+  # if (process.returncode is not None):
+  #   send_message('{"error": "%s" }' % process.returncode)
+  # else:
+  send_message('{"error": %s}' % "null")
 
 # Thread that reads messages from the webapp.
 def read_thread_func(queue):
@@ -115,53 +150,31 @@ def read_thread_func(queue):
     # send_message('{"revealing?": "%s"}' % reveal)
 
     exeAllowed = data['exeAllowed']
-    # send_message('{"message": "exe allowed: %s"}' % exeAllowed)
 
     if (checkPath(fileStr)):
       # send_message('{"openingFile": "%s"}' % fileStr )
       result = getFilePath(fileStr, exeAllowed)
       if (reveal):
-        revealCommand = r'explorer /select,"%s"' % result
-        subprocess.call(revealCommand)
-        # test = result
-        send_message('{"text": "select folder & select file %s"}' % urllib.quote(revealCommand))
-
-        # send_message('{"error": %s }' % "null")
+        process = subprocess.Popen([fileExplorer['reveal']['cmd'], fileExplorer['reveal']['arg'], result])
+        # send_message('{"text": "select folder & select file %s"}' % urllib.quote(revealCommand))
+        createResponse(process)
       else:
-        # send_message('{"stat": "%s"}' % fileStr)
-        # result = fileStr
-        # if (result is not None):
-        # os.startfile(result) # todo add try catch if file can't be opened
-        # exeTest = is_exe(result)
-        # send_message('{"debug": "is exe file?: %s"}' % exeTest)
-
-        #if is_exe(result) && !exeAllowed:
-        #    send_message('{"error": %s }' % 'EXE_ACCESS_DENIED')
-        #else:
-            # no exe or allowed
         if result is not None:
-            subprocess.call(r'explorer %s' % result)
-            send_message('{"error": %s }' % "null")
+            process = subprocess.call([fileExplorer['open'], result])
+            # send_message('{"error": "%s" }' % result)
+            createResponse(process)
         else:
             send_message('{"error": %s }' % "EXE_ACCESS_DENIED")  # todo pass error from getFilePath
-        # send_message('{"stat": "%s"}' %  urllib.quote(result))
-
-        #send_message('{"debug": "exe allowed: %s"}' % exeAllowed)
-
-        # else:
-        #   send_message('{"error": %s }' % "ERROR_BAD_LINK")
-        # else:
-        #   if exeAllowed:
-        #     os.startfile(fileStr) # todo add try catch if file can't be opened
-        #   else:
-        #     send_message('{"error": %s }' % "ERROR_EXECTUBALES_NOT_ENABLED")
     else:
       if (reveal):
         revealPath = os.path.dirname(fileStr)
         send_message('{"text": "opening folder %s"}' % urllib.quote(revealPath))
-        subprocess.call(r'explorer "%s"' % revealPath)
-        send_message('{"error": %s }' % "null")
+        subprocess.call([fileExplorer['open'], revealPath])
+        # subprocess.call(fileExplorer['open'] % revealPath)
+        send_message('{"error": "debug %s" }' % revealPath)
+        # send_message('{"error": %s }' % "null")
       else:
+        # send_message('{"debug": "fileExplorer %s"}' % getFilePath(fileStr, exeAllowed))
         send_message('{"error": "%s", "url": "%s"}' % ("ERROR_BAD_LINK", fileStr))
     sys.exit(0)
 

@@ -104,14 +104,14 @@ module.exports = {
                 from: 'src/manifest.json',
                 transform: function(content, path) {
                     // add description & version from package.json
-                    let json = JSON.parse(content.toString('utf8'));
+                    // let json = JSON.parse(content.toString('utf8'));
 
                     // if (FF) {
                     //     Object.assign(json, manifestAdditionsFF);
                     // }
 
                     return JSON.stringify(
-                        Object.assign({}, json, {
+                        Object.assign({}, JSON.parse(content.toString('utf8')), {
                             description: process.env.npm_package_description,
                             version: process.env.npm_package_version || '0.0.1'
                         }), null, 2);

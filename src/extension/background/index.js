@@ -287,7 +287,7 @@ browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
 
 function onError(err) {
-    console.log('error handler:', err);
+    console.log('error handler:', err); // todo - check that really the connection to the native app isn't open
     notify('error', 'An error occured. Please check that you ' +
       'have installed the native app. See installation guide in addon-bar' +
       'menu.');
