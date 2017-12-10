@@ -1,11 +1,8 @@
 # py2exe build directory
 build
 
-# hot module reloads in dist folder
-
-dist/*.hot-update.js
-dist/*.hot-update.js.map
-dist/*.hot-update.json
+# dist folder
+dist
 
 # Logs
 logs
