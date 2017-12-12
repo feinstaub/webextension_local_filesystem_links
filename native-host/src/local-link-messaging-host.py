@@ -166,14 +166,18 @@ def read_thread_func(queue):
       # send_message(r'{"openingFile": "%s"}' % fileStr)
       result = getFilePath(fileStr, exeAllowed)
       if (reveal):
-        process = subprocess.call(fileExplorer['reveal']['cmd'] + ' ' + fileExplorer['reveal']['arg'] % result)
+        # process = subprocess.call(fileExplorer['reveal']['cmd'] + ' ' + fileExplorer['reveal']['arg'] % result) # working in windows
+        subprocess.call([fileExplorer['reveal']['cmd'], fileExplorer['reveal']['arg'] % result])
         # send_message('{"text": "select folder & select file %s"}' % urllib.quote(revealCommand))
         # createResponse(process)
       else:
         if result is not None:
             # os.startfile(result)
             # fileToOpen = b'%s' % fileExplorer['open'] +
-            process = subprocess.call(u"{0} \"{1}\"".format(fileExplorer['open'], result))
+            # process = subprocess.call(u"{0} \"{1}\"".format(fileExplorer['open'], result)) # working in windows
+
+            process = subprocess.call([fileExplorer['open'], result])
+            
             # send_message(u"{\"debug\": \"%s\" }" % urllib.quote(u"{0} \"{1}\"".format(fileExplorer['open'], result)))
             # createResponse(process)
         else:
