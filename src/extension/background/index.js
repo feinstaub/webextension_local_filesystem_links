@@ -178,12 +178,12 @@ browser.runtime.onMessage.addListener(
             sendResponse({info: 'tab created'});
             break;
         case 'open':
-            console.log('Last error:', browser.runtime.lastError);
+            // console.log('Last error:', browser.runtime.lastError);
             // console.log(sender.tab ?
             //             'from a content script:' + sender.tab.url :
             //             'from the extension', request.url);
 
-            console.log('reveal', request.reveal ? 1 : 0);
+            // console.log('reveal', request.reveal ? 1 : 0);
             var uri = request.url;
 
             // notify(undefined, 'Clicked url: ' + request.url); // just for debugging
@@ -231,7 +231,7 @@ browser.runtime.onMessage.addListener(
 
 browser.tabs.onActivated.addListener(() => {
     // notify('dummy', 'just a test');
-    console.log('tab activated');
+    // console.log('tab activated');
     updateAddonbarIcon(false); // always toggle to inactive
     checkUrls();
 });
@@ -287,9 +287,10 @@ browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 
 
 function onError(err) {
-    console.log('error handler:', err); // todo - check that really the connection to the native app isn't open
-    notify('error', 'An error occured. Please check that you ' +
-      'have installed the native app. See installation guide in addon-bar' +
+    // console.log('error handler:', err.name, err.message, err.stack,
+      // err.lineNumber); // todo - check that really the connection to the native app isn't open
+    notify(err.name, err.message + '. Please check that you ' +
+      'have installed the native app. See installation guide in addon-bar ' +
       'menu.');
 }
 

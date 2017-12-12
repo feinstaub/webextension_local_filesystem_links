@@ -18,7 +18,7 @@ This folder contains information needed for the windows installer.
   Resource for a VC++ check can be found [here](https://stackoverflow.com/questions/11137424/how-to-make-vcredist-x86-reinstall-only-if-not-yet-installed)
 
 
-## SignTool
+## SignTool (not working yet)
 Signing is needed to avoid security warning from Windows Defender.
 
 [step by step guide to sign inno setup installer](https://revolution.screenstepslive.com/s/revolution/m/10695/l/563371-signing-installers-you-create-with-inno-setup)

@@ -11,10 +11,8 @@
     "sign": "web-ext sign",
     "clean": "rimraf dist",
     "dev": "npm run clean && cross-env NODE_ENV=development webpack-dev-server --inline --hot --content-base=dist/",
-    "build": "npm run clean && cross-env NODE_ENV=production webpack --progress --hide-modules && npm run createExe:win32 && npm run compileInstaller:win32",
-    "lint": "eslint ./src/**.js",
-    "createExe:win32": "python ./src/host/setup.py py2exe",
-    "compileInstaller:win32": "innosetup-compiler ./src/host/windows/InnoSetupScript.iss --gui --verbose"
+    "build": "npm run clean && cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "lint": "eslint ./src/**.js"
   },
   "engines": {
     "firefox": ">=38.0a1",
@@ -43,7 +41,6 @@
     "file-loader": "^0.9.0",
     "friendly-errors-webpack-plugin": "^1.1.3",
     "html-webpack-plugin": "^2.28.0",
-    "innosetup-compiler": "^5.5.9",
     "node-sass": "^4.7.2",
     "rimraf": "^2.5.4",
     "sass-loader": "^6.0.6",

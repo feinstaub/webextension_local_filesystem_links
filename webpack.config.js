@@ -81,10 +81,10 @@ module.exports = {
         //     names: ['app', 'background', 'options'] // , 'webpack-manifest'] // Specify the common bundle's name.
         // }),
         new CopyWebpackPlugin([
-            { // copy host json
-                from: 'src/host/',
-                to: 'host/'
-            },
+            // { // copy host json --> exluded (manual download required)
+            //     from: 'src/host/',
+            //     to: 'host/'
+            // },
             { // copy locale
                 from: 'src/extension/_locales',
                 to: '_locales'
@@ -111,10 +111,13 @@ module.exports = {
                     // }
 
                     return JSON.stringify(
-                        Object.assign({}, JSON.parse(content.toString('utf8')), {
-                            description: process.env.npm_package_description,
-                            version: process.env.npm_package_version || '0.0.1'
-                        }), null, 2);
+                        Object.assign({}, JSON.
+                            parse(content.toString('utf8')), {
+                                description: process.env.
+                                  npm_package_description,
+                                version: process.env.
+                                  npm_package_version || '0.0.1'
+                            }), null, 2);
                 }
             }
         ]),

@@ -10,8 +10,8 @@
 ; SignTool=signtool
 AppId={{318A38DD-A431-42F0-BBAB-58C330AC545F}
 AppName=Local file links Native Messaging API Host
-AppVersion=0.1
-;AppVerName=Local file links Native Messaging API Host 0.1
+AppVersion=0.0.1
+;AppVerName=Local file links Native Messaging API Host 0.0.1
 AppPublisher=feinstaub/webextension_local_filesystem_links
 AppPublisherURL=https://github.com/feinstaub/webextension_local_filesystem_links
 AppSupportURL=https://github.com/feinstaub/webextension_local_filesystem_links
@@ -20,11 +20,11 @@ DefaultDirName={%USERPROFILE}\Local_file_links-Native_API_Host
 DisableDirPage=yes
 DefaultGroupName=Local file links Native Messaging API Host
 DisableProgramGroupPage=yes
-OutputDir=D:\github\webextension_local_filesystem_links\dist\host\windows
+OutputDir=D:\github\webextension_local_filesystem_links\native-host\bin\win32
 OutputBaseFilename=native-app-setup
 Compression=lzma
-UninstallDisplayIcon=D:\github\webextension_local_filesystem_links\src\host\addon_icon_48.ico
-SetupIconFile=D:\github\webextension_local_filesystem_links\src\host\addon_icon_48.ico
+UninstallDisplayIcon=D:\github\webextension_local_filesystem_links\native-host\src\addon_icon_48.ico
+SetupIconFile=D:\github\webextension_local_filesystem_links\native-host\src\addon_icon_48.ico
 SolidCompression=yes
 PrivilegesRequired=none
 
@@ -35,9 +35,10 @@ Name: Visualc; Description: Install Visual C++ re-distributable (required for th
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "D:\github\webextension_local_filesystem_links\dist\host\webextension_local_filesystem_links_win.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\github\webextension_local_filesystem_links\src\host\windows\vcredist_x86.exe"; DestDir: "{app}"; AfterInstall: RunOtherInstaller; Tasks: Visualc
-Source: "D:\github\webextension_local_filesystem_links\dist\host\windows\*"; DestDir: "{app}"; Flags: ignoreversion; Excludes: "AppxManifest.xml, readme.md, **\*.iss"
+Source: "D:\github\webextension_local_filesystem_links\native-host\bin\win32\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\github\webextension_local_filesystem_links\native-host\src\webextension_local_filesystem_links_win.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\github\webextension_local_filesystem_links\native-host\build\windows\vcredist_x86.exe"; DestDir: "{app}"; AfterInstall: RunOtherInstaller; Tasks: Visualc
+Source: "D:\github\webextension_local_filesystem_links\native-host\build\windows\*"; DestDir: "{app}"; Flags: ignoreversion; Excludes: "AppxManifest.xml, readme.md, **\*.iss"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

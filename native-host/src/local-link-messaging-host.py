@@ -21,14 +21,17 @@ currentOS = sys.platform
 fileExplorers = {
   "win32": {
     "open": r'explorer',
-    "reveal": r'explorer /select'
+    "reveal": {
+      "cmd": r'explorer',
+      "arg": r'/select,"%s"'
+    }
   },
   "linux": {
     "open": r'xdg-open',
     "reveal": {
       "cmd": r'nautilus', # not perfect to use directly nautilus but xdg-open is not supporting select option
-      "arg": r'--select'
-    } 
+      "arg": r'--select "%s"'
+    }
   }
 }
 
@@ -51,7 +54,7 @@ if currentOS == "win32":
 
   msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
   msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
-  
+
   fileExplorer = fileExplorers['win32']
 
   def is_exe(fpath):
@@ -87,7 +90,10 @@ def send_message(message):
 
 def preparePath(pathStr):
   # pathStr = re.sub(r'file:[\/\\]{2,3}', '', pathStr) # remove file://  -- org
-  pathStr = re.sub(r'file:[\/\\]{2}', '', pathStr) # remove file://
+  if currentOS == "win32":
+    pathStr = re.sub(r'file:[\/\\]{2,3}', '', pathStr) # remove file:// (also any leading / needs to be removed in windows)
+  else:
+    pathStr = re.sub(r'file:[\/\\]{2}', '', pathStr) # remove file://
 
   pathStr = urllib.unquote(pathStr).decode('utf8')
   if sys.platform.startswith('linux'):
@@ -97,13 +103,16 @@ def preparePath(pathStr):
     pathStr = re.sub(r'[/]{1,2}~/', '~/', pathStr)
     pathStr = os.path.expanduser(pathStr) # expand ~ to home/username
     # send_message('{"text": "check: %s"}' % pathStr)
-  
+
   pathStr = os.path.normpath(pathStr) # normalize slashes
+  # send_message('{"debug": "%s"}' % urllib.quote(pathStr))
   return pathStr
 
 # Helper for check if path or file exists
 def checkPath(pathStr):
   pathStr = preparePath(pathStr)
+
+  # send_message('{"debug": "%s"}' % os.path.exists(pathStr))
   return os.path.exists(pathStr)
 
 def getFilePath(program, exeAllowed):
@@ -118,7 +127,7 @@ def getFilePath(program, exeAllowed):
     #send_message('{"debug": "is no exe file: %s -- %s"}' % (urllib.quote(executable), urllib.quote(filePath)))
     # print "document"
 
-def createResponse(process):
+def createResponse():
   # process returns None if it's still active
   # if (process.returncode is not None):
   #   send_message('{"error": "%s" }' % process.returncode)
@@ -151,31 +160,37 @@ def read_thread_func(queue):
 
     exeAllowed = data['exeAllowed']
 
+    # send_message('{"debug": "%s"}' % fileExplorer['open'])
+
     if (checkPath(fileStr)):
-      # send_message('{"openingFile": "%s"}' % fileStr )
+      # send_message(r'{"openingFile": "%s"}' % fileStr)
       result = getFilePath(fileStr, exeAllowed)
       if (reveal):
-        process = subprocess.Popen([fileExplorer['reveal']['cmd'], fileExplorer['reveal']['arg'], result])
+        process = subprocess.call(fileExplorer['reveal']['cmd'] + ' ' + fileExplorer['reveal']['arg'] % result)
         # send_message('{"text": "select folder & select file %s"}' % urllib.quote(revealCommand))
-        createResponse(process)
+        # createResponse(process)
       else:
         if result is not None:
-            process = subprocess.call([fileExplorer['open'], result])
-            # send_message('{"error": "%s" }' % result)
-            createResponse(process)
+            # os.startfile(result)
+            # fileToOpen = b'%s' % fileExplorer['open'] +
+            process = subprocess.call(u"{0} \"{1}\"".format(fileExplorer['open'], result))
+            # send_message(u"{\"debug\": \"%s\" }" % urllib.quote(u"{0} \"{1}\"".format(fileExplorer['open'], result)))
+            # createResponse(process)
         else:
             send_message('{"error": %s }' % "EXE_ACCESS_DENIED")  # todo pass error from getFilePath
     else:
       if (reveal):
         revealPath = os.path.dirname(fileStr)
-        send_message('{"text": "opening folder %s"}' % urllib.quote(revealPath))
+        # send_message('{"text": "opening folder %s"}' % urllib.quote(revealPath))
         subprocess.call([fileExplorer['open'], revealPath])
         # subprocess.call(fileExplorer['open'] % revealPath)
-        send_message('{"error": "debug %s" }' % revealPath)
+        # send_message('{"error": "debug %s" }' % revealPath)
         # send_message('{"error": %s }' % "null")
       else:
         # send_message('{"debug": "fileExplorer %s"}' % getFilePath(fileStr, exeAllowed))
         send_message('{"error": "%s", "url": "%s"}' % ("ERROR_BAD_LINK", fileStr))
+
+    createResponse() # default response
     sys.exit(0)
 
 def Main():

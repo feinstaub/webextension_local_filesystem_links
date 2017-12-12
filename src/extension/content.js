@@ -127,8 +127,9 @@
         // port.sendMessage({
             action: 'open',
             // removed decodeURIComponent because env. var. failed
+            // --> decoding needed for accents
             message: 'hello',
-            url: this.href, //decodeURIComponent(this.href), // this.href
+            url: decodeURIComponent(this.href), // this.href
             reveal: options.revealOpenOption == 'O' ? false : true,
             directOpen: options.revealOpenOption == 'D'
         }).then(function(response) {
@@ -159,8 +160,9 @@
         // port.sendMessage({
             action: 'open',
             // removed decodeURIComponent because env. var. failed
+            // --> decoding needed for accents (check env. var later)
             message: 'hello',
-            url: link, //decodeURIComponent(this.href),
+            url: decodeURIComponent(link),
             reveal: options.revealOpenOption == 'O' ? true : false
         }).then(function(response) {
             console.log('response');
