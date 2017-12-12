@@ -23,14 +23,14 @@ fileExplorers = {
     "open": r'explorer',
     "reveal": {
       "cmd": r'explorer',
-      "arg": r'/select,"%s"'
+      "arg": r'/select,'
     }
   },
   "linux": {
     "open": r'xdg-open',
     "reveal": {
       "cmd": r'nautilus', # not perfect to use directly nautilus but xdg-open is not supporting select option
-      "arg": r'--select "%s"'
+      "arg": r'--select'
     }
   }
 }
@@ -167,7 +167,8 @@ def read_thread_func(queue):
       result = getFilePath(fileStr, exeAllowed)
       if (reveal):
         # process = subprocess.call(fileExplorer['reveal']['cmd'] + ' ' + fileExplorer['reveal']['arg'] % result) # working in windows
-        subprocess.call([fileExplorer['reveal']['cmd'], fileExplorer['reveal']['arg'] % result])
+        subprocess.call([fileExplorer['reveal']['cmd'], fileExplorer['reveal']['arg'], result])
+        # send_message(u"{\"debug\": \"%s\" }" % urllib.quote(fileExplorer['reveal']['arg'] % result))
         # send_message('{"text": "select folder & select file %s"}' % urllib.quote(revealCommand))
         # createResponse(process)
       else:
