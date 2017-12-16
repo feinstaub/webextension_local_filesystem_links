@@ -3,17 +3,6 @@ local-filesystem-links DEVELOPMENT
 
 jsfiddle for some whitelist testing: http://jsfiddle.net/awolf2904/tefcs74q/
 
-Todos:
-
-- [x] add test folder + webserver for test cases (later, for now I'm starting the test server in a separate working copy) --> integrated separate repo
-- [ ] Icon adding not working properly
-- [ ] Native message installer required (later, batch file for development OK)
-- [x] Check why native messaging is not working at the moment - just a installation issue? Problem was that the application id is required otherwise we received something like "can't postMessage to disconnected port"
-- [x] Create Extension settings page - options.html (uses Vue for view handling)
-- [ ] Add "addon bar" icon to display activity of Extension on current tab
-- [x] Implement localization (locale switching difficult - need to install FF nightly with different language)
-- [ ] Loading/Activation on tab is over-enhancing the page - duplicated icons
-
 Todos for README:
 
 - [ ] Remove everything jpm related
@@ -22,16 +11,16 @@ Todos for README:
 # Building for production
 1. `npm run build` - creates extension from src folder, converts host script to executable and create installer with InnoSetup
    (working under windows)
-3. `npm run bundle` to create the final package
+2. `npm run bundle` to create the final package
 
 # Usage
 First run `npm install`.
 
-## Start dev server for FF
-`npm run dev:FF`
+## Start dev server
+`npm run dev` starts the development build for FF and watches source directory for changes.
 
 ## Start firefox with webextension loaded
-`npm start` to start web-ext start with dist folder.
+`npm start` to start web-ext start with dist folder. It will load the extension in Firefox.
 
 Based on https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
 

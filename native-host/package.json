@@ -7,7 +7,7 @@
     "clean:win32": "rimraf bin/win32 dist",
     "clean:linux": "rimraf bin/linux",
     "build:win32": "npm run clean:win32 && npm run createExe:win32 && npm run compileInstaller:win32",
-    "createExe:win32": "python ./src/setup.py py2exe --platform win32",
+    "createExe:win32": "py -2 ./src/setup.py py2exe",
     "compileInstaller:win32": "innosetup-compiler ./build/windows/InnoSetupScript.iss --gui --verbose",
     "build:linux": "npm run clean:linux && ./build/linux/bundle.sh"
   },

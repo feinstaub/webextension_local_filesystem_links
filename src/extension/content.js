@@ -1,7 +1,7 @@
 'use strict';
 
 (function fileLinkAddon($) {
-    console.log('content script started...');
+    // console.log('content script started...');
     $.noConflict();
 
     var fileLinkSelectors = [
@@ -32,16 +32,18 @@
     * Activates the plugin - add icon after link and starts observer if enabled
     */
     function activate() {
-        console.log('activate', options);
+        // console.log('activate', options);
         if (options.enableLinkIcons) {
             currentIconClass = 'aliensun-link-icon' +
             (options.revealOpenOption == 'R' ? '-arrow' : '');
 
             createObserver();
             $container.addClass(currentIconClass);
-            console.log('added class', $container);
+            // console.log('added class', $container);
 
             updateLink($(fileLinkSelectors.join(', ')));
+        } else {
+            removeLinkIcons();
         }
 
         // we could add a if case here to add tooltip disable pref.
@@ -57,8 +59,19 @@
             //             "from the extension");
             // console.log('init', sender.tab, request.data, request); // sender.tab);
             switch(request.action) {
+            case 'destroy':
+                // console.log('remove icons & click handlers');
+                removeLinkIcons();
+                // remove tooltips
+                $('a').filter(fileLinkSelectors.join(', ')).attr('title', '');
+                // disconnect jquery-observe
+                $(fileLinkSelectors.join(', ')).disconnect();
+                $(document).disconnect();
+                // remove click handler
+                $(document).undelegate(fileLinkSelectors.join(', '), 'click');
+                break;
             case 'init':
-                console.log('init content script', request);
+                // console.log('init content script', request);
                 appTextMessages = request.data.constants.MESSAGES.
                   USERMESSAGES;
                 options = request.data.options; // load options
@@ -73,10 +86,6 @@
                 // now everything is ready to load
                 activate();
                 sendResponse({feedback: 'initDone'});
-                break;
-            case 'update':
-                console.log('update icons', request, sender);
-                updateIcons(); // request.data.options);
                 break;
             default:
             }
@@ -99,7 +108,7 @@
     function updateIcons(data) {
         options = $.extend({}, options, data);
 
-        console.log('pref changed', data, options);
+        // console.log('pref changed', data, options);
         removeLinkIcons();
         updateLinkTooltip();
 
@@ -114,15 +123,8 @@
     // Use delegate so the click event is also avaliable at newly added links
     $(document).on('click', fileLinkSelectors.join(', '), function(e) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
-        console.log('clicked file link: ' +
-          this.href, options.revealOpenOption);
-        // console.log('port', port);
-        // self.postMessage({
-        //     action: 'open',
-        //     // removed decodeURIComponent because env. var. failed
-        //     url: this.href, //decodeURIComponent(this.href),
-        //     reveal: options.revealOpenOption == 'O' ? false : true
-        // });
+        // console.log('clicked file link: ' +
+        //   this.href, options.revealOpenOption);
         browser.runtime.sendMessage({
         // port.sendMessage({
             action: 'open',
@@ -133,9 +135,9 @@
             reveal: options.revealOpenOption == 'O' ? false : true,
             directOpen: options.revealOpenOption == 'D'
         }).then(function(response) {
-            console.log(response);
+            // console.log(response);
         }).catch(function(error) {
-            console.log('error', error);
+            // console.log('error', error);
         });
     });
 
@@ -165,9 +167,9 @@
             url: decodeURIComponent(link),
             reveal: options.revealOpenOption == 'O' ? true : false
         }).then(function(response) {
-            console.log('response');
+            // console.log('response');
         }).catch(function(err) {
-            console.log('error', err);
+            // console.log('error', err);
         });
     }
 
@@ -205,7 +207,7 @@
     // --> final solution: use jquery-observe that's simplyfing mutationObserver
 
     function updateLink($element) {
-        console.log('updating', $element);
+        // console.log('updating', $element);
         var iconTooltip = options.revealOpenOption == 'O' ?
           appTextMessages.tooltips.openFolder :
           appTextMessages.tooltips.linkText;
@@ -218,9 +220,9 @@
         $container.addClass(currentIconClass);
 
         $element.each(function(index, el) {
-            console.log('el href = ', $(el).attr('href'));
-            console.log('icon already added?', $(el).next().
-            is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
+            // console.log('el href = ', $(el).attr('href'));
+            // console.log('icon already added?', $(el).next().
+            // is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
             if (!$(el).next().
               is('.aliensun-link-icon,.aliensun-link-icon-arrow')) {
                 // icon not added
@@ -239,7 +241,7 @@
     function removeLinkIcons() {
         var $icons = $('.aliensun-link-icon, .aliensun-link-icon-arrow');
 
-        console.log('test',$icons);
+        // console.log('test',$icons);
 
         $icons.remove();
     }
@@ -287,14 +289,14 @@
                 // We're getting only one observer callback for each added element.
                 // So we don't need to store the previous added node.
 
-                //console.log('link added');
+                // console.log('link added');
                 // console.log($(this).eq(0).html(), record); // this = addedNodes
 
                 // get elements that are with-out icon - avoid multiple icons
                 var $elements = $(this).filter(function(/* index, item */) {
-                    console.log('filter next element', $(this).
-                        next().
-                        is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
+                    // console.log('filter next element', $(this).
+                    //     next().
+                    //     is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
                     return !$(this).
                         next().
                         is('.aliensun-link-icon,.aliensun-link-icon-arrow');

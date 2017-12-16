@@ -6,7 +6,7 @@ function notify(title, message) {
     notifyCount++;
     const id = `${cakeNotification}-${notifyCount}`;
 
-    console.log('notify', id, browser.notifications);
+    // console.log('notify', id, browser.notifications);
     browser.notifications.create(
         id,
         {
@@ -17,7 +17,7 @@ function notify(title, message) {
         }).then(() => {
             // console.log('cake created', arguments);
             setTimeout(() => {
-                console.log('cake cleared');
+                // console.log('cake cleared');
                 browser.notifications.clear(id);
             }, 2000);
         });

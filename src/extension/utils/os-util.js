@@ -15,7 +15,7 @@ var getOsStringTag = function() {
     // see https://developer.mozilla.org/en/OS_TARGET
     return browser.runtime.getPlatformInfo(function(info) {
         // Display host OS in the console
-        console.log(info.os);
+        // console.log(info.os);
         return info.os;
     }); // xulRuntime.OS;
 };

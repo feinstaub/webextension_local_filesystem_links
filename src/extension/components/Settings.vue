@@ -133,7 +133,7 @@
 
         browser.storage.local.set(settings).then(() => {
           // Update status to let user know options were saved.
-          console.log('saved!', browser.storage.local);
+          // console.log('saved!', browser.storage.local);
           this.statusMsg = 'Options saved.';
           let updateActionObj = Object.assign({},
           {
@@ -159,10 +159,10 @@
         // return {colorSettings: defaultColor};
         // Use default value color = 'red' and likesColor = true.
         // chrome.storage.local.get(defaultColor,
-        console.log('load defaults', defaultSettings, this.getObj(defaultSettings))
+        // console.log('load defaults', defaultSettings, this.getObj(defaultSettings))
         browser.storage.local.get(this.getObj(defaultSettings)).then(
           (items) => {
-            console.log('loaded', items);
+            // console.log('loaded', items);
             // alert(JSON.stringify(items))
             this.settings = items || defaultSettings;
             this.loaded = true;
