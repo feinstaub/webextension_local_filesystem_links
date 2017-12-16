@@ -17,10 +17,10 @@
       <h2><span class="important">Important!</span> Next steps required for the extension to work</h2>
       <ol>
         <li>Download and install the native application for your system.<br/>
-          <a href="https://raw.githubusercontent.com/feinstaub/webextension_local_filesystem_links/master/native-host/bin/win32/native-app-setup.exe" download>Windows</a><br/>
-          <a href="https://raw.githubusercontent.com/feinstaub/webextension_local_filesystem_links/master/native-host/bin/linux/native-app-bundle-linux.tar" download>Linux (Python 2.7 dependency required)</a>
+          <a class="download-os" href="https://drive.google.com/uc?export=download&id=19jN3BJCpwFuEzLsHbDTlIdcm_wVuwAON" target="_blank">Windows</a>
+          <a class="download-os" href="https://drive.google.com/uc?export=download&id=1QKdOeOkGGwQoI8tA9sQFpUYnJZyL58Cu" target="_blank">Linux<br/><small>(Python 2.7 dependency required)</small></a>
         </li>
-        <li>
+        <li class="clearfix">
           Check and modify whitelist settings by clicking at the addon icon in then addon bar.
           By default all pages are allowed but it's recommended to limit the pages where the addon can add the local link behaviour.
         </li>
@@ -44,6 +44,11 @@
           to open the application in your linked application.
         </p>
       </div>
+      <h4>Whitelist needs to be according to new schema e.g. *://*.jsfiddle.net/*</h4>
+      <p>The new format is &lt;scheme&gt;://&lt;host&gt;&lt;path&gt; (wildcard char * is possible)<br/>
+      A single * will be replaced with &lt;all_urls&gt; by the extension.
+      Please have a look at the following docs. for more details about <a href="https://developer.mozilla.org/de/Add-ons/WebExtensions/Match_patterns">match patterns</a>
+      </p>
     </main>
     <script src="installed.js"></script>
   </body>

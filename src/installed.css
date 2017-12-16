@@ -51,3 +51,28 @@ img {
 .app-name {
   font-size: 1.4em;
 }
+
+.download-os:link {
+  display: block;
+  float:left;
+  width: 100px;
+  height: 100px;
+  text-decoration: none;
+  background: rgb(235, 243, 255);
+  color: black;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+}
+
+.download-os:hover {
+  background: lightgray;
+}
+
+.download-os:visited {
+  color: black;
+}
+
+.clearfix {
+  clear: both;
+}
