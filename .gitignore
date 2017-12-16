@@ -1,3 +1,6 @@
+# ignre web-ext bundle
+web-ext-artifacts
+
 # binary folder
 bin
 
