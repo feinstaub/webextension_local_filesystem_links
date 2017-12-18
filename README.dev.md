@@ -1,6 +1,27 @@
 local-filesystem-links DEVELOPMENT
 ==================================
 
+jsfiddle for some whitelist testing: http://jsfiddle.net/awolf2904/tefcs74q/
+
+Todos for README:
+
+- [ ] Remove everything jpm related
+- [ ] Changed linting from gulp to eslint directly
+
+# Building for production
+1. `npm run build` - creates extension from src folder, converts host script to executable and create installer with InnoSetup
+   (working under windows)
+2. `npm run bundle` to create the final package
+
+# Usage
+First run `npm install`.
+
+## Start dev server
+`npm run dev` starts the development build for FF and watches source directory for changes.
+
+## Start firefox with webextension loaded
+`npm start` to start web-ext start with dist folder. It will load the extension in Firefox.
+
 Based on https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/jpm
 
 ### Linux ###

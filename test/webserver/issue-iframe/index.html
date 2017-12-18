@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test page - iframe issue</title>
+  </head>
+  <body>
+    <a href="/">back</a><br/>
+    <button onclick="reloadIframe()">Reload</button><br/>
+    <iframe id="FrameID" src="//fiddle.jshell.net/awolf2904/tefcs74q/show/" width="400px" height="500px">
+    </iframe>
+    <h2>Outside iframe</h2>
+    <a href="file://c:/">c:/</a>
+    <p>Reloading of iframe not working properly - same behaviour as in jsfiddle. Not fixed yet</p>
+    <script>
+      function reloadIframe() {
+        // alert('reloading');
+        // document.getElementById('FrameID').contentWindow.location.reload(true);
+        const iFrame = document.getElementById('FrameID');
+        iFrame.parentNode.replaceChild(iFrame.cloneNode(), iFrame);
+      }
+    </script>
+  </body>
+</html>

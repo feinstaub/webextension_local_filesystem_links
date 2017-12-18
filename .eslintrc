@@ -15,6 +15,7 @@
         "indent": ["error", 4]
     },
     "globals": {
-        "jQuery": true
+        "jQuery": true,
+        "browser": true
     }
 }

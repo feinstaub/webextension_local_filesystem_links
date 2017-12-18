@@ -1,0 +1,9 @@
+{
+  "name": "webextension_local_filesystem_links",
+  "description": "Local file links Native Messaging API Host",
+  "path": "HOST_PATH",
+  "type": "stdio",
+  "allowed_extensions": [
+    "jid1-JAzC7z53jemo5Q@jetpack"
+  ]
+}
