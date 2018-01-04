@@ -98,9 +98,9 @@
         revealOpenOptionTitle: getI18n('revealOpenOption_title'),
         revealOpenOptionDescription: getI18n('revealOpenOption_description'),
         revealOpenOptionTexts: {
-          'o': getI18n('revealOpenOption_options.o'),
-          'r': getI18n('revealOpenOption_options.r'),
-          'd': getI18n('revealOpenOption_options.d')
+          'o': getI18n('revealOpenOption_options_Open'),
+          'r': getI18n('revealOpenOption_options_Reveal'),
+          'd': getI18n('revealOpenOption_options_Direct')
         },
         settings: defaultSettings,
         statusMsg: undefined,

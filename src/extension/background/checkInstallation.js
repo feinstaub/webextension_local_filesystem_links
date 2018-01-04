@@ -1,6 +1,8 @@
-// script for checking if this is the first start
-// 1st start --> show installation guide
+import notify from './notify';
 
+/** Show installation guid tab
+  * @returns {undefined}
+  */
 export function showInstallationTab() {
     let query = browser.tabs.query({
         currentWindow: true,
@@ -23,8 +25,11 @@ export function showInstallationTab() {
         }
     });
 }
-
-function checkInstallation(details, notify) {
+/** Check if this is the first run of the extension & show install guide
+  * @param {object} details info to the current installation reason
+  * @returns {undefined}
+  */
+function checkInstallation(details) {
     // notify('in func', 'installed');
     if(details.reason == 'install') {
         // console.log('This is a first install!');
