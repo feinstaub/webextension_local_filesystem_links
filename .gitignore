@@ -1,4 +1,8 @@
-# ignre web-ext bundle
+# ignore python binaries
+*.pyc
+__pycache__
+
+# ignore web-ext bundle
 web-ext-artifacts
 
 # binary folder
