@@ -31,15 +31,15 @@
     "message": "Changes the default click behaviour of file-links. Default = direct file link open.",
     "description": "Settings description for default click behaviour"
   },
-  "revealOpenOption_options.o": {
+  "revealOpenOption_options_Open": {
     "message": "Open link directly",
     "description": "Setting open link directly"
   },
-  "revealOpenOption_options.r": {
+  "revealOpenOption_options_Reveal": {
     "message": "Reveal link (open containing folder)",
     "description": "Setting reveal link"
   },
-  "revealOpenOption_options.d": {
+  "revealOpenOption_options_Direct": {
     "message": "Open link directly in browser",
     "description": "Setting direct open"
   },
