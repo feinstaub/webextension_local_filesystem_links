@@ -8,7 +8,8 @@ options = {
         'build': {'build_base': 'dist/'},
         'py2exe': {
            'compressed':1,
-           # 'bundle_files': 2,
+           #'includes': ['pathlib2'],
+           #'bundle_files': 1,
            'dist_dir': "bin/" + platform
            # 'dll_excludes': ['w9xpopen.exe']
     }}
