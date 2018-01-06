@@ -8,10 +8,15 @@
 
 ; signool not properly setup yet - key missing --> skipped signing for now and check it later. First fix path issue after installation.
 ; SignTool=signtool
+#define AppVersion GetFileVersion("D:\github\webextension_local_filesystem_links\native-host\bin\win32\local-link-messaging-host\local-link-messaging-host.exe")
+#define AppName "Local file links Native Messaging API Host"
+
 AppId={{318A38DD-A431-42F0-BBAB-58C330AC545F}
-AppName=Local file links Native Messaging API Host
-AppVersion=0.1.0
-;AppVerName=Local file links Native Messaging API Host 0.1.0
+AppName={#AppName} v{#AppVersion}
+AppVerName={#AppName} {#AppVersion}
+VersionInfoVersion={#AppVersion}
+AppVersion={#AppVersion}
+;AppVerName=Local file links Native Messaging API Host
 AppPublisher=feinstaub/webextension_local_filesystem_links
 AppPublisherURL=https://github.com/feinstaub/webextension_local_filesystem_links
 AppSupportURL=https://github.com/feinstaub/webextension_local_filesystem_links
@@ -35,10 +40,9 @@ Name: Visualc; Description: Install Visual C++ re-distributable (required for th
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "D:\github\webextension_local_filesystem_links\native-host\bin\win32\*"; DestDir: "{app}"
+Source: "D:\github\webextension_local_filesystem_links\native-host\bin\win32\local-link-messaging-host\*"; DestDir: "{app}"
 Source: "D:\github\webextension_local_filesystem_links\native-host\src\webextension_local_filesystem_links_win.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\github\webextension_local_filesystem_links\native-host\build\windows\vcredist_x86.exe"; DestDir: "{app}"; AfterInstall: RunOtherInstaller; Tasks: Visualc
-Source: "D:\github\webextension_local_filesystem_links\native-host\build\windows\*"; DestDir: "{app}"; Flags: ignoreversion; Excludes: "AppxManifest.xml, readme.md, **\*.iss"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
