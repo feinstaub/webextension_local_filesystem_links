@@ -1,6 +1,7 @@
 # ignore python binaries
 *.pyc
 __pycache__
+version.rc
 
 # ignore web-ext bundle
 web-ext-artifacts
