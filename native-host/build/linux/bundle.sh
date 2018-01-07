@@ -4,11 +4,15 @@
 # (required python to be installed)
 # 
 # Todo: check how to create an installer that is installing Python dependency.
-mkdir -p bin/linux
+#mkdir -p bin/linux
 
-tar -cvf bin/linux/native-app-bundle-linux.tar \
+(cd src; tar -cvf ../bin/linux/native-app-bundle-linux.tar \
     --transform 's,^src,local_filesystem_links_host_app,' \
-    src/install_host.sh \
-    src/uninstall_host.sh \
-    src/local-link-messaging-host.py \
-    src/webextension_local_filesystem_links.json
+    webextension_local_filesystem_links.json)
+
+(cd build/linux; tar -rf ../../bin/linux/native-app-bundle-linux.tar \
+    --transform 's,^src,local_filesystem_links_host_app,' \
+    uninstall_host_compiled.sh \
+    install_host_compiled.sh)
+
+(cd bin/linux; tar -rf ../../bin/linux/native-app-bundle-linux.tar local-link-messaging-host/. --transform 's,^src,local_filesystem_links_host_app,')

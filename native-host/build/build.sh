@@ -14,10 +14,10 @@ VSVersionInfo(
 
 if [[ "$OS" =~ ^MSYS.* ]]; then
     BIN_DIR="bin/win32";
-elif [[ "$OS" =~ ^LINUX.* ]]; then
-    BIN_DIR="bin/linux";
+elif [[ "$OS" =~ ^Linux.* ]]; then
+    BIN_DIR="./bin/linux";
 else
-    BIN_DIR=$OS
+    BIN_DIR="./bin/$OS"
 fi
 
 # rmdir -rf BIN_DIR # already removed by npm
