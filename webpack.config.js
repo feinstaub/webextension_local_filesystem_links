@@ -10,14 +10,12 @@ var FriendlyErrors = require('friendly-errors-webpack-plugin');
 // console.log(process.env.BROWSER)
 // console.log(process.env.NODE_ENV);
 
-const manifestAdditionsFF = {
-    // added to manifest.json --> maybe we need that later
-    // 'applications': {
-    //     'gecko': {
-    //         'id': 'webextension_local_filesystem_links@example.org'
-    //     }
-    // }
+const manifestFiles = {
+    firefox: 'manifest.firefox.json',
+    chrome: 'manifest.chrome.json'
 };
+
+const manifestFileName = manifestFiles[process.env.BROWSER || 'firefox']; // default to firefox
 
 module.exports = {
     entry: {
@@ -101,7 +99,9 @@ module.exports = {
             },
             // {output}/file.txt
             {
-                from: 'src/manifest.json',
+                //from: 'src/manifest.json',
+                from: `src/${manifestFileName}`,
+                to: 'manifest.json',
                 transform: function(content, path) {
                     // add description & version from package.json
                     // let json = JSON.parse(content.toString('utf8'));

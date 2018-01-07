@@ -9,10 +9,15 @@
         <p>decodeURIComponent is important for direct link click to make these characters work
         - side effect env. var not working with it (work-around needed for env. var)</p>
         <h2>Windows</h2>
-        <a href="file://c:/tmp/áéíóú.txt">c:/tmp/áéíóú.txt</a><br/>
-        <a href="file://c:/tmp/áéíóú/áéíóú.txt">c:/tmp/áéíóú/áéíóú.txt</a><br/>
+        <a href="file:///c:/tmp/áéíóú.txt">c:/tmp/áéíóú.txt</a><br/>
+        <a href="file:///c:/tmp/áéíóú/áéíóú.txt">c:/tmp/áéíóú/áéíóú.txt</a><br/>
+        <br/>
+        <p>Test of unicode support <a href="https://www.chinahighlights.com/travelguide/special-report/chinese-new-year/happy-new-year-in-chinese.htm">Chinese</a></p>
+        <a href="file:///c:/tmp/新年快乐 新年快樂.txt">c:/tmp/新年快乐 新年快樂.txt</a> Happy New Year on Chinese<br/>
         <h2>Linux</h2>
         <a href="file:///~/tmp/áéíóú.txt">/~/tmp/áéíóú.txt</a><br/>
         <a href="file:///~/tmp/áéíóú/áéíóú.txt">/~/tmp/áéíóú/áéíóú.txt</a><br/>
+        <p>Test of unicode support <a href="https://www.chinahighlights.com/travelguide/special-report/chinese-new-year/happy-new-year-in-chinese.htm">Chinese</a></p>
+        <a href="file:///~/tmp/新年快乐 新年快樂.txt">/~/tmp/新年快乐 新年快樂.txt</a> Happy New Year on Chinese<br/>
     </body>
 </html>

@@ -2,9 +2,9 @@ This folder contains information needed for the windows installer.
 
 ## Files
 - InnoSetupScript.iss: Used by [Inno Setup](http://www.jrsoftware.org/) to create the installer.
-- vcredist_x86.exe: Needed for Py2Exe to work (unchecked by default because it needs admin rights to install)
+- vcredist_x86.exe: Needed for PyInstaller to work (unchecked by default because it needs admin rights to install)
   Bundled in the setup.exe (can be enabled during installation)
-  Question: Is it already installed at most users pcs or not?
+  Question: Is it already installed at most users pcs or not? Or is it automatically bundled into pyinstaller bundle?
 - Windows SDK for signTool - download [here](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk)
   (not everything needed but still around 300 MB, most important part is SDK Signing tools)
 

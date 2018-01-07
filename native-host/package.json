@@ -1,19 +1,22 @@
 {
   "name": "native-messaging-host",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Native messaging host application for local filesystem links webextension.",
   "main": "local-link-messaging.py",
   "scripts": {
     "clean:win32": "rimraf bin/win32 dist",
-    "clean:linux": "rimraf bin/linux",
+    "clean:linux": "rimraf bin/linux dist",
     "build:win32": "npm run clean:win32 && npm run createExe:win32 && npm run compileInstaller:win32",
-    "createExe:win32": "py -2 ./src/setup.py py2exe",
+    "createExe:win32": "sh build/build.sh",
+    "createExe:unix": "./build/build.sh",
     "compileInstaller:win32": "innosetup-compiler ./build/windows/InnoSetupScript.iss --gui --verbose",
-    "build:linux": "npm run clean:linux && ./build/linux/bundle.sh"
+    "bundleInstaller:linux": "./build/linux/bundle.sh",
+    "build:linux": "npm run clean:linux && npm run createExe:unix && npm run bundleInstaller:linux"
   },
   "author": "A. Wolf <awolf2904@gmail.com>",
   "license": "GPL-3.0",
   "devDependencies": {
-    "innosetup-compiler": "^5.5.9"
+    "innosetup-compiler": "^5.5.9",
+    "rimraf": "^2.6.2"
   }
 }
