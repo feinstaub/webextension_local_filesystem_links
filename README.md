@@ -45,7 +45,7 @@ See README.dev.md
 
 Donations
 ---------
-If you like the extension and you want to support the development. Donations are appreciated.
+If you like the extension and you want to support the development - please consider to donate. Any donations are greatly appreciated.
 
 - [Paypal.me to AWolf81](https://www.paypal.me/awlf81) (coding contributions)
 - Feinstaub (creator & management) (no direct donations possible yet - reason see below)
