@@ -74,8 +74,8 @@ class LocalFileSystemExtension {
       * @returns {undefined}
       */
     injectScripts(activeTab) {
-          // inject scripts
-          // --> defaults to activetab
+        // inject scripts
+        // --> defaults to activetab
         browser.tabs.executeScript(null,
             {allFrames: true, file: 'js/jquery-1.11.3.min.js'});
         browser.tabs.executeScript(null,
@@ -97,7 +97,7 @@ class LocalFileSystemExtension {
                             revealOpenOption: settings.
                               revealOpenOption
                         },
-                        constants: CONSTANTS
+                        constants: JSON.parse(JSON.stringify(CONSTANTS)) // Parse / stringify needed in FF 54 --> otherwise constants.MESSAGES were undefined
                     }
                 });
                 this.injectedTabs.push(activeTab.id); // add id to keep track of js adding.
