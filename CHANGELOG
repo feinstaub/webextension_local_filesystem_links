@@ -1,5 +1,23 @@
 Changelog for Local Filesystem Links
 ====================================
+v0.99.57
+--------
+**Available Features**
+First compatible version with webextension stlye that's required for FF >= 57. A large re-write of the background scripts and a new native app (currently supporting Linux & Windows - iOS planned) was necessary.
+* Native app for link opening (wasn't required in previous versions - currently supported OS are **Windows & Linux**) - requires manual installation (download link see post-installation page of the extension)
+* Link opening & revealing (same as before)
+* White-list urls (match pattern slightly different - see info in post-install guide)
+* Prevention of executable link execution (some improvements for Windows req. - .msi files can be opened)
+* Activity indication with addonbar icon
+* Addon-bar menu for faster access to settings
+* Settings page (almost as before)
+* UNC links are supported e.g. //servename/directory (SMB protocoll still not implemented but should be possible now) - root directory issue still present as reported in issue #90. More investigation required.)
+
+** Missing features (added in future release) **
+* [MISSING]: Native app support for MacOS (extension not usable at MacOS with-out the app - probably easy to implement but I don't have access to a test setup with that OS. Still trying to install OSx in VM ware.)
+* [MISSING]: Right click context menu
+* [MISSING]: Link text selection open via context menu
+* [MISSING]: In browser opening option (e.g. show supported types directly in Firefox like images, PDFs,...)
 
 v0.99.47
 --------
