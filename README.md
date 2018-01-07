@@ -47,7 +47,7 @@ Donations
 ---------
 If you like the extension and you want to support the development. Donations are appreciated.
 
-- [https://www.paypal.me/awlf81](Paypal.me to AWolf81 (coding))
+- [Paypal.me to AWolf81](https://www.paypal.me/awlf81) (coding contributions)
 - Feinstaub (creator & management) (no direct donations possible yet - reason see below)
 
 What are we doing with the donations?
