@@ -1,12 +1,18 @@
 // toggle info field of installer
-document.getElementById('toggleInfo').addEventListener('click', toggle);
+let toggleBtns = document.getElementsByClassName('toggle')
 
-function toggle() {
-    var infoEl = document.getElementById('info');
+for (var i = 0; i < toggleBtns.length; i++) {
+    toggleBtns[i].addEventListener('click', toggle);
+}
+
+function toggle(evt) {
+    evt.preventDefault();
+    
+    var infoEl = document.getElementById(evt.target.getAttribute('data-target'));
 
     if (infoEl.style.display === 'none' || !infoEl.style.display) {
-        document.getElementById('info').style.display = 'block';
+        infoEl.style.display = 'block';
     } else {
-        document.getElementById('info').style.display = 'none';
+        infoEl.style.display = 'none';
     }
 }

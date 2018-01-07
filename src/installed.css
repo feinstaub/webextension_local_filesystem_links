@@ -25,7 +25,7 @@ h4 {
   margin-bottom: 5px;
 }
 
-#info {
+.info-container {
   display: none;
   margin-left: 15px;
   background: rgb(235, 243, 255);
@@ -41,35 +41,46 @@ p {
 }
 
 li {
-  padding: 16px;
+  padding: 10px;
 }
 img {
   float: left;
   padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 10px;
 }
 
 .app-name {
   font-size: 1.4em;
 }
 
-.download-os:link {
-  display: block;
-  float:left;
-  width: 100px;
-  height: 100px;
-  text-decoration: none;
-  background: rgb(235, 243, 255);
-  color: black;
+.download-os-container {
+  display: flex;
+  flex-wrap: nowrap;
   padding: 5px;
-  margin: 5px;
-  text-align: center;
 }
 
-.download-os:hover {
+.download-os {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.download-os-container>a:link {
+  text-decoration: none;
+  color: black;
+  background: rgb(235, 243, 255);
+  margin: 5px;
+}
+
+.download-os-container>a:hover {
   background: lightgray;
 }
 
-.download-os:visited {
+.download-os-container>a:visited {
   color: black;
 }
 

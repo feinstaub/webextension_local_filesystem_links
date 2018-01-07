@@ -17,11 +17,21 @@
       <h2><span class="important">Important!</span> Next steps required for the extension to work</h2>
       <ol>
         <li>Download and install the native application for your system.<br/>
-          <a class="download-os" href="https://github.com/AWolf81/webextension_local_filesystem_links-native-host-binaries/raw/master/win32/native-app-setup.exe" target="_blank">Windows</a>
-          <a class="download-os" href="https://github.com/AWolf81/webextension_local_filesystem_links-native-host-binaries/raw/master/linux/native-app-bundle-linux.tar" target="_blank">Linux</a>
+          <div class="download-os-container">
+            <a href="https://github.com/AWolf81/webextension_local_filesystem_links-native-host-binaries/raw/master/win32/native-app-setup.exe" target="_blank">
+              <span class="download-os">
+                Windows
+              </span>
+            </a>
+            <a href="https://github.com/AWolf81/webextension_local_filesystem_links-native-host-binaries/raw/master/linux/native-app-bundle-linux.tar" target="_blank">
+              <span class="download-os">
+                  Linux
+              </span>
+            </a>
+          </div>
         </li>
         <li class="clearfix">
-          Check and modify whitelist settings by clicking at the addon icon in then addon bar.
+          Check and modify whitelist settings by clicking at the addon icon in addon bar and select "Change settings...".
           By default all pages are allowed but it's recommended to limit the pages where the addon can add the local link behaviour.
         </li>
         <li>
@@ -34,8 +44,23 @@
       <a href="https://www.paypal.me/awlf81">Paypal.me to AWolf81 (coding)</a>
       <hr/>
       <h3>Additional information</h3>
-      <h4>Why do I need to install a program? <a href="#" id="toggleInfo">Show answer</a></h4>
-      <div id="info">
+      <h4>Why do I get a warning that my computer was protected by Windows? <a href="#" data-target="warningInfo" class="toggle">Show answer</a></h4>
+      <div id="warningInfo" class="info-container">
+        <p>
+          At the moment, the Windows installer is not signed that's why you're getting the message. Signing is planned but not ready yet. You can install the app if you're clicking on show more information and afterwards click on the new button "run anyway".<br/>
+          Below you see that message in Windows 10:
+          <img src="img/Webextension_Setup_warning_message_Windows.gif" width="100%"/>
+        </p>
+        <p>
+          If you're concerned about security then you can do the following to be sure that everything is as usual:
+          <ul>
+            <li>Check that the installer is downloaded from github repo by hovering over the download links above for your OS. Repo link <a href="https://github.com/AWolf81/webextension_local_filesystem_links-native-host-binaries">AWolf81/webextension_local_filesystem_links-native-host-binaries</a></li>
+            <li>Run your virus scanner on the downloaded file before executing</li>
+          </ul>
+        </p>
+      </div>
+      <h4>Why do I need to install a program? <a href="#" data-target="info" class="toggle">Show answer</a></h4>
+      <div id="info" class="info-container">
         <p>
           In previous versions of Firefox (before FF 57) it was possible to access the
           local filesystem with the browser API. That's not supported anymore and it
@@ -43,7 +68,7 @@
         </p>
         <p>
           To make this extension possible we need a way to interact with the file system again.
-          This is possible with a native application that can communicate with the browser with an API. It's called native messaging.
+          This is possible with a native application that communicates with the browser with an API. It's called native messaging.
           The application will use the system file explorer (e.g. on Windows - it's Windows Explorer)
           to open the application in your linked application.
         </p>
