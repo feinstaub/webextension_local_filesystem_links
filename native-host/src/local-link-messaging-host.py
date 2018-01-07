@@ -12,7 +12,6 @@ import json
 import urllib
 import subprocess
 from subprocess import PIPE
-from subprocess_fix import Popen
 import os
 import re
 from pathlib2 import Path
@@ -27,16 +26,25 @@ fileExplorers = {
       "arg": r'/select,'
     }
   },
-  "linux": {
+  "linux": [{
+    # Ubunutu
     "open": r'xdg-open',
     "reveal": {
       "cmd": r'nautilus', # not perfect to use directly nautilus but xdg-open is not supporting select option
-      "arg": r'--select'
+      "arg": r'--select '
     }
-  }
+  },
+  {
+    # Open SUSE
+    "open": r'xdg-open',
+    "reveal": {
+      "cmd": r'dolphin',
+      "arg": r'--select '
+    }
+  }]
 }
 
-fileExplorer = fileExplorers['linux'] # default to linux
+fileExplorer = fileExplorers['linux'][1] # default to linux
 
 # On Windows, the default I/O mode is O_TEXT. Set this to O_BINARY
 # to avoid unwanted modifications of the input/output streams.
@@ -47,6 +55,7 @@ if currentOS == "win32":
   # from get_binary_type import GetBinaryType
   import pywintypes
   import win32api
+  from subprocess_fix import Popen
 
   msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
   msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
@@ -67,12 +76,27 @@ if currentOS == "win32":
     else:
       return executable == fpath.lower()
 else:
+  from subprocess import Popen
+  
+  # helper to check if cmd exists (e.g. Nautilus or Dolphin)
+  def cmd_exists(cmd):
+    return subprocess.call("type " + cmd, shell=True, 
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
+
   # Helper for checking if file is exec. returns file if executable (for unix)
   def is_exe(fpath):
     return os.path.exists(fpath) and os.access(fpath, os.X_OK) and os.path.isfile(fpath)
 
   if sys.platform.startswith('linux'):
     fileExplorer = fileExplorers['linux']
+
+    if cmd_exists(fileExplorer[0]['reveal']['cmd']):
+      fileExplorer = fileExplorer[0]
+    elif cmd_exists(fileExplorer[1]['reveal']['cmd']):
+      fileExplorer = fileExplorer[1]
+    else:
+      # no match fallback to default -- just reveal not working
+      fileExplorer = fileExplorer[0]
 
 
 # Helper function that sends a message to the webapp.
@@ -153,7 +177,7 @@ def read_thread_func(queue):
     reveal = data['reveal']
 
     exeAllowed = data['exeAllowed']
-    # send_message(u"{\"debug\": \"%s\"}" % urllib.quote(fileStr.encode('utf-8')))
+    # send_message(u"{\"debug\": \"%s\"}" % urllib.quote(fileExplorer.encode('utf-8')))
     if (checkPath(fileStr)):
       result = getFilePath(fileStr, exeAllowed)
       if (reveal):
