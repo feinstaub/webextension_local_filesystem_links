@@ -6,12 +6,52 @@ jsfiddle for some whitelist testing: http://jsfiddle.net/awolf2904/tefcs74q/
 Todos for README:
 
 - [ ] Remove everything jpm related
+- [ ] Cleanup
 - [ ] Changed linting from gulp to eslint directly
 
 # Building for production
-1. `npm run build` - creates extension from src folder, converts host script to executable and create installer with InnoSetup
+
+1. Install dependencies:
+
+    $ npm install
+
+2. Generate the production version of the extension in dist folder.
+Creates extension from src folder, converts host script to executable and create installer with InnoSetup
    (working under windows)
-2. `npm run bundle` to create the final package
+
+    $ npm run build
+
+3. Generate the bundle in web-ext-artifacts folder / create the final package
+
+    $ npm run bundle
+
+4. Sign. (this should sign the extension bundle - just not sure if it's working with the source (-s) parameter pointing to the bundle.)
+
+* One-time: Install [web-ext](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Getting_started_with_web-ext) with `npm install web-ext`.
+* Find API key hiere: See Tools > Manage API Keys (https://addons.mozilla.org/en-US/developers/addon/api/key/)
+
+    $ node node_modules/web-ext/bin/web-ext sign -s web-ext-artifacts/local_filesystem_links-0.99.57.zip --api-key ... --api-secret ...
+
+    * Troubleshooting:
+        * Says it cannot find manifest.json. See https://github.com/visionmedia/debug/issues/261
+            * $ npm install npm@latest
+            * Did not work
+            * Also tried to unpack the zip file and use this as source.
+            * Also tried to sign the src, but this is not possible because there is no manifest.json (just manifest.chrome.json and manifest.firefox.json)
+
+# Extension testing in browser (still valid?)
+
+## Install native app
+Go to `src\host\` and run `install_host`. This will register the native app in your system-
+
+## Manually starting
+Run `npm run dev`, open Firefox and enter about:debugging in url bar and load `dist\manifest.json` Extension.
+
+## With Web-ext CLI
+Install [web-ext](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Getting_started_with_web-ext) with `npm install --global web-ext`.
+
+And run `web-ext run` in `dist` folder to start FF nightly with the Extension temporarily enabled.
+
 
 # Usage
 First run `npm install`.
