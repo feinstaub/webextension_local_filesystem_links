@@ -2,6 +2,8 @@
 *.pyc
 __pycache__
 version.rc
+# native host pyinstaller spec - build file
+native-host/local-link-messaging-host.spec
 
 # ignore web-ext bundle
 web-ext-artifacts
