@@ -21,23 +21,16 @@ Creates extension from src folder, converts host script to executable and create
 
     $ npm run build
 
-3. Generate the bundle in web-ext-artifacts folder / create the final package
-
-    $ npm run bundle
-
-4. Sign. (this should sign the extension bundle - just not sure if it's working with the source (-s) parameter pointing to the bundle.)
+3. Sign
 
 * One-time: Install [web-ext](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Getting_started_with_web-ext) with `npm install web-ext`.
 * Find API key hiere: See Tools > Manage API Keys (https://addons.mozilla.org/en-US/developers/addon/api/key/)
 
-    $ node node_modules/web-ext/bin/web-ext sign -s web-ext-artifacts/local_filesystem_links-0.99.57.zip --api-key ... --api-secret ...
+    $ ./node_modules/web-ext/bin/web-ext sign --api-key=userkey --api-secret=... -s dist
 
-    * Troubleshooting:
-        * Says it cannot find manifest.json. See https://github.com/visionmedia/debug/issues/261
-            * $ npm install npm@latest
-            * Did not work
-            * Also tried to unpack the zip file and use this as source.
-            * Also tried to sign the src, but this is not possible because there is no manifest.json (just manifest.chrome.json and manifest.firefox.json)
+4. Generate the bundle in web-ext-artifacts folder / create the final package
+
+    $ npm run bundle
 
 # Extension testing in browser (still valid?)
 
