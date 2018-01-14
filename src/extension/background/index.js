@@ -77,7 +77,7 @@ class LocalFileSystemExtension {
         // inject scripts
         // --> defaults to activetab
         browser.tabs.executeScript(null,
-            {allFrames: true, file: 'js/jquery-1.11.3.min.js'});
+            {allFrames: true, file: 'js/jquery-2.2.4.min.js'});
         browser.tabs.executeScript(null,
             {allFrames: true, file: 'js/jquery-observe.js'});
         browser.tabs.executeScript(null,
