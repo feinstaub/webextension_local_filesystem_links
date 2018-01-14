@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['src/local-link-messaging-host.py'],
-             pathex=['/home/alexander/code/webextension_local_filesystem_links/native-host'],
+a = Analysis(['src\\local-link-messaging-host.py'],
+             pathex=['D:\\github\\webextension_local_filesystem_links\\native-host'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -23,7 +23,7 @@ exe = EXE(pyz,
           debug=False,
           strip=False,
           upx=True,
-          console=True , version='version.rc', icon='src/addon_icon_48.ico')
+          console=True , version='version.rc', icon='src\\addon_icon_48.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
