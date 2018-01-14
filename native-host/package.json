@@ -7,11 +7,11 @@
     "clean:win32": "rimraf bin/win32 dist",
     "clean:linux": "rimraf bin/linux dist",
     "build:win32": "npm run clean:win32 && npm run createExe:win32 && npm run compileInstaller:win32",
+    "build:linux": "npm run clean:linux && npm run createExe:unix && npm run bundleInstaller:linux",
     "createExe:win32": "sh build/build.sh",
     "createExe:unix": "./build/build.sh",
     "compileInstaller:win32": "innosetup-compiler ./build/windows/InnoSetupScript.iss --gui --verbose",
-    "bundleInstaller:linux": "./build/linux/bundle.sh",
-    "build:linux": "npm run clean:linux && npm run createExe:unix && npm run bundleInstaller:linux"
+    "bundleInstaller:linux": "./build/linux/bundle.sh"
   },
   "author": "A. Wolf <awolf2904@gmail.com>",
   "license": "GPL-3.0",
