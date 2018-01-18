@@ -58,10 +58,10 @@ If you like the extension and you want to support the development - please consi
         * [Some people do not use Paypal](https://github.com/feinstaub/webextension_local_filesystem_links/issues/98#issuecomment-357984115), maybe because of https://de.wikipedia.org/wiki/PayPal#Kritik
     * Any donation that supports a Free Software community helps to maintain a technical and social environment where the development of software like this addon are possible.  If you have no idea which community you would like to support, I recommend these organisations:
         * **KDE**: https://www.kde.org/community/donations/others.php
-            * ["A world in which everyone has control over their digital life and enjoys freedom and privacy."](https://dot.kde.org/2016/04/05/kde-presents-its-vision-future)
-            * also supports Bitpay: https://bitpay.com/990273/donate)
-        * **Free Software Foundation**: https://www.fsf.org/about/ways-to-donate/
-        * **Software Freedom Conservancy**: https://sfconservancy.org/donate/
+            * Vision: ["A world in which everyone has control over their digital life and enjoys freedom and privacy."](https://dot.kde.org/2016/04/05/kde-presents-its-vision-future)
+            * [supports Bitpay](https://bitpay.com/990273/donate)
+        * **Free Software Foundation**: https://www.fsf.org/about/ways-to-donate
+        * **Software Freedom Conservancy**: https://sfconservancy.org/donate
             * ["helps promote, improve, develop, and defend Free, Libre, and Open Source Software (FLOSS) projects"](https://sfconservancy.org/about/)
         * **Mozilla**: https://donate.mozilla.org/de/
     * For Germany, there are related organisations which help Free Software indirectly by supporting the underlying values:
