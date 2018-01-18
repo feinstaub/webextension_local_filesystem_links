@@ -47,10 +47,26 @@ Donations
 ---------
 If you like the extension and you want to support the development - please consider to donate. Any donations are greatly appreciated.
 
-- [Paypal.me to AWolf81](https://www.paypal.me/awlf81) (coding contributions)
-- Feinstaub (creator & management) (no direct donations possible yet - reason see below)
+* AWolf81 - current main developer:
+    * [Paypal.me to AWolf81](https://www.paypal.me/awlf81) (coding contributions)
+    * What are we doing with the donations?
+        * Buy a code signing certificate (needed for Windows) cost around 100 USD
+        * Incentive / motivation - this helps to stay motivated.
 
-What are we doing with the donations?
-- Buy a code signing certificate (needed for Windows) cost around 100 USD
-- Incentive / motivation - this helps to stay motivated.
-- Donations to support other open source projects e.g. Mozilla
+* Feinstaub - original author and addon management:
+    * No direct donations possible yet (waiting for something private and decentrally organized like [GNU Taler](https://taler.net/en))
+        * [Some people do not use Paypal](https://github.com/feinstaub/webextension_local_filesystem_links/issues/98#issuecomment-357984115), maybe because of https://de.wikipedia.org/wiki/PayPal#Kritik
+    * Any donation that supports a Free Software community helps to maintain a technical and social environment where the development of software like this addon are possible.  If you have no idea which community you would like to support, I recommend these organisations:
+        * **KDE**: https://www.kde.org/community/donations/others.php
+            * ["A world in which everyone has control over their digital life and enjoys freedom and privacy."](https://dot.kde.org/2016/04/05/kde-presents-its-vision-future)
+            * also supports Bitpay: https://bitpay.com/990273/donate)
+        * **Free Software Foundation**: https://www.fsf.org/about/ways-to-donate/
+        * **Software Freedom Conservancy**: https://sfconservancy.org/donate/
+            * ["helps promote, improve, develop, and defend Free, Libre, and Open Source Software (FLOSS) projects"](https://sfconservancy.org/about/)
+        * **Mozilla**: https://donate.mozilla.org/de/
+    * For Germany, there are related organisations which help Free Software indirectly by supporting the underlying values:
+        * **DigitalCourage**: https://digitalcourage.de/ueber-uns
+            * "Digitalcourage arbeitet für eine lebenswerte Welt im digitalen Zeitalter."
+            * "setzt sich seit 1987 für Grundrechte und Datenschutz ein"
+        * **Forum InformatikerInnen für Frieden und gesellschaftliche Verantwortung e.V.**: https://www.fiff.de
+            * "FIfF wurde 1984 [...] aus einer historischen Situation heraus gegründet, als es galt, das Schweigen einer Zunft zu brechen, die so maßgeblich an der Entwicklung automatisierter und informatisierter Kriegsführung beteiligt war."
