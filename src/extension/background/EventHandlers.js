@@ -45,7 +45,7 @@ export class ExtensionEventHandlers {
             break;
         case 'open':
             var uri = request.url;
-            // console.log('opening', uri);
+            console.log('opening', uri);
 
             if(request.directOpen) {
                 // setting commented at the moment --> re-add later
@@ -61,6 +61,7 @@ export class ExtensionEventHandlers {
                         'exeAllowed': this.settings.enableExecutables
                     }).
                       then(function(response) {
+                          // console.log('received response', response);
                           if (response && response.error) {
                               const msg = browser.i18n.
                                 getMessage(response.error,

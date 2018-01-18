@@ -113,10 +113,17 @@ def preparePath(pathStr):
   # send_message('{"debug prepare": "%s"}' % pathStr.encode('utf-8'))
 
   if currentOS == "win32":
-    # pathStr = re.sub(r'file:[\/]{2,3}', '', pathStr) # remove file:// (also any leading / needs to be removed in windows)
-    pathStr = re.sub(r'[a-z]*:[\/]{2,3}', '', pathStr) # remove file:// (also any leading / needs to be removed in windows)
+      # add feature to allow 4 slashes too for UNC network addresses
+      regex = r'\bfile:(\/\/){2}\b';
+
+      #4 slashes? add another one to have 5 slashes
+      if re.match(regex, pathStr):
+          pathStr = re.sub("(%s)" % regex, r'\1/', pathStr)
+
+      # pathStr = re.sub(r'file:[\/]{2,3}', '', pathStr) # remove file:// (also any leading / needs to be removed in windows)
+      pathStr = re.sub(r'[a-z]*:[\/]{2,3}', '', pathStr) # remove file:// (also any leading / needs to be removed in windows)
   else:
-    pathStr = re.sub(r'[a-z]*:[\/]{2}', '', pathStr) # remove file://
+      pathStr = re.sub(r'[a-z]*:[\/]{2}', '', pathStr) # remove file://
 
   # pathStr = urllib.unquote(pathStr).decode('utf8')   # why was this here?
   if sys.platform.startswith('linux'):
@@ -133,8 +140,20 @@ def preparePath(pathStr):
 def checkPath(pathStr):
   pathStr = preparePath(pathStr)
   path_to_open = Path(pathStr)
-  #send_message(u'{"debug": "%s"}' % urllib.quote(pathStr.encode('utf-8')))
-  return os.path.exists(pathStr)
+  # send_message(u'{"debug before match": "%s"}' % urllib.quote(pathStr))
+  # send_message(u'{"debug match": "%s"}' % pathStr.startswith('//'))
+  if currentOS == 'win32' and os.path.exists(pathStr) is False:
+    # and url.startswith('//') would be good to test but it wasn't working --> re-check later
+    # windows and two slashes --> UNC link detected (special check required because os.path.exists fails on //servername/)
+    p = Popen(["net", "view", pathStr], shell=True,
+      stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    out, err = p.communicate()
+
+    validUNC = False if err else True
+  else:
+    validUNC = False
+
+  return os.path.exists(pathStr) or validUNC
 
 def getFilePath(program, exeAllowed):
   filePath = preparePath(program)
@@ -150,7 +169,7 @@ def createResponse():
 
 def openFile(command):
     # command = u"explorer c:\\tmp\\áéíóú.txt"
-    # send_message(r'{"debug": "%s"}' % urllib.quote(command.encode('utf-8')))
+    # send_message(r'{"debug openfile": "%s"}' % urllib.quote(command.encode('utf-8')))
     p = Popen(command, shell=True,
     stdin=PIPE, stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
@@ -177,17 +196,18 @@ def read_thread_func(queue):
     reveal = data['reveal']
 
     exeAllowed = data['exeAllowed']
-    # send_message(u"{\"debug\": \"%s\"}" % urllib.quote(fileExplorer.encode('utf-8')))
+    # send_message(u"{\"debug\": \"%s\"}" % urllib.quote(fileStr.encode('utf-8')))
     if (checkPath(fileStr)):
       result = getFilePath(fileStr, exeAllowed)
       if (reveal):
         openFile(fileExplorer['reveal']['cmd'] + ' ' + fileExplorer['reveal']['arg'] + "\"%s\"" % result)
       else:
         if result is not None:
-            openFile(u"%s \"%s\"" % (fileExplorer['open'], result))
+          openFile(u"%s \"%s\"" % (fileExplorer['open'], result))
         else:
-            send_message('{"error": %s }' % "EXE_ACCESS_DENIED")  # todo pass error from getFilePath
+          send_message('{"error": %s }' % "EXE_ACCESS_DENIED")  # todo pass error from getFilePath
     else:
+      # send_message(u"{\"debug not found\": \"%s\"}" % urllib.quote(fileStr.encode('utf-8')))
       if (reveal):
         result = getFilePath(fileStr, exeAllowed)
         revealPath = os.path.dirname(result)
