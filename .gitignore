@@ -1,3 +1,6 @@
+# ignore MacOS specific
+.DS_Store
+
 # ignore python binaries
 *.pyc
 __pycache__

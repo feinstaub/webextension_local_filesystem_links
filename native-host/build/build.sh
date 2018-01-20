@@ -16,6 +16,8 @@ if [[ "$OS" =~ ^MSYS.* ]]; then
     BIN_DIR="bin/win32";
 elif [[ "$OS" =~ ^Linux.* ]]; then
     BIN_DIR="./bin/linux";
+elif [[ "$OS" =~ ^Darwin.* ]]; then
+    BIN_DIR="./bin/mac"
 else
     BIN_DIR="./bin/$OS"
 fi

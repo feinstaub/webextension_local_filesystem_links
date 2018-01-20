@@ -213,12 +213,7 @@ def read_thread_func(queue):
         openFile(fileExplorer['reveal']['cmd'] + ' ' + fileExplorer['reveal']['arg'] + "\"%s\"" % result)
       else:
         if result is not None:
-<<<<<<< HEAD
           openFile(u"%s \"%s\"" % (fileExplorer['open'], result))
-=======
-            send_message(u"{\"debug\": \"%s\"}" % urllib.quote(result.encode('utf-8')))
-            openFile(u"%s \"%s\"" % (fileExplorer['open'], result))
->>>>>>> added macos file explorer
         else:
           send_message('{"error": %s }' % "EXE_ACCESS_DENIED")  # todo pass error from getFilePath
     else:
