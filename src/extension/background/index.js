@@ -110,6 +110,8 @@ class LocalFileSystemExtension {
       * @returns {undefined}
       */
     loadExtension(settings, whitelist) {
+        const excludeFileExtensions = ['.xml'];
+
         // set settings
         this.settings = settings;
 
@@ -134,6 +136,12 @@ class LocalFileSystemExtension {
                       }).catch(() => {}); // ignore errors (no content script available)
                   });
                 return; // no tab active --> e.g. about:addons
+            }
+
+            if (excludeFileExtensions.some(val => activeTab.url.indexOf(val) !== -1)) {
+                // don't enhance xml files = don't affect xml viewer
+                // array so it's easily possible to add more excludes
+                return;
             }
 
             // show enhancement at addon bar icon
