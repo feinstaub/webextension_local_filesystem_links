@@ -32,7 +32,7 @@ mkdir -p "$TARGET_DIR"
 cp "$DIR/$HOST_NAME.json" "$TARGET_DIR"
 
 # Copy lib & executable
-cp "$DIR/local-link-messaging-host" "$TARGET_DIR" -r
+cp -r "$DIR/local-link-messaging-host" "$TARGET_DIR"
 
 # Copy uninstall script
 cp "$DIR/uninstall_host_compiled.sh" "$TARGET_DIR"
