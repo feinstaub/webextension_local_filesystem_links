@@ -5,9 +5,9 @@
     $.noConflict();
 
     var fileLinkSelectors = [
-            'a[href^="file:"]'
-            /*'a[href^="smb://"]',
-            'a[href^="afp://"]'*/
+            'a[href^="file:"]',
+            'a[href^="smb://"]',
+            'a[href^="afp://"]'
         ],
         appTextMessages = {
             // every constant text we're showing the user

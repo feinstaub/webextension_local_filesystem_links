@@ -61,7 +61,7 @@ export class ExtensionEventHandlers {
                         'exeAllowed': this.settings.enableExecutables
                     }).
                       then(function(response) {
-                          // console.log('received response', response);
+                          console.log('received response', response);
                           if (response && response.error) {
                               const msg = browser.i18n.
                                 getMessage(response.error,

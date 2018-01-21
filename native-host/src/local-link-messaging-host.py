@@ -118,11 +118,14 @@ def send_message(message):
   sys.stdout.flush()
 
 def preparePath(pathStr):
-  # replace backslashes to slashes
-  pathStr = re.sub(r'\\', r'/', pathStr)
   # send_message('{"debug prepare": "%s"}' % pathStr.encode('utf-8'))
+  file_link = False
 
   if currentOS == "win32":
+      file_link = True # only file links supported (no smb/afp)
+      # replace backslashes to slashes
+      pathStr = re.sub(r'\\', r'/', pathStr)
+      
       # add feature to allow 4 slashes too for UNC network addresses
       regex = r'\bfile:(\/\/){2}\b';
 
@@ -133,36 +136,60 @@ def preparePath(pathStr):
       # pathStr = re.sub(r'file:[\/]{2,3}', '', pathStr) # remove file:// (also any leading / needs to be removed in windows)
       pathStr = re.sub(r'[a-z]*:[\/]{2,3}', '', pathStr) # remove file:// (also any leading / needs to be removed in windows)
   else:
+    if pathStr.startswith('file'):
+      file_link = True
       pathStr = re.sub(r'[a-z]*:[\/]{2}', '', pathStr) # remove file://
+    # else keep protocol for smb & afp
 
   # pathStr = urllib.unquote(pathStr).decode('utf8')   # why was this here?
-  if sys.platform.startswith('linux') or sys.platform == 'darwin':
+  if (sys.platform.startswith('linux') or sys.platform == 'darwin'):
     # hack to have ~ path working in Linux & mac os
     # one or two slashes before ~ // stop at first / after ~
     # unixPath = unixPath.replace(/(\/){1,2}~\//, '~/');  # code from previous addon
     pathStr = re.sub(r'[/]{1,2}~/', '~/', pathStr)
     pathStr = os.path.expanduser(pathStr) # expand ~ to home/username
 
-  pathStr = os.path.normpath(pathStr) # normalize slashes ----- not working?
+  if file_link:
+    pathStr = os.path.normpath(pathStr) # normalize slashes ----- not working?
+  
   return pathStr
 
 # Helper for check if path or file exists
 def checkPath(pathStr):
   pathStr = preparePath(pathStr)
-  path_to_open = Path(pathStr)
+  #check = os.path.exists(pathStr)
+  #send_message(u'{"debug check path": "%s"}' % urllib.quote(pathStr))
+  # path_to_open = Path(pathStr)
   # send_message(u'{"debug before match": "%s"}' % urllib.quote(pathStr))
   # send_message(u'{"debug match": "%s"}' % pathStr.startswith('//'))
-  if currentOS == 'win32' and os.path.exists(pathStr) is False:
-    # and url.startswith('//') would be good to test but it wasn't working --> re-check later
-    # windows and two slashes --> UNC link detected (special check required because os.path.exists fails on //servername/)
-    p = Popen(["net", "view", pathStr], shell=True,
-      stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    out, err = p.communicate()
+  if os.path.exists(pathStr) is False:
+    if currentOS == 'win32':
+      # and url.startswith('//') would be good to test but it wasn't working --> re-check later
+      # windows and two slashes --> UNC link detected (special check required because os.path.exists fails on //servername/)
+      p = Popen(["net", "view", pathStr], shell=True,
+        stdin=PIPE, stdout=PIPE, stderr=PIPE)
+      out, err = p.communicate()
+    elif currentOS == 'darwin' or currentOS == 'linux':
+      # WIP: SMB/AFP support (afp only at Mac required)
+      # todo - check if smbutil also availabe in linux? tested with Mac
+      # issues:
+      # - each opening creates a new volume in /volumes/ on MacOS
+      # - opening is slow because it is always creating a new connection
+      # - files aren't opened because we can only open from mount point - just folders are displayed
+      # - afp links not working yet - reason? smbutil issue?
+
+      #send_message(u'{"debug": "%s"}' % urllib.quote(err))
+      #err = subprocess.call(["smbutil", "view", pathStr])
+      p = Popen(["smbutil", "view", pathStr],
+        stdin=PIPE, stdout=PIPE, stderr=PIPE)
+      out, err = p.communicate()
+    else:
+      err = True
 
     validUNC = False if err else True
   else:
     validUNC = False
-
+  #send_message(u'{"debug": "%s"}' % urllib.quote(validUNC))
   return os.path.exists(pathStr) or validUNC
 
 def getFilePath(program, exeAllowed):
@@ -209,6 +236,7 @@ def read_thread_func(queue):
     # send_message(u"{\"debug\": \"%s\"}" % urllib.quote(fileStr.encode('utf-8')))
     if (checkPath(fileStr)):
       result = getFilePath(fileStr, exeAllowed)
+      # send_message(u"{\"debug\": \"%s\"}" % urllib.quote(result.encode('utf-8')))
       if (reveal):
         openFile(fileExplorer['reveal']['cmd'] + ' ' + fileExplorer['reveal']['arg'] + "\"%s\"" % result)
       else:
