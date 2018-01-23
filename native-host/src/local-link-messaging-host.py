@@ -41,7 +41,14 @@ fileExplorers = {
       "cmd": r'dolphin',
       "arg": r'--select '
     }
-  }]
+  }],
+  "mac": {
+    "open": r'open',
+    "reveal": {
+      "cmd": r'open',
+      "arg": r'--reveal '
+    }
+  }
 }
 
 fileExplorer = fileExplorers['linux'][1] # default to linux
@@ -97,6 +104,9 @@ else:
     else:
       # no match fallback to default -- just reveal not working
       fileExplorer = fileExplorer[0]
+  elif sys.platform == 'darwin':
+    fileExplorer = fileExplorers['mac']
+    #send_message(u'{"debug os": "%s"}' % sys.platform) #urllib.quote(pathStr.encode('utf-8')))
 
 
 # Helper function that sends a message to the webapp.
@@ -126,8 +136,8 @@ def preparePath(pathStr):
       pathStr = re.sub(r'[a-z]*:[\/]{2}', '', pathStr) # remove file://
 
   # pathStr = urllib.unquote(pathStr).decode('utf8')   # why was this here?
-  if sys.platform.startswith('linux'):
-    # hack to have ~ path working in Linux
+  if sys.platform.startswith('linux') or sys.platform == 'darwin':
+    # hack to have ~ path working in Linux & mac os
     # one or two slashes before ~ // stop at first / after ~
     # unixPath = unixPath.replace(/(\/){1,2}~\//, '~/');  # code from previous addon
     pathStr = re.sub(r'[/]{1,2}~/', '~/', pathStr)
