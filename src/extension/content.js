@@ -48,6 +48,8 @@
 
         // we could add a if case here to add tooltip disable pref.
         updateLinkTooltip();
+
+        registerEvents();
     }
 
     // Get settings from addon
@@ -68,7 +70,7 @@
                 $(fileLinkSelectors.join(', ')).disconnect();
                 $(document).disconnect();
                 // remove click handler
-                $(document).undelegate(fileLinkSelectors.join(', '), 'click');
+                unregisterEvents();
                 break;
             case 'init':
                 // console.log('init content script', request);
@@ -90,19 +92,6 @@
             default:
             }
         });
-    // self.port.on('init', function(addonOptions, constants) {
-    //     // console.log('init', addonOptions, constants);
-    //     appTextMessages = constants.MESSAGES.USERMESSAGES;
-
-    //     // load plugin options
-    //     options = addonOptions;
-
-    //     // console.log('test', appTextMessages);
-    //     $icon = $container.append($('<i/>').addClass('material-icons'));
-
-    //     // now everything is ready to load
-    //     activate();
-    // });
 
     // Update settings on change of pref.
     function updateIcons(data) {
@@ -121,7 +110,21 @@
     // self.port.on('prefChange:revealOpenOption', updateIcons);
 
     // Use delegate so the click event is also avaliable at newly added links
-    $(document).on('click', fileLinkSelectors.join(', '), function(e) {
+    function registerEvents() {
+        $(document).on('click', fileLinkSelectors.join(', '), openFileHandler);
+
+        // icon click handler
+        $(document).on('click',
+        '[class^=\'aliensun-link-icon\']',// folder or arrow
+        openFolderHandler);
+    }
+
+    function unregisterEvents() {
+        $(document).off('click', fileLinkSelectors.join(', '), openFileHandler);
+        $(document).off('click', '[class^=\'aliensun-link-icon\']', openFolderHandler);
+    }
+
+    function openFileHandler(e) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
         // console.log('clicked file link: ' +
         //   this.href, options.revealOpenOption);
@@ -139,7 +142,7 @@
         }).catch(function(error) {
             // console.log('error', error);
         });
-    });
+    }
 
     /*
     Event for icon to reveal the folder directly
@@ -172,11 +175,6 @@
             // console.log('error', err);
         });
     }
-
-    // icon click handler
-    $(document).on('click',
-    '[class^=\'aliensun-link-icon\']',// folder or arrow
-    openFolderHandler);
 
     // -------------------------------------------------------------------------
     // add link icons (if enabled)
