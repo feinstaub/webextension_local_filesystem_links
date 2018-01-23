@@ -1,0 +1,18 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=100%, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Issue 113 - Multiple windows opened </title>
+</head>
+<body>
+    <p>
+        First load: file links are correctly handled. <br/>
+        After click on normal link the file links opens multiple windows.
+    </p>
+    <ul>
+        <li><a href="https://www.google.com">Link to google (no file link)</a></li>
+        <li><a href="file://c:/tmp/existing_file.txt" target="_blank">existing_file.txt</a></li>
+    </ul>
+</body>
+</html>
