@@ -28,13 +28,19 @@ class LocalFileSystemExtension {
             this.checkUrls();
         });
 
+        browser.tabs.onRemoved.addListener((tabId, /*removeInfo*/) => {
+            this.injectedTabs.pop(tabId);
+        });
+
         browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-            if(changeInfo.status && changeInfo.status === 'loading') {
-                this.injectedTabs.pop(tab.id);
+            if(changeInfo.status && changeInfo.status === 'loading' && tab.active) {
+                // console.log('loading', tabId, tab.active);
+                this.injectedTabs.pop(tabId);
             }
 
             if (changeInfo.status && changeInfo.status === 'complete' &&
               tab.active) {
+                console.log('complete');
                 this.checkUrls();
             }
         });
@@ -76,32 +82,29 @@ class LocalFileSystemExtension {
     injectScripts(activeTab) {
         // inject scripts
         // --> defaults to activetab
-        browser.tabs.executeScript(null,
-            {allFrames: true, file: 'js/jquery-2.2.4.min.js'});
-        browser.tabs.executeScript(null,
-            {allFrames: true, file: 'js/jquery-observe.js'});
-        browser.tabs.executeScript(null,
-            {
-                allFrames: true,
-                file: './content.js'
-            }).then(() => {
-                // content script loaded --> now we can send init data
-                const settings = this.settings;
+        const execute = browser.tabs.executeScript; // short-hand
+        
+        execute(null, {allFrames: true, file: 'js/jquery-2.2.4.min.js'}).then(() => 
+            execute(null, {allFrames: true, file: 'js/jquery-observe.js'})).then(()=>
+                execute(null, {allFrames: true, file: './content.js'})).then(() => {
+                    // jquery & content script loaded --> now we can send init data
+                    const settings = this.settings;
 
-                browser.tabs.sendMessage(activeTab.id, {
-                    action: 'init',
-                    data: {
-                        options: {
-                            enableLinkIcons: settings.
-                              enableLinkIcons,
-                            revealOpenOption: settings.
-                              revealOpenOption
-                        },
-                        constants: JSON.parse(JSON.stringify(CONSTANTS)) // Parse / stringify needed in FF 54 --> otherwise constants.MESSAGES were undefined
-                    }
+                    browser.tabs.sendMessage(activeTab.id, {
+                        action: 'init',
+                        data: {
+                            options: {
+                                enableLinkIcons: settings.
+                                    enableLinkIcons,
+                                revealOpenOption: settings.
+                                    revealOpenOption
+                            },
+                            constants: JSON.parse(JSON.stringify(CONSTANTS)) // Parse / stringify needed in FF 54 --> otherwise constants.MESSAGES were undefined
+                        }
+                    });
+                    this.injectedTabs.push(activeTab.id); // add id to keep track of js adding.
+                    console.log('injected scripts', this.injectedTabs);
                 });
-                this.injectedTabs.push(activeTab.id); // add id to keep track of js adding.
-            });
     }
 
     /** Load the extension if query matches whitelist
@@ -124,7 +127,7 @@ class LocalFileSystemExtension {
 
             //
             if (!activeTab) {
-                // console.log('no active tab');
+                console.log('no active tab');
                 //unloadContentScript();
                 browser.tabs.query({active: true,
                     windowId: browser.windows.WINDOW_ID_CURRENT}).
@@ -147,6 +150,7 @@ class LocalFileSystemExtension {
             // show enhancement at addon bar icon
             updateAddonbarIcon(true);
 
+            console.log('injected tabs', this.injectedTabs, activeTab.id, this.injectedTabs.indexOf(activeTab.id));
             if (this.injectedTabs.indexOf(activeTab.id) > -1) {
                 // already added scripts & css
                 return;
