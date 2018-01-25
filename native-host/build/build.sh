@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Detects which OS and if it is Linux then it will detect which Linux
 # Distribution.
 
@@ -38,7 +38,7 @@ echo $PACKAGE_VERSION # return 0.1.0 - debugging output
 # filevers=(2, 0, 4, 0),
 # prodvers=(2, 0, 4, 0),
 #IN="bla@some.com;john@home.com" # e.g. 3.2.1 --> [0] = 3, [1] = 2, [2] = 1
-versionArr=(${PACKAGE_VERSION//./ }) #
+versionArr=${PACKAGE_VERSION//./ } #
 
 {
   printf "$VERSION_INFO\n"
