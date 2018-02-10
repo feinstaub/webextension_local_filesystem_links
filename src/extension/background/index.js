@@ -11,7 +11,6 @@ class LocalFileSystemExtension {
         this.settings = {};
         this.injectedTabs = [];
         this.eventHandlers = new ExtensionEventHandlers(this.settings);
-
         this.addListeners();
     }
 
@@ -23,24 +22,29 @@ class LocalFileSystemExtension {
         browser.runtime.onMessage.addListener(this.eventHandlers.onMessage.
           bind(this));
 
-        browser.tabs.onActivated.addListener(() => {
+        const checkPage = () => {
             updateAddonbarIcon(false); // always toggle to inactive
             this.checkUrls();
-        });
+        }
 
-        browser.tabs.onRemoved.addListener((tabId, /*removeInfo*/) => {
-            this.injectedTabs.pop(tabId);
+        browser.windows.onCreated.addListener(checkPage); // initial load of firefox
+        browser.tabs.onActivated.addListener(checkPage); // switched between tabs
+        browser.windows.onFocusChanged.addListener(checkPage); // switched from other window
+
+        browser.tabs.onRemoved.addListener((tabId, removeInfo) => {
+            //console.log('remove', tabId, removeInfo);
+            this.removeTabFromInjectedTabs(removeInfo.windowId, tabId);
         });
 
         browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             if(changeInfo.status && changeInfo.status === 'loading' && tab.active) {
                 // console.log('loading', tabId, tab.active);
-                this.injectedTabs.pop(tabId);
+                this.removeTabFromInjectedTabs(tab.windowId, tab.id);
             }
 
             if (changeInfo.status && changeInfo.status === 'complete' &&
               tab.active) {
-                console.log('complete');
+                // console.log('complete');
                 this.checkUrls();
             }
         });
@@ -48,7 +52,16 @@ class LocalFileSystemExtension {
         // check if first installation or update
         browser.runtime.onInstalled.addListener(checkInstallation);
     }
-
+    /**
+     * Remove tab from injectedTabs array (if exists)
+     * @param {integer} windowId id of current window
+     * @param {integer} tabId id of tab to remove
+     */
+    removeTabFromInjectedTabs(windowId, id) {
+        if (this.injectedTabs.indexOf(`${windowId}-${id}`) !== -1) {
+            this.injectedTabs.pop(`${windowId}-${id}`);
+        }
+    }
     /** Check the urls (if active tab is whitelisted)
       * @returns {undefined}
       */
@@ -102,8 +115,6 @@ class LocalFileSystemExtension {
                             constants: JSON.parse(JSON.stringify(CONSTANTS)) // Parse / stringify needed in FF 54 --> otherwise constants.MESSAGES were undefined
                         }
                     });
-                    this.injectedTabs.push(activeTab.id); // add id to keep track of js adding.
-                    console.log('injected scripts', this.injectedTabs);
                 });
     }
 
@@ -127,17 +138,23 @@ class LocalFileSystemExtension {
 
             //
             if (!activeTab) {
-                console.log('no active tab');
-                //unloadContentScript();
+                // console.log('no active tab');
+                // needed if tab is newly removed from the whitelist --> stop active content script
+                // unloadContentScript();
                 browser.tabs.query({active: true,
                     windowId: browser.windows.WINDOW_ID_CURRENT}).
                   then(tabs => browser.tabs.get(tabs[0].id)).
                   then(tab => {
-                      // injectedTabs.pop(tab.id);
+                      // console.log('no active tab - destroy', tab);
                       browser.tabs.sendMessage(tab.id, {
                           action: 'destroy'
-                      }).catch(() => {}); // ignore errors (no content script available)
-                  });
+                      }).catch((err) => {
+                          // console.log(err) // e.g. receiving end does not exist
+                      }); // ignore errors (no content script available)
+
+                      // remove tab from injected tabs array
+                      this.removeTabFromInjectedTabs(tab.windowId, tab.id);
+                });
                 return; // no tab active --> e.g. about:addons
             }
 
@@ -150,14 +167,15 @@ class LocalFileSystemExtension {
             // show enhancement at addon bar icon
             updateAddonbarIcon(true);
 
-            console.log('injected tabs', this.injectedTabs, activeTab.id, this.injectedTabs.indexOf(activeTab.id));
-            if (this.injectedTabs.indexOf(activeTab.id) > -1) {
-                // already added scripts & css
-                return;
+            // console.log('injected tabs', this.injectedTabs, activeTab.id, this.injectedTabs.indexOf(`${activeTab.windowId}-${activeTab.id}`) === -1);
+            if (this.injectedTabs.indexOf(`${activeTab.windowId}-${activeTab.id}`) === -1) {
+                // add scripts & css
+                // console.log('inject', `${activeTab.windowId}-${activeTab.id}`);
+                this.injectCSS();
+                this.injectScripts(activeTab);
+                
+                this.injectedTabs.push(`${activeTab.windowId}-${activeTab.id}`); // add id to keep track of js adding.
             }
-
-            this.injectCSS();
-            this.injectScripts(activeTab);
         };
 
         // execute query
