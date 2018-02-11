@@ -97,25 +97,26 @@ class LocalFileSystemExtension {
         // --> defaults to activetab
         const execute = browser.tabs.executeScript; // short-hand
         
-        execute(null, {allFrames: true, file: 'js/jquery-2.2.4.min.js'}).then(() => 
-            execute(null, {allFrames: true, file: 'js/jquery-observe.js'})).then(()=>
-                execute(null, {allFrames: true, file: './content.js'})).then(() => {
-                    // jquery & content script loaded --> now we can send init data
-                    const settings = this.settings;
+        execute(null, {allFrames: true, file: 'js/jquery-2.2.4.min.js'})
+            .then(() => execute(null, {allFrames: true, file: 'js/jquery-observe.js'}))
+            .then(() => execute(null, {allFrames: true, file: './content.js'}))
+            .then(() => {
+                // jquery & content script loaded --> now we can send init data
+                const settings = this.settings;
 
-                    browser.tabs.sendMessage(activeTab.id, {
-                        action: 'init',
-                        data: {
-                            options: {
-                                enableLinkIcons: settings.
-                                    enableLinkIcons,
-                                revealOpenOption: settings.
-                                    revealOpenOption
-                            },
-                            constants: JSON.parse(JSON.stringify(CONSTANTS)) // Parse / stringify needed in FF 54 --> otherwise constants.MESSAGES were undefined
-                        }
-                    });
+                browser.tabs.sendMessage(activeTab.id, {
+                    action: 'init',
+                    data: {
+                        options: {
+                            enableLinkIcons: settings.
+                                enableLinkIcons,
+                            revealOpenOption: settings.
+                                revealOpenOption
+                        },
+                        constants: JSON.parse(JSON.stringify(CONSTANTS)) // Parse / stringify needed in FF 54 --> otherwise constants.MESSAGES were undefined
+                    }
                 });
+            });
     }
 
     /** Load the extension if query matches whitelist
