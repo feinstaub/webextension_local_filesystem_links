@@ -37,7 +37,7 @@
             currentIconClass = 'aliensun-link-icon' +
             (options.revealOpenOption == 'R' ? '-arrow' : '');
 
-            createObserver();
+            // createObserver(); // fix later, long running script issue - see issue #109
             $container.addClass(currentIconClass);
             // console.log('added class', $container);
 
@@ -252,22 +252,24 @@
     function createObserver() {
         // observe changes of file links
         // create an observer if someone is changing an a-tag directly
-        $(fileLinkSelectors.join(', ')).
-            observe({attributes: true, attributeFilter: ['href']},
-                function(/* record */) {
-                    // observe href change
-                    //console.log('changed href', $(this), $icon.attr('class'));
+        if ($(fileLinkSelectors.join(', ')).length > 0) {
+            $(fileLinkSelectors.join(', ')).
+                observe({attributes: true, attributeFilter: ['href']},
+                    function(/* record */) {
+                        // observe href change
+                        //console.log('changed href', $(this), $icon.attr('class'));
 
-                    // remove previous icon
-                    $(this).next('.' + $icon.attr('class')).remove();
-                    // add new icons so we have the correct data at the icon
-                    updateLink($(this));
-                });
+                        // remove previous icon
+                        $(this).next('.' + $icon.attr('class')).remove();
+                        // add new icons so we have the correct data at the icon
+                        updateLink($(this));
+                    });
+        }
 
         // observe newly added file links
         $(document).
             observe('added', fileLinkSelectors.join(', '),
-            function(/* record */) {
+            function() {
                 // Observe if elements matching 'a[href^="file://"]' have been added
                 //
                 // there can be multiple observer callbacks attached now!!
@@ -287,11 +289,11 @@
                 // We're getting only one observer callback for each added element.
                 // So we don't need to store the previous added node.
 
-                // console.log('link added');
+                console.log('link added', this);
                 // console.log($(this).eq(0).html(), record); // this = addedNodes
 
                 // get elements that are with-out icon - avoid multiple icons
-                var $elements = $(this).filter(function(/* index, item */) {
+                var $elements = $(this).filter(function() {
                     // console.log('filter next element', $(this).
                     //     next().
                     //     is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
@@ -304,7 +306,6 @@
                     updateLink($elements);
                 }
             });
-
         // suspend not supported in FF
         // function handleSuspend() {
         //     console.log('Suspending event page');
