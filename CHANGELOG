@@ -1,5 +1,13 @@
 Changelog for Local Filesystem Links
 ====================================
+v0.99.58
+--------
+* Added MacOS support (SMB support still in progress)
+* Added info to post-install page for white-listing with ports as mentioned in issue #115 / #118.
+* IMPROVED: Content script injection to avoid multiple opened files (fixes issue #108 & #113)
+* Disabled dynamically added link icons - performance issues at some pages (will be re-added later, see issue #109)
+* FIX: Issue 92 - XML files are not handled by the extension so the XML viewer is working as expected.
+
 v0.99.57
 --------
 **Available Features**
