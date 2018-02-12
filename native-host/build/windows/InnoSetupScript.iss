@@ -42,7 +42,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Files]
 Source: "D:\github\webextension_local_filesystem_links\native-host\bin\win32\local-link-messaging-host\*"; DestDir: "{app}"
 Source: "D:\github\webextension_local_filesystem_links\native-host\src\webextension_local_filesystem_links_win.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\github\webextension_local_filesystem_links\native-host\build\windows\vcredist_x86.exe"; DestDir: "{app}"; AfterInstall: RunOtherInstaller; Tasks: Visualc
+Source: "D:\github\webextension_local_filesystem_links\native-host\build\windows\vcredist_x86.exe"; DestDir: "{app}"; AfterInstall: RunOtherInstaller; Tasks: Visualc; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -56,7 +56,7 @@ procedure RunOtherInstaller;
 var
   ResultCode: Integer;
 begin
-  if not ShellExec('runas', ExpandConstant('{src}\vcredist_x86.exe'), '', '', SW_SHOW,
+  if not ShellExec('runas', ExpandConstant('{app}\vcredist_x86.exe'), '', '', SW_SHOW,
           ewWaitUntilTerminated, ResultCode)
   then
     MsgBox('Other installer failed to run!' + #13#10 +

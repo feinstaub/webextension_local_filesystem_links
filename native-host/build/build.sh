@@ -42,8 +42,8 @@ versionArr=${PACKAGE_VERSION//./ } #
 
 {
   printf "$VERSION_INFO\n"
-  printf "  filevers=(%s, %s, %s, 0),\n" "${versionArr[0]}" "${versionArr[1]}" "${versionArr[2]}"
-  printf "  prodvers=(%s, %s, %s, 0),\n" "${versionArr[0]}" "${versionArr[1]}" "${versionArr[2]}"
+  printf "  filevers=(%s, %s, %s, 0),\n" ${versionArr[0]} ${versionArr[1]} ${versionArr[2]}
+  printf "  prodvers=(%s, %s, %s, 0),\n" ${versionArr[0]} ${versionArr[1]} ${versionArr[2]}
   echo "))"
 } >version.rc
 
