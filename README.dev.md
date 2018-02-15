@@ -41,6 +41,7 @@ Not needed? (generates web-ext-artifacts/local_filesystem_links-0.99.58.zip for 
 
 Now manual upload of the zip file here: https://addons.mozilla.org/en-US/developers/addon/local-filesystem-links/versions
     - red message: "Version 0.99.58 was uploaded before and deleted". No hint what to do next.
+    - solution: upload new version 0.99.59 (npm run build, npm run bundle, upload the file)
 
 # Extension testing in browser (still valid?)
 
