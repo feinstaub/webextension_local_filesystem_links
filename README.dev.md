@@ -28,9 +28,19 @@ Creates extension from src folder, converts host script to executable and create
 
     $ ./node_modules/web-ext/bin/web-ext sign --api-key=userkey --api-secret=... -s dist
 
+NOTE for 0.99.57:
+    - the sign command automatically triggers the review process. No need to upload it manually
+    - 0.99.58: "Your add-on has been submitted for review. It passed validation but could not be automatically signed because this is a listed add-on.
+    FAIL"
+
+Not needed? (generates web-ext-artifacts/local_filesystem_links-0.99.58.zip for example):
+
 4. Generate the bundle in web-ext-artifacts folder / create the final package
 
     $ npm run bundle
+
+Now manual upload of the zip file here: https://addons.mozilla.org/en-US/developers/addon/local-filesystem-links/versions
+    - red message: "Version 0.99.58 was uploaded before and deleted". No hint what to do next.
 
 # Extension testing in browser (still valid?)
 
