@@ -3,6 +3,10 @@
 __pycache__
 version.rc
 
+# ignore python test log files
+htmlcov
+.coverage
+
 # ignore web-ext bundle
 web-ext-artifacts
 

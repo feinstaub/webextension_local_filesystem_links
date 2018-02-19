@@ -151,19 +151,22 @@ def createResponse():
 def openFile(command):
     # command = u"explorer c:\\tmp\\áéíóú.txt"
     # send_message(r'{"debug": "%s"}' % urllib.quote(command.encode('utf-8')))
-    p = Popen(command, shell=True,
+    process = Popen(command, shell=True,
     stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    out, err = p.communicate()
+    out, err = process.communicate()
+    return process.returncode
 
 # Thread that reads messages from the webapp.
 def read_thread_func(queue):
   message_number = 0
+  default_response = True
+
   while 1:
     # Read the message length (first 4 bytes).
     text_length_bytes = sys.stdin.read(4)
 
     if len(text_length_bytes) == 0:
-      sys.exit(0)
+      sys.exit(1)
 
     # Unpack message length as 4 byte integer.
     text_length = struct.unpack("i", text_length_bytes)[0]
@@ -186,6 +189,7 @@ def read_thread_func(queue):
         if result is not None:
             openFile(u"%s \"%s\"" % (fileExplorer['open'], result))
         else:
+            default_response = False
             send_message('{"error": %s }' % "EXE_ACCESS_DENIED")  # todo pass error from getFilePath
     else:
       if (reveal):
@@ -193,9 +197,11 @@ def read_thread_func(queue):
         revealPath = os.path.dirname(result)
         openFile(fileExplorer['open'] + " \"%s\"" % revealPath)
       else:
+        default_response = False
         send_message('{"error": "%s", "url": "%s"}' % ("ERROR_BAD_LINK", fileStr))
 
-    createResponse() # default response
+    if default_response:
+      createResponse() # default response
     sys.exit(0)
 
 def Main():

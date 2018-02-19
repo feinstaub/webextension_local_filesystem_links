@@ -1,0 +1,10 @@
+{
+    "python.unitTest.unittestArgs": [
+        "-v",
+        "-s",
+        "./native-host/locallinkmessaging_host/",
+        "-p",
+        "test*.py"
+    ],
+    "python.unitTest.unittestEnabled": true
+}

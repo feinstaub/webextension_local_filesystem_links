@@ -11,7 +11,10 @@
     "createExe:unix": "./build/build.sh",
     "compileInstaller:win32": "innosetup-compiler ./build/windows/InnoSetupScript.iss --gui --verbose",
     "bundleInstaller:linux": "./build/linux/bundle.sh",
-    "build:linux": "npm run clean:linux && npm run createExe:unix && npm run bundleInstaller:linux"
+    "build:linux": "npm run clean:linux && npm run createExe:unix && npm run bundleInstaller:linux",
+    "test:python": "cd ./locallinkmessaging_host/ && python -m unittest discover",
+    "create-coverage:python": "cd ./locallinkmessaging_host/locallinkmessaging && (echo \\x00{\"url\": \"file://c:/\", \"reveal\": false, \"exeAllowed\": false} | coverage run locallinkmessaging.py)",
+    "report-coverage:python": "cd ./locallinkmessaging_host/locallinkmessaging && coverage report"
   },
   "author": "A. Wolf <awolf2904@gmail.com>",
   "license": "GPL-3.0",
