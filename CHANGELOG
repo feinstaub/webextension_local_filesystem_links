@@ -1,5 +1,12 @@
 Changelog for Local Filesystem Links
 ====================================
+
+v0.99.60
+--------
+* removed source maps & minification - fixed issue #126
+* changed to jquery 3.x - fixed issue #123
+* New package with build from source instructions for Mozilla review
+
 v0.99.59
 --------
 * Added MacOS support (SMB support still in progress)
