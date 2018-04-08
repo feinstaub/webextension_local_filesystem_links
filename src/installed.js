@@ -1,5 +1,5 @@
 // toggle info field of installer
-let toggleBtns = document.getElementsByClassName('toggle')
+let toggleBtns = document.getElementsByClassName('toggle');
 
 for (var i = 0; i < toggleBtns.length; i++) {
     toggleBtns[i].addEventListener('click', toggle);
@@ -7,8 +7,9 @@ for (var i = 0; i < toggleBtns.length; i++) {
 
 function toggle(evt) {
     evt.preventDefault();
-    
-    var infoEl = document.getElementById(evt.target.getAttribute('data-target'));
+
+    var infoEl = document.getElementById(evt.target.
+        getAttribute('data-target'));
 
     if (infoEl.style.display === 'none' || !infoEl.style.display) {
         infoEl.style.display = 'block';

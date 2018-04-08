@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="aliensun-wrapper">
     <div class="col-narrow">
       <img src="img/active_icon_64.png">
     </div>
@@ -16,8 +16,8 @@
 
 <script>
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
       appName: browser.runtime.getManifest().name
     };
@@ -28,57 +28,68 @@ export default {
     },
     showInstallInfo() {
       // console.log('show tab...', browser.runtime.sendMessage);
-      browser.runtime.sendMessage({action: 'showInstallInfoTab'}).then(function(response) {
+      browser.runtime
+        .sendMessage({ action: "showInstallInfoTab" })
+        .then(function(response) {
           // console.log('showInstallInfo done', response)
-      }).catch(function(err) {
+        })
+        .catch(function(err) {
           // console.log('error', err);
-      });
+        });
     }
   }
-}
+};
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 // globals
 /* apply a natural box layout model to all elements, but allowing components to change */
-html {
-  box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-div {
-  margin: 0;
-  padding: 10px 5px;
-  width: 300px;
-}
-h1, h2 {
-  font-weight: normal;
-  margin: 0;
-}
-h1 {
-  font-size: 16px;
-}
-
-a {
-  color: #42b983;
-}
-
-img {
-  text-align: center;
-}
+// html {
+//   box-sizing: border-box;
+// }
+// *,
+// *:before,
+// *:after {
+//   box-sizing: inherit;
+// }
 
 // collumns
-.col-narrow {
-  float: left;
-  width: 25%;
-}
-.col-wide {
-  float: left;
-  width: 75%
-}
+.aliensun-wrapper {
+  div {
+    margin: 0;
+    padding: 10px 5px;
+    width: 300px;
+  }
+  h1,
+  h2 {
+    font-weight: normal;
+    margin: 0;
+  }
+  h1 {
+    font-size: 16px;
+  }
 
-hr {
-  border-color: AliceBlue;
+  a {
+    color: #42b983;
+  }
+
+  img {
+    text-align: center;
+  }
+
+  .col-narrow {
+    float: left;
+    width: 25%;
+  }
+
+  .col-wide {
+    float: left;
+    width: 75%;
+    padding-left: 15px;
+  }
+
+  hr {
+    border-color: AliceBlue;
+  }
 }
 </style>
