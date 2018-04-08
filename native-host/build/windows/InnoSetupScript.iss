@@ -6,8 +6,7 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 
-; signool not properly setup yet - key missing --> skipped signing for now and check it later. First fix path issue after installation.
-; SignTool=signtool
+SignTool=signtool
 #define AppVersion GetFileVersion("D:\github\webextension_local_filesystem_links\native-host\bin\win32\local-link-messaging-host\local-link-messaging-host.exe")
 #define AppName "Local file links Native Messaging API Host"
 
