@@ -10,7 +10,6 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 // console.log(process.env.BROWSER)
 // console.log(process.env.NODE_ENV);
-const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 const manifestFiles = {
     firefox: 'manifest.firefox.json',
@@ -31,7 +30,7 @@ module.exports = {
         // publicPath: '/dist/',
         filename: '[name].js'
     },
-    mode: mode,
+    mode: 'none',
     module: {
         rules: [
             {
