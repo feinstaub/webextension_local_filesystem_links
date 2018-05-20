@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
+    "lodash.debounce": "^4.0.8",
     "match-pattern": "0.0.2",
     "vue": "^2.1.0",
     "webextension-polyfill": "^0.2.1"
@@ -45,6 +46,7 @@
     "node-sass": "^4.7.2",
     "rimraf": "^2.5.4",
     "sass-loader": "^6.0.6",
+    "style-loader": "^0.21.0",
     "vue-loader": "^10.0.0",
     "vue-template-compiler": "^2.1.0",
     "web-ext": "^2.2.2",

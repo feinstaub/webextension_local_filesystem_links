@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import _ from "lodash";
+import debounce from "lodash.debounce";
 import { defaultSettings } from "../constants";
 
 const DEBOUNCE_TIME = 500; // delay saving by 500ms (reduce saving as you type)
@@ -119,7 +119,7 @@ export default {
     }
   },
   methods: {
-    updateSetting: _.debounce(function() {
+    updateSetting: debounce(function() {
       this.save();
     }, DEBOUNCE_TIME),
 
@@ -180,39 +180,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-// variables
-$indent: 2%;
-
-.aliensun-settings {
-  /* globals for the component */
-  input[type="text"] {
-    width: 100%;
-    padding: 5px;
-    margin-top: 16px;
-  }
-
-  input[type="radio"] {
-    margin-bottom: 6px;
-  }
-
-  p {
-    margin: 0;
-  }
-  // setting styles
-  .title {
-    font-size: 20px;
-    font-weight: bold;
-    padding: 6px;
-  }
-  .description {
-    font-size: 14px;
-  }
-  .container {
-    margin-left: $indent;
-    padding-top: 8px;
-    margin-bottom: 16px;
-  }
-}
-</style>
