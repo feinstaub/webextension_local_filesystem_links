@@ -4,11 +4,13 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var WriteFilePlugin = require('write-file-webpack-plugin');
 var FriendlyErrors = require('friendly-errors-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 // var FF = process.env.BROWSER === 'Firefox'; // needed for custom stuff in manifest for Firefox
 
 // console.log(process.env.BROWSER)
 // console.log(process.env.NODE_ENV);
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 const manifestFiles = {
     firefox: 'manifest.firefox.json',
@@ -29,22 +31,12 @@ module.exports = {
         // publicPath: '/dist/',
         filename: '[name].js'
     },
+    mode: mode,
     module: {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    loaders: {
-                        // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-                        // the "scss" and "sass" values for the lang attribute to the right configs here.
-                        // other preprocessors should work out of the box, no loader config like this nessessary.
-                        'scss': 'vue-style-loader!css-loader!sass-loader',
-                        'sass': 'vue-style-loader!css-loader!sass-loader?' +
-                          'indentedSyntax'
-                    }
-                    // other vue-loader options go here
-                }
+                loader: 'vue-loader'
             },
             {
                 test: /\.js$/,
@@ -78,6 +70,7 @@ module.exports = {
     },
     devtool: '#source-map',
     plugins: [
+        new VueLoaderPlugin(),
         // new webpack.optimize.OccurrenceOrderPlugin(),
         // new webpack.optimize.CommonsChunkPlugin({
         //     names: ['app', 'background', 'options'] // , 'webpack-manifest'] // Specify the common bundle's name.
