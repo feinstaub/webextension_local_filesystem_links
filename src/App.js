@@ -1,21 +1,8 @@
-<template>
-  <div id="app" class="aliensun-wrapper">
-    <div class="col-narrow">
-      <img src="img/active_icon_64.png">
-    </div>
-    <div class="col-wide">
-      <h1>{{ appName }}</h1>
-      <a href="#" @click="displaySettings">Change settings...</a> <!-- i18n not added yet -->
-      <hr/>
-      <a href="#" @click="showInstallInfo">Show install info</a>
-      <!-- new feature button to append url to whitelist -->
-    </div>
-    <!-- <h2>Settings</h2> -->
-  </div>
-</template>
+import withRender from './app.html';
 
-<script>
-export default {
+console.log(withRender);
+
+export default withRender({
   name: "app",
   data() {
     return {
@@ -38,5 +25,4 @@ export default {
         });
     }
   }
-};
-</script>
+});

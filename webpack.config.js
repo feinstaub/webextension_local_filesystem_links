@@ -4,7 +4,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var WriteFilePlugin = require('write-file-webpack-plugin');
 var FriendlyErrors = require('friendly-errors-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 // var FF = process.env.BROWSER === 'Firefox'; // needed for custom stuff in manifest for Firefox
 
@@ -34,13 +33,20 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.vue$/,
-                loader: 'vue-loader'
-            },
-            {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.html$/,
+                loader: 'vue-template-loader',
+                // We don't want to pass `src/index.html` file to this loader.
+                exclude: /(index|options|background).html/,
+                /*options: {
+                    transformToRequire: {
+                        img: 'src'
+                    }
+                }*/
             },
             {
                 test: /\.css$/,
@@ -57,7 +63,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.common.js'
+            'vue$': 'vue/dist/vue.esm.js'
         }
     },
     devServer: {
@@ -69,11 +75,7 @@ module.exports = {
     },
     devtool: '#source-map',
     plugins: [
-        new VueLoaderPlugin(),
         // new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     names: ['app', 'background', 'options'] // , 'webpack-manifest'] // Specify the common bundle's name.
-        // }),
         new CopyWebpackPlugin([
             // { // copy host json --> exluded (manual download required)
             //     from: 'src/host/',
@@ -134,7 +136,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src', 'options.html'),
             filename: 'options.html',
-            // chunksSortMode: 'none',
+            chunksSortMode: 'none',
             chunks: ['options'] //, 'webpack-manifest']
         }),
         new WriteFilePlugin(),

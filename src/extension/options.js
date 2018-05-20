@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Settings from './components/Settings.vue';
+import Settings from './components/Settings.js';
 import './settings.css';
 
 const optionsApp = new Vue({
