@@ -7,12 +7,14 @@
   "author": "austrALIENsun",
   "scripts": {
     "start": "web-ext run -s dist/",
+    "prebundle": "npm run lf-endings",
     "bundle": "web-ext build -s dist/ --overwrite-dest",
     "sign": "web-ext sign",
     "clean": "rimraf dist",
     "dev": "npm run clean && cross-env NODE_ENV=development webpack-dev-server --inline --hot --content-base=dist/",
     "build": "npm run clean && cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "lint": "eslint ./src/**.js"
+    "lint": "eslint ./src/**.js",
+    "lf-endings": "crlf --set=LF dist/*.*"
   },
   "engines": {
     "firefox": ">=38.0a1",
@@ -36,6 +38,7 @@
     "babel-loader": "^6.0.0",
     "babel-preset-es2015": "^6.0.0",
     "copy-webpack-plugin": "^4.0.1",
+    "crlf": "^1.1.1",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "eslint": "^3.1.0",
