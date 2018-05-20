@@ -1,0 +1,38 @@
+.aliensun-wrapper div {
+    margin: 0;
+    padding: 10px 5px;
+    width: 300px;
+  }
+
+.aliensun-wrapper h1,
+.aliensun-wrapper h2 {
+    font-weight: normal;
+    margin: 0;
+  }
+
+.aliensun-wrapper h1 {
+    font-size: 16px;
+  }
+
+.aliensun-wrapper a {
+    color: #42b983;
+  }
+
+.aliensun-wrapper img {
+    text-align: center;
+  }
+
+.aliensun-wrapper .col-narrow {
+    float: left;
+    width: 25%;
+  }
+
+.aliensun-wrapper .col-wide {
+    float: left;
+    width: 75%;
+    padding-left: 15px;
+  }
+
+.aliensun-wrapper hr {
+    border-color: AliceBlue;
+}
