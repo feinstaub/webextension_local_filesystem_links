@@ -1,7 +1,7 @@
 {
   "title": "Local Filesystem Links",
   "name": "alien-local-filesystem-links",
-  "version": "0.99.61",
+  "version": "0.99.62",
   "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
   "main": "index.js",
   "author": "austrALIENsun",
@@ -24,7 +24,6 @@
     "multiprocess": true
   },
   "dependencies": {
-    "lodash": "^4.17.10",
     "lodash.debounce": "^4.0.8",
     "match-pattern": "0.0.2",
     "vue": "^2.5.16",
@@ -36,7 +35,6 @@
     "babel-loader": "^7.1.4",
     "babel-preset-es2015": "*",
     "copy-webpack-plugin": "^4.5.1",
-    "crlf": "^1.1.1",
     "cross-env": "^5.1.5",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
