@@ -29,27 +29,28 @@ module.exports = {
         // publicPath: '/dist/',
         filename: '[name].js'
     },
+    mode: 'none',
     module: {
         rules: [
-            {
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                options: {
-                    loaders: {
-                        // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-                        // the "scss" and "sass" values for the lang attribute to the right configs here.
-                        // other preprocessors should work out of the box, no loader config like this nessessary.
-                        'scss': 'vue-style-loader!css-loader!sass-loader',
-                        'sass': 'vue-style-loader!css-loader!sass-loader?' +
-                          'indentedSyntax'
-                    }
-                    // other vue-loader options go here
-                }
-            },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.html$/,
+                loader: 'vue-template-loader',
+                // We don't want to pass `src/index.html` file to this loader.
+                exclude: /(index|options|background).html/,
+                /*options: {
+                    transformToRequire: {
+                        img: 'src'
+                    }
+                }*/
+            },
+            {
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader' ]
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
@@ -62,7 +63,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.common.js'
+            'vue$': 'vue/dist/vue.esm.js'
         }
     },
     devServer: {
@@ -75,9 +76,6 @@ module.exports = {
     devtool: '#source-map',
     plugins: [
         // new webpack.optimize.OccurrenceOrderPlugin(),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     names: ['app', 'background', 'options'] // , 'webpack-manifest'] // Specify the common bundle's name.
-        // }),
         new CopyWebpackPlugin([
             // { // copy host json --> exluded (manual download required)
             //     from: 'src/host/',
@@ -138,7 +136,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src', 'options.html'),
             filename: 'options.html',
-            // chunksSortMode: 'none',
+            chunksSortMode: 'none',
             chunks: ['options'] //, 'webpack-manifest']
         }),
         new WriteFilePlugin(),

@@ -1,0 +1,77 @@
+<div class="aliensun-settings">
+    <!-- whitelist setting -->
+    <label class="title" for="whitelist">{{whitelistTitle}}</label>
+    <div class="container">
+        <p class="description">
+        {{whitelistDescription}}
+        </p>
+        <input id="whitelist"
+        type="text"
+        name="whitelist"
+        v-model="settings.whitelist" />
+    </div>
+
+    <!-- <hr/> -->
+    <!-- Enable executables -->
+    <label class="title" for="enableExe">{{enableExecutablesTitle}}</label>
+    <div class="container">
+        <p class="description">
+        <input id="enableExe"
+            type="checkbox"
+            name="enabelExe"
+            v-model="settings.enableExecutables"/>
+            <span @click="toggleExecutables()">{{enableExecutablesDescription}}</span>
+        </p>
+    </div>
+    <!-- <hr/> -->
+
+    <!-- Enable link icons -->
+    <label class="title" for="enableLinkIcons">{{enableLinkIconsTitle}}</label>
+    <div class="container">
+        <p class="description">
+        <input id="enableLinkIcons"
+            type="checkbox"
+            name="enableLinkIcons"
+            v-model="settings.enableLinkIcons"/>
+            <span @click="toggleLinkIcon()">{{enableLinkIconsDescription}}</span>
+        </p>
+    </div>
+    <!-- <hr/> -->
+
+    <!-- Default link click behaviour -->
+    <label class="title" for="revealOpenOption">{{revealOpenOptionTitle}}</label>
+    <div class="container">
+        <label for="revealOpenOption"><input id="revealOpenOption"
+        type="radio"
+        name="defaultClickRadio"
+        value="O"
+        v-model="settings.revealOpenOption"/>{{revealOpenOptionTexts.o}}
+        </label>
+        <label for="revealOpenOption_r">
+        <input
+            type="radio"
+            id="revealOpenOption_r"
+            name="defaultClickRadio"
+            value="R"
+            v-model="settings.revealOpenOption"/>{{revealOpenOptionTexts.r}}
+        </label>
+        <!--
+        Disable direct open at the moment - fix later. Issue with privileges.
+        It's saying something like 'invalid url - file://...'
+        More details see here at prop. url: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/tabs/create
+        <label for="revealOpenOption_d">
+        <input
+        id="revealOpenOption_d"
+        type="radio"
+        name="defaultClickRadio"
+        value="D"
+        v-model="settings.revealOpenOption"/>{{revealOpenOptionTexts.d}}
+        </label> -->
+        <p class="description">
+        {{revealOpenOptionDescription}}
+        </p>
+    </div>
+    <p v-if="statusMsg"><strong>{{statusMsg}}</strong></p>
+    <!-- <pre>{{settings}}</pre> -->
+    <!-- <hr/> -->
+    </div>
