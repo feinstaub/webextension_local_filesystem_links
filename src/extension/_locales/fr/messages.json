@@ -1,0 +1,119 @@
+{
+  "whitelist_title": {
+    "message": "Activer l'addon de lien de fichier pour les URLs en liste blanche",
+    "description": "Paramètres titre de la liste blanche"
+  },
+  "whitelist_description": {
+    "message": "Toutes les URL qui sont ajoutées à la liste blanche activeront les liens de fichiers locaux si vous naviguez vers cette adresse. * activera tout. Vide désactivera tout. Les URL multiples sont séparées par des espaces. Les caractères génériques sont autorisés, par exemple *://*.trello.com/*.",
+    "description": "Description des paramètres de la liste blanche"
+  },
+  "enableExecutables_title": {
+    "message": "Activer les liens vers les fichiers exécutables locaux",
+    "description": "Titre des paramètres pour l\'activation des fichiers exécutables"
+  },
+  "enableExecutables_description": {
+    "message": "Si cette option est activée, n\'importe quel fichier de programme peut être lancé par l'addon. (Attention ! Un site malveillant pourrait l'utiliser pour une attaque par déni de service (DDOS) !",
+    "description": "Description des paramètres pour les fichiers exécutables"
+  },
+  "enableLinkIcons_title":  {
+    "message": "Activer les icônes de lien",
+    "description": "Titre des paramètres pour les icônes d\'activation des liens"
+  },
+  "enableLinkIcons_description": {
+    "message": "Si cette case est cochée, un lien sera ajouté à chaque lien local.",
+    "description": "Description des paramètres pour les icônes de lien"
+  },
+  "revealOpenOption_title": {
+    "message": "Comportement par défaut des clics de texte de lien par défaut",
+    "description": "Paramètres titre pour le comportement de clic de lien par défaut"
+  },
+  "revealOpenOption_description": {
+    "message": "Modifie le comportement de clic par défaut des liens de fichier. Par défaut = lien de fichier direct ouvert.",
+    "description": "Description des paramètres pour le comportement de clic par défaut"
+  },
+  "revealOpenOption_options_Open": {
+    "message": "Ouvrir le lien directement",
+    "description": "Mise en place d'un lien ouvert directement"
+  },
+  "revealOpenOption_options_Reveal": {
+    "message": "Révéler le lien (ouvrir le dossier contenant le dossier)",
+    "description": "Réglage du lien de révélation"
+  },
+  "revealOpenOption_options_Direct": {
+    "message": "Ouvrir le lien directement dans le navigateur",
+    "description": "Réglage d\'ouverture directe"
+  },
+  "ERROR_EXECTUBALES_NOT_ENABLED": {
+    "message": "Vous essayez d\'ouvrir un fichier exécutable. Veuillez vérifier les paramètres de l\'addon pour activer les fichiers exécutables et réessayer.",
+    "description": "Message d\'erreur EXE non activé"
+  },
+  "ERROR_BAD_LINK": {
+    "message": "Impossible d'ouvrir le fichier $URL$$.",
+    "description": "Message d'erreur mauvais lien",
+    "placeholders": {
+      "url" : {
+        "content" : "$1",
+        "example" : "fichier://"
+      }
+    }
+  },
+  "INFO_CONFIG_CHANGED_SMB": {
+    "message": "Configuration modifiée ! Les liens SMB sont maintenant activés",
+    "description": "Message d\'information SMB configuré (pas encore utilisé)"
+  },
+  "LABEL_CONTEXT_MENU_OPEN_LINK": {
+    "message": "Ouvrir le lien",
+    "description": "Texte de l\'étiquette Ouvrir le lien"
+  },
+  "LABEL_CONTEXT_MENU_OPEN_CONTAINING": {
+    "message": "Ouvrir le dossier contenant",
+    "description": "Texte d'étiquette ouvert contenant un dossier"
+  },
+  "LABEL_CONTEXT_MENU_OPEN_DIRECT": {
+    "message": "Ouvrir dans le navigateur",
+    "description": "Texte d\'étiquette ouvert dans le navigateur"
+  },
+
+  "LABEL_CONTEXT_SUB_SELECTION_TITLE": {
+    "message": "Sélection de l\'addon de lien",
+    "description": "Sélection du texte de l\'étiquette dans le menu contextuel"
+  },
+
+  "LABEL_CONTEXT_SUB_LINK_TITLE": {
+    "message": "Ajout de lien",
+    "description": "Elément de menu contextuel du texte de l\'étiquette"
+  },
+
+  "LABEL_ADDONBAR_ICON_HOVER": {
+    "message": "Ajout de lien local (onglet courant : $ACTIVE$)",
+    "description": "Icône d\'état au survol du texte",
+    "placeholders": {
+      "active" : {
+        "content" : "$1",
+        "example" : "activé"
+      }
+    }
+  },
+
+  "LABEL_ADDONBAR_HOVER_STATE_active": {
+    "message": "activé",
+    "description": "Survol de texte en état actif"
+  },
+  "LABEL_ADDONBAR_HOVER_STATE_inactive": {
+    "message": "inactif",
+    "description": "Survol de Texte en état inactif"
+  },
+
+  "TOOLTIP_OPEN_FOLDER": {
+    "message": "Ouvrir dossier",
+    "description": "Dossier ouvert du texte de l'info-bulle"
+  },
+  "TOOLTIP_OPEN_LINK": {
+    "message": "Ouvrir lien",
+    "description": "Texte d\'info-bulle lien ouvert"
+  },
+  "TOOLTIP_OPEN_IN_BROWSER": {
+    "message": "Ouvrir le lien dans le navigateur",
+    "description": "Texte d\'info-bulle ouvert dans le navigateur"
+  }
+}
