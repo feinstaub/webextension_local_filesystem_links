@@ -15,7 +15,14 @@
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack-cli --progress --hide-modules",
     "lint": "eslint ./src/**.js",
-    "lint:web-ext": "web-ext lint"
+    "lint:web-ext": "web-ext lint",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+        "npm run lint",
+        "git add"
+    ]
   },
   "engines": {
     "firefox": ">=38.0a1",
@@ -46,6 +53,8 @@
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.2",
+    "lint-staged": "^9.2.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.16.4",
     "rimraf": "^2.6.2",
