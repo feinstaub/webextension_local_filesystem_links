@@ -21,21 +21,25 @@
         currentIconClass; // folder or arrow?
 
     function updateLinkTooltip() {
-        var tooltipText = options.revealOpenOption == 'O' ?
-          appTextMessages.tooltips.linkText :
-          appTextMessages.tooltips.openFolder;
+        var tooltipText =
+            options.revealOpenOption == 'O'
+                ? appTextMessages.tooltips.linkText
+                : appTextMessages.tooltips.openFolder;
 
-        $('a').filter(fileLinkSelectors.join(', ')).attr('title', tooltipText);
+        $('a')
+            .filter(fileLinkSelectors.join(', '))
+            .attr('title', tooltipText);
     }
 
     /*
-    * Activates the plugin - add icon after link and starts observer if enabled
-    */
+     * Activates the plugin - add icon after link and starts observer if enabled
+     */
     function activate() {
         // console.log('activate', options);
         if (options.enableLinkIcons) {
-            currentIconClass = 'aliensun-link-icon' +
-            (options.revealOpenOption == 'R' ? '-arrow' : '');
+            currentIconClass =
+                'aliensun-link-icon' +
+                (options.revealOpenOption == 'R' ? '-arrow' : '');
 
             // createObserver(); // fix later, long running script issue - see issue #109
             $container.addClass(currentIconClass);
@@ -54,18 +58,23 @@
 
     // Get settings from addon
 
-    browser.runtime.onMessage.addListener(
-        function(request, sender, sendResponse) {
-            // console.log(sender.tab ?
-            //             "from a content script:" + sender.tab.url :
-            //             "from the extension");
-            // console.log('init', sender.tab, request.data, request); // sender.tab);
-            switch(request.action) {
+    browser.runtime.onMessage.addListener(function(
+        request,
+        sender,
+        sendResponse
+    ) {
+        // console.log(sender.tab ?
+        //             "from a content script:" + sender.tab.url :
+        //             "from the extension");
+        // console.log('init', sender.tab, request.data, request); // sender.tab);
+        switch (request.action) {
             case 'destroy':
                 // console.log('remove icons & click handlers');
                 removeLinkIcons();
                 // remove tooltips
-                $('a').filter(fileLinkSelectors.join(', ')).attr('title', '');
+                $('a')
+                    .filter(fileLinkSelectors.join(', '))
+                    .attr('title', '');
                 // disconnect jquery-observe
                 $(fileLinkSelectors.join(', ')).disconnect();
                 $(document).disconnect();
@@ -74,24 +83,24 @@
                 break;
             case 'init':
                 // console.log('init content script', request);
-                appTextMessages = request.data.constants.MESSAGES.
-                  USERMESSAGES;
+                appTextMessages = request.data.constants.MESSAGES.USERMESSAGES;
                 options = request.data.options; // load options
 
                 if (!$icon) {
-                    $icon = $container.append($('<i/>').
-                        addClass('material-icons'));
+                    $icon = $container.append(
+                        $('<i/>').addClass('material-icons')
+                    );
                 }
 
                 // port = browser.runtime.connect();
                 // console.log('port open', port);
                 // now everything is ready to load
                 activate();
-                sendResponse({feedback: 'initDone'});
+                sendResponse({ feedback: 'initDone' });
                 break;
             default:
-            }
-        });
+        }
+    });
 
     // Update settings on change of pref.
     function updateIcons(data) {
@@ -114,34 +123,43 @@
         $(document).on('click', fileLinkSelectors.join(', '), openFileHandler);
 
         // icon click handler
-        $(document).on('click',
-        '[class^=\'aliensun-link-icon\']',// folder or arrow
-        openFolderHandler);
+        $(document).on(
+            'click',
+            "[class^='aliensun-link-icon']", // folder or arrow
+            openFolderHandler
+        );
     }
 
     function unregisterEvents() {
         $(document).off('click', fileLinkSelectors.join(', '), openFileHandler);
-        $(document).off('click', '[class^=\'aliensun-link-icon\']', openFolderHandler);
+        $(document).off(
+            'click',
+            "[class^='aliensun-link-icon']",
+            openFolderHandler
+        );
     }
 
     function openFileHandler(e) {
         e.preventDefault(); // prevent default to avoid browser to launch smb://
         // console.log('clicked file link: ' +
         //   this.href, options.revealOpenOption);
-        browser.runtime.sendMessage({
-        // port.sendMessage({
-            action: 'open',
-            // removed decodeURIComponent because env. var. failed
-            // --> decoding needed for accents
-            message: 'hello',
-            url: decodeURIComponent(this.href), // this.href
-            reveal: options.revealOpenOption == 'O' ? false : true,
-            directOpen: options.revealOpenOption == 'D'
-        }).then(function(response) {
-            // console.log(response);
-        }).catch(function(error) {
-            // console.log('error', error);
-        });
+        browser.runtime
+            .sendMessage({
+                // port.sendMessage({
+                action: 'open',
+                // removed decodeURIComponent because env. var. failed
+                // --> decoding needed for accents
+                message: 'hello',
+                url: decodeURIComponent(this.href), // this.href
+                reveal: options.revealOpenOption == 'O' ? false : true,
+                directOpen: options.revealOpenOption == 'D'
+            })
+            .then(function(response) {
+                // console.log(response);
+            })
+            .catch(function(error) {
+                // console.log('error', error);
+            });
     }
 
     /*
@@ -161,19 +179,22 @@
         //     reveal: options.revealOpenOption == 'O' ? true : false,
         //     backslashReplaceRequired: true
         // });
-        browser.runtime.sendMessage({
-        // port.sendMessage({
-            action: 'open',
-            // removed decodeURIComponent because env. var. failed
-            // --> decoding needed for accents (check env. var later)
-            message: 'hello',
-            url: decodeURIComponent(link),
-            reveal: options.revealOpenOption == 'O' ? true : false
-        }).then(function(response) {
-            // console.log('response');
-        }).catch(function(err) {
-            // console.log('error', err);
-        });
+        browser.runtime
+            .sendMessage({
+                // port.sendMessage({
+                action: 'open',
+                // removed decodeURIComponent because env. var. failed
+                // --> decoding needed for accents (check env. var later)
+                message: 'hello',
+                url: decodeURIComponent(link),
+                reveal: options.revealOpenOption == 'O' ? true : false
+            })
+            .then(function(response) {
+                // console.log('response');
+            })
+            .catch(function(err) {
+                // console.log('error', err);
+            });
     }
 
     // -------------------------------------------------------------------------
@@ -206,13 +227,15 @@
 
     function updateLink($element) {
         // console.log('updating', $element);
-        var iconTooltip = options.revealOpenOption == 'O' ?
-          appTextMessages.tooltips.openFolder :
-          appTextMessages.tooltips.linkText;
+        var iconTooltip =
+            options.revealOpenOption == 'O'
+                ? appTextMessages.tooltips.openFolder
+                : appTextMessages.tooltips.linkText;
 
         // update class (folder or arrow)
-        currentIconClass = 'aliensun-link-icon' +
-        (options.revealOpenOption == 'R' ? '-arrow' : '');
+        currentIconClass =
+            'aliensun-link-icon' +
+            (options.revealOpenOption == 'R' ? '-arrow' : '');
 
         $container.removeClass();
         $container.addClass(currentIconClass);
@@ -221,21 +244,25 @@
             // console.log('el href = ', $(el).attr('href'));
             // console.log('icon already added?', $(el).next().
             // is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
-            if (!$(el).next().
-              is('.aliensun-link-icon,.aliensun-link-icon-arrow')) {
+            if (
+                !$(el)
+                    .next()
+                    .is('.aliensun-link-icon,.aliensun-link-icon-arrow')
+            ) {
                 // icon not added
-                $icon.
-                  attr('title', iconTooltip).
-                  clone().data('link', $(el).attr('href')). // added to container
-                  insertAfter($(el));
+                $icon
+                    .attr('title', iconTooltip)
+                    .clone()
+                    .data('link', $(el).attr('href')) // added to container
+                    .insertAfter($(el));
             }
         });
     }
 
     /*
-    * Remove all link icons
-    * (needed for updating at icon pref. change)
-    */
+     * Remove all link icons
+     * (needed for updating at icon pref. change)
+     */
     function removeLinkIcons() {
         var $icons = $('.aliensun-link-icon, .aliensun-link-icon-arrow');
 
@@ -245,67 +272,68 @@
     }
 
     /*
-    * Create observers for file links
-    * Two observers - one for href attributes and
-    * another one for newly added file links
-    */
+     * Create observers for file links
+     * Two observers - one for href attributes and
+     * another one for newly added file links
+     */
     function createObserver() {
         // observe changes of file links
         // create an observer if someone is changing an a-tag directly
         if ($(fileLinkSelectors.join(', ')).length > 0) {
-            $(fileLinkSelectors.join(', ')).
-                observe({attributes: true, attributeFilter: ['href']},
-                    function(/* record */) {
-                        // observe href change
-                        //console.log('changed href', $(this), $icon.attr('class'));
+            $(fileLinkSelectors.join(', ')).observe(
+                { attributes: true, attributeFilter: ['href'] },
+                function(/* record */) {
+                    // observe href change
+                    //console.log('changed href', $(this), $icon.attr('class'));
 
-                        // remove previous icon
-                        $(this).next('.' + $icon.attr('class')).remove();
-                        // add new icons so we have the correct data at the icon
-                        updateLink($(this));
-                    });
+                    // remove previous icon
+                    $(this)
+                        .next('.' + $icon.attr('class'))
+                        .remove();
+                    // add new icons so we have the correct data at the icon
+                    updateLink($(this));
+                }
+            );
         }
 
         // observe newly added file links
-        $(document).
-            observe('added', fileLinkSelectors.join(', '),
-            function() {
-                // Observe if elements matching 'a[href^="file://"]' have been added
-                //
-                // there can be multiple observer callbacks attached now!!
-                // --> if you add three links you'll get three callback events
-                //     with the same elements
-                //     --> store elements in first observer,
-                //         so next observer callback detect that there is
-                //         nothing new
-                //
-                // Info:
-                // That's working but it would be better to not trigger
-                // these callbacks but I'm not sure how to fix.
-                // --> asked if it could be fixed,
-                //     see here https://github.com/kapetan/jquery-observe/issues/5
-                //
-                // Update: 09.03.2016
-                // We're getting only one observer callback for each added element.
-                // So we don't need to store the previous added node.
+        $(document).observe('added', fileLinkSelectors.join(', '), function() {
+            // Observe if elements matching 'a[href^="file://"]' have been added
+            //
+            // there can be multiple observer callbacks attached now!!
+            // --> if you add three links you'll get three callback events
+            //     with the same elements
+            //     --> store elements in first observer,
+            //         so next observer callback detect that there is
+            //         nothing new
+            //
+            // Info:
+            // That's working but it would be better to not trigger
+            // these callbacks but I'm not sure how to fix.
+            // --> asked if it could be fixed,
+            //     see here https://github.com/kapetan/jquery-observe/issues/5
+            //
+            // Update: 09.03.2016
+            // We're getting only one observer callback for each added element.
+            // So we don't need to store the previous added node.
 
-                console.log('link added', this);
-                // console.log($(this).eq(0).html(), record); // this = addedNodes
+            console.log('link added', this);
+            // console.log($(this).eq(0).html(), record); // this = addedNodes
 
-                // get elements that are with-out icon - avoid multiple icons
-                var $elements = $(this).filter(function() {
-                    // console.log('filter next element', $(this).
-                    //     next().
-                    //     is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
-                    return !$(this).
-                        next().
-                        is('.aliensun-link-icon,.aliensun-link-icon-arrow');
-                });
-
-                if ($elements.length > 0) {
-                    updateLink($elements);
-                }
+            // get elements that are with-out icon - avoid multiple icons
+            var $elements = $(this).filter(function() {
+                // console.log('filter next element', $(this).
+                //     next().
+                //     is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
+                return !$(this)
+                    .next()
+                    .is('.aliensun-link-icon,.aliensun-link-icon-arrow');
             });
+
+            if ($elements.length > 0) {
+                updateLink($elements);
+            }
+        });
         // suspend not supported in FF
         // function handleSuspend() {
         //     console.log('Suspending event page');
@@ -314,4 +342,4 @@
         // }
         // browser.runtime.onSuspend.addListener(handleSuspend);
     }
-}(jQuery));
+})(jQuery);

@@ -14,8 +14,7 @@
     "rules": {
         "no-console": "off",
         "no-invalid-this": 0,
-        "new-cap": [0, {"newIsCap": false}],
-        "indent": ["error", 4],
+        "new-cap": [0, {"newIsCap": false}]
     },
     "globals": {
         "jQuery": true,

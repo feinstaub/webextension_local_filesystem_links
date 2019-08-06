@@ -1,12 +1,10 @@
 import withRender from './app.html';
 
-console.log(withRender);
-
 export default withRender({
     name: 'app',
     data() {
         return {
-            appName: browser.runtime.getManifest().name,
+            appName: browser.runtime.getManifest().name
         };
     },
     methods: {
@@ -23,6 +21,6 @@ export default withRender({
                 .catch(function(err) {
                     // console.log('error', err);
                 });
-        },
-    },
+        }
+    }
 });

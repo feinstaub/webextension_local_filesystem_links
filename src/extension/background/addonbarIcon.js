@@ -1,7 +1,7 @@
 /** Updates the addonbar icon (active/inactive)
-* @param {boolean} status True, extension active for current tab else inactive
-* @returns {undefined}
-*/
+ * @param {boolean} status True, extension active for current tab else inactive
+ * @returns {undefined}
+ */
 export function updateAddonbarIcon(status) {
     const filePrefix = status ? 'active' : 'inactive';
     const i18nKey = 'LABEL_ADDONBAR_HOVER_STATE_' + filePrefix;
@@ -16,7 +16,7 @@ export function updateAddonbarIcon(status) {
     browser.browserAction.setIcon({
         path: {
             '16': 'img/' + filePrefix + '_icon_16.png',
-            '32': 'img/' + filePrefix + '_icon_32.png',
+            '32': 'img/' + filePrefix + '_icon_32.png'
         }
     });
 }

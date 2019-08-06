@@ -14,9 +14,10 @@
     "watch": "webpack-cli --watch",
     "prebuild": "npm run clean",
     "build": "cross-env NODE_ENV=production webpack-cli --progress --hide-modules",
-    "lint": "eslint ./src/**.js",
+    "lint": "eslint ./src/**/*.js",
     "lint:web-ext": "web-ext lint",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "pretty": "prettier ./src/**/*.js --write"
   },
   "lint-staged": {
     "*.js": [
