@@ -1,18 +1,15 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var WriteFilePlugin = require('write-file-webpack-plugin');
-var FriendlyErrors = require('friendly-errors-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
+const FriendlyErrors = require('friendly-errors-webpack-plugin');
 
 // var FF = process.env.BROWSER === 'Firefox'; // needed for custom stuff in manifest for Firefox
 
-// console.log(process.env.BROWSER)
-// console.log(process.env.NODE_ENV);
-
 const manifestFiles = {
     firefox: 'manifest.firefox.json',
-    chrome: 'manifest.chrome.json'
+    chrome: 'manifest.chrome.json',
 };
 
 const manifestFileName = manifestFiles[process.env.BROWSER || 'firefox']; // default to firefox
@@ -22,12 +19,11 @@ module.exports = {
         app: './src/main.js',
         background: './src/extension/background/index.js',
         options: './src/extension/options.js',
-        content: './src/extension/content.js'
+        content: './src/extension/content.js',
     },
     output: {
         path: path.resolve(__dirname, './dist'),
-        // publicPath: '/dist/',
-        filename: '[name].js'
+        filename: '[name].js',
     },
     mode: 'none',
     module: {
@@ -35,69 +31,61 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/
+                exclude: /node_modules/,
             },
             {
                 test: /\.html$/,
                 loader: 'vue-template-loader',
                 // We don't want to pass `src/index.html` file to this loader.
                 exclude: /(index|options|background).html/,
-                /*options: {
-                    transformToRequire: {
-                        img: 'src'
-                    }
-                }*/
             },
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader' ]
+                use: ['style-loader', 'css-loader'],
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
                 loader: 'file-loader',
                 options: {
-                    name: '[name].[ext]?[hash]'
-                }
-            }
-        ]
+                    name: '[name].[ext]?[hash]',
+                },
+            },
+        ],
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.esm.js'
-        }
+            vue$: 'vue/dist/vue.esm.js',
+        },
     },
     devServer: {
         historyApiFallback: true,
-        noInfo: true
+        noInfo: true,
+        writeToDisk: true,
     },
     performance: {
-        hints: false
+        hints: false,
     },
     devtool: '#source-map',
     plugins: [
         // new webpack.optimize.OccurrenceOrderPlugin(),
         new CopyWebpackPlugin([
-            // { // copy host json --> exluded (manual download required)
-            //     from: 'src/host/',
-            //     to: 'host/'
-            // },
-            { // copy locale
+            {
+                // copy locale
                 from: 'src/extension/_locales',
-                to: '_locales'
+                to: '_locales',
             },
             {
-                from: 'src/static'
+                from: 'src/static',
             },
             {
-                from: 'src/assets'
+                from: 'src/assets',
             },
             {
                 from: 'src/installed.*',
-                flatten: true
+                flatten: true,
             },
             // {output}/file.txt
             {
-                //from: 'src/manifest.json',
                 from: `src/${manifestFileName}`,
                 to: 'manifest.json',
                 transform: function(content, path) {
@@ -109,15 +97,21 @@ module.exports = {
                     // }
 
                     return JSON.stringify(
-                        Object.assign({}, JSON.
-                            parse(content.toString('utf8')), {
-                                description: process.env.
-                                  npm_package_description,
-                                version: process.env.
-                                  npm_package_version || '0.0.1'
-                            }), null, 2);
-                }
-            }
+                        Object.assign(
+                            {},
+                            JSON.parse(content.toString('utf8')),
+                            {
+                                description:
+                                    process.env.npm_package_description,
+                                version:
+                                    process.env.npm_package_version || '0.0.1',
+                            }
+                        ),
+                        null,
+                        2
+                    );
+                },
+            },
         ]),
         // https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
@@ -125,23 +119,23 @@ module.exports = {
             template: 'index.html',
             // chunksSortMode: 'none',
             chunks: ['app'], // , 'webpack-manifest'],
-            inject: true
+            inject: true,
         }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src', 'background.html'),
             filename: 'background.html',
             // chunksSortMode: 'none',
-            chunks: ['background'] //, 'webpack-manifest']
+            chunks: ['background'],
         }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src', 'options.html'),
             filename: 'options.html',
             chunksSortMode: 'none',
-            chunks: ['options'] //, 'webpack-manifest']
+            chunks: ['options'],
         }),
         new WriteFilePlugin(),
-        new FriendlyErrors()
-    ]
+        new FriendlyErrors(),
+    ],
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -150,8 +144,8 @@ if (process.env.NODE_ENV === 'production') {
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: '"production"'
-            }
-        })
+                NODE_ENV: '"production"',
+            },
+        }),
     ]);
 }

@@ -8,8 +8,9 @@ for (var i = 0; i < toggleBtns.length; i++) {
 function toggle(evt) {
     evt.preventDefault();
 
-    var infoEl = document.getElementById(evt.target.
-        getAttribute('data-target'));
+    var infoEl = document.getElementById(
+        evt.target.getAttribute('data-target')
+    );
 
     if (infoEl.style.display === 'none' || !infoEl.style.display) {
         infoEl.style.display = 'block';

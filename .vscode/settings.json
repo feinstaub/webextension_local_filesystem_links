@@ -1,0 +1,11 @@
+{
+  // Set the default
+  "editor.formatOnSave": false,
+  // Enable per-language
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "prettier.singleQuote": true,
+  "prettier.semi": true,
+  "prettier.tabWidth": 4
+}
