@@ -6,11 +6,13 @@
     "main": "index.js",
     "author": "austrALIENsun",
     "scripts": {
-        "start": "wait-on dist/ && web-ext run -s dist/",
+        "start": "npm run dev",
+        "start:web-ext": "wait-on dist/ && web-ext run -s dist/",
+        "web-ext": "web-ext run -s dist/",
         "bundle": "web-ext build -s dist/ --overwrite-dest",
         "sign": "web-ext sign",
         "clean": "rimraf dist",
-        "dev": "npm-run-all clean --parallel watch start",
+        "dev": "npm-run-all clean --parallel watch start:web-ext",
         "watch": "webpack-cli --watch",
         "prebuild": "npm run clean",
         "build": "cross-env NODE_ENV=production webpack-cli --progress --hide-modules",
@@ -70,7 +72,6 @@
         "web-ext": "^3.1.1",
         "webpack": "^4.8.3",
         "webpack-cli": "^3.3.6",
-        "webpack-dev-server": "^3.7.2",
         "write-file-webpack-plugin": "^4.3.2"
     }
 }
