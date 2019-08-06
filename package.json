@@ -16,8 +16,12 @@
     "build": "cross-env NODE_ENV=production webpack-cli --progress --hide-modules",
     "lint": "eslint ./src/**/*.js",
     "lint:web-ext": "web-ext lint",
-    "precommit": "lint-staged",
     "pretty": "prettier ./src/**/*.js --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": [
