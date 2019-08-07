@@ -7,14 +7,14 @@ function notify(title, message) {
     const id = `${cakeNotification}-${notifyCount}`;
 
     // console.log('notify', id, browser.notifications);
-    browser.notifications.create(
-        id,
-        {
+    browser.notifications
+        .create(id, {
             type: 'basic',
             iconUrl: browser.extension.getURL('img/active_icon_64.png'),
             title: title || browser.runtime.getManifest().name,
             message: message
-        }).then(() => {
+        })
+        .then(() => {
             // console.log('cake created', arguments);
             setTimeout(() => {
                 // console.log('cake cleared');

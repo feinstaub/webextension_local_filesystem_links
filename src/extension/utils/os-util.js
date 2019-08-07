@@ -7,7 +7,6 @@
 // var {Cc, Ci} = chrome; //require('chrome');
 
 var getOsStringTag = function() {
-
     // https://developer.mozilla.org/en/nsIXULRuntime
     // var xulRuntime = Cc['@mozilla.org/xre/app-info;1'].
     //     getService(Ci.nsIXULRuntime);
