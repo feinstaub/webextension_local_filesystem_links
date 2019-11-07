@@ -20,9 +20,9 @@ currentOS = sys.platform
 
 fileExplorers = {
   "win32": {
-    "open": r'explorer',
+    "open": r'cmd /c',
     "reveal": {
-      "cmd": r'explorer',
+      "cmd": r'cmd /c explorer',
       "arg": r'/select,'
     }
   },
