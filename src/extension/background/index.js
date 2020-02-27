@@ -110,9 +110,6 @@ class LocalFileSystemExtension {
 
         execute(null, { allFrames: true, file: 'js/jquery-3.3.1.min.js' })
             .then(() =>
-                execute(null, { allFrames: true, file: 'js/jquery-observe.js' })
-            )
-            .then(() =>
                 execute(null, { allFrames: true, file: './content.js' })
             )
             .then(() => {
