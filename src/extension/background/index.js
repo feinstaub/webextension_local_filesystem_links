@@ -2,6 +2,7 @@ import * as CONSTANTS from '../constants';
 import checkInstallation from './checkInstallation';
 import { updateAddonbarIcon } from './addonbarIcon';
 import { ExtensionEventHandlers } from './EventHandlers';
+import debounce from 'lodash.debounce';
 
 /** Main background script class of the extension */
 class LocalFileSystemExtension {
@@ -37,7 +38,7 @@ class LocalFileSystemExtension {
             this.removeTabFromInjectedTabs(tabId);
         });
 
-        browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+        const updateHandlerDebounced = debounce((tabId, changeInfo, tab) => {
             if (tab.active) {
                 if (changeInfo.status === 'loading' && changeInfo.url) {
                     // console.log('loading', tabId, tab.active);
@@ -52,13 +53,17 @@ class LocalFileSystemExtension {
                     .catch(() => {
                         // console.log('no content script');
                         this.removeTabFromInjectedTabs(tabId);
-
+                    })
+                    .finally(() => {
                         if (changeInfo.status === 'complete') {
+                            // console.log('check urls in complete');
                             this.checkUrls();
                         }
                     });
             }
-        });
+        }, 200);
+
+        browser.tabs.onUpdated.addListener(updateHandlerDebounced);
 
         // check if first installation or update
         browser.runtime.onInstalled.addListener(checkInstallation);
