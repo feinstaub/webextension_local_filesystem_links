@@ -34,26 +34,29 @@ class LocalFileSystemExtension {
 
         browser.tabs.onRemoved.addListener((tabId, removeInfo) => {
             //console.log('remove', tabId, removeInfo);
-            this.removeTabFromInjectedTabs(removeInfo.windowId, tabId);
+            this.removeTabFromInjectedTabs(tabId);
         });
 
         browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-            if (
-                changeInfo.status &&
-                changeInfo.status === 'loading' &&
-                tab.active
-            ) {
-                // console.log('loading', tabId, tab.active);
-                this.removeTabFromInjectedTabs(tab.windowId, tab.id);
-            }
+            if (tab.active) {
+                if (changeInfo.status === 'loading' && changeInfo.url) {
+                    // console.log('loading', tabId, tab.active);
+                    this.removeTabFromInjectedTabs(tabId); // url changed and loading a new page - remove tabId as we need to inject the content script
+                }
 
-            if (
-                changeInfo.status &&
-                changeInfo.status === 'complete' &&
-                tab.active
-            ) {
-                // console.log('complete');
-                this.checkUrls();
+                // console.log('change info: ', changeInfo);
+
+                // check if content script is not connected
+                browser.tabs
+                    .sendMessage(tabId, { action: 'ping' })
+                    .catch(() => {
+                        // console.log('no content script');
+                        this.removeTabFromInjectedTabs(tabId);
+
+                        if (changeInfo.status === 'complete') {
+                            this.checkUrls();
+                        }
+                    });
             }
         });
 
@@ -65,9 +68,10 @@ class LocalFileSystemExtension {
      * @param {integer} windowId id of current window
      * @param {integer} tabId id of tab to remove
      */
-    removeTabFromInjectedTabs(windowId, id) {
-        if (this.injectedTabs.indexOf(`${windowId}-${id}`) !== -1) {
-            this.injectedTabs.pop(`${windowId}-${id}`);
+    removeTabFromInjectedTabs(id) {
+        if (this.injectedTabs.indexOf(id) !== -1) {
+            // console.log('remove id', id);
+            this.injectedTabs.pop(id);
         }
     }
     /** Check the urls (if active tab is whitelisted)
@@ -108,9 +112,16 @@ class LocalFileSystemExtension {
         // --> defaults to activetab
         const execute = browser.tabs.executeScript; // short-hand
 
-        execute(null, { allFrames: true, file: 'js/jquery-3.3.1.min.js' })
+        execute(null, {
+            allFrames: true,
+            file: 'js/jquery-3.3.1.min.js'
+        })
             .then(() =>
-                execute(null, { allFrames: true, file: './content.js' })
+                execute(null, {
+                    allFrames: true,
+                    file: './content.js',
+                    runAt: 'document_end'
+                })
             )
             .then(() => {
                 // jquery & content script loaded --> now we can send init data
@@ -147,30 +158,11 @@ class LocalFileSystemExtension {
 
             const activeTab = tabs.filter(tab => tab.active)[0];
 
-            //
             if (!activeTab) {
                 // console.log('no active tab');
                 // needed if tab is newly removed from the whitelist --> stop active content script
-                // unloadContentScript();
-                browser.tabs
-                    .query({
-                        active: true,
-                        windowId: browser.windows.WINDOW_ID_CURRENT
-                    })
-                    .then(tabs => browser.tabs.get(tabs[0].id))
-                    .then(tab => {
-                        // console.log('no active tab - destroy', tab);
-                        browser.tabs
-                            .sendMessage(tab.id, {
-                                action: 'destroy'
-                            })
-                            .catch(err => {
-                                // console.log(err) // e.g. receiving end does not exist
-                            }); // ignore errors (no content script available)
-
-                        // remove tab from injected tabs array
-                        this.removeTabFromInjectedTabs(tab.windowId, tab.id);
-                    });
+                // --> removed below as it was causing an issue with multiple events. Removing means a whitelist change requires a page reload. Acceptable behaviour.
+                // Note: Also an unfocused window will also trigger this case
                 return; // no tab active --> e.g. about:addons
             }
 
@@ -187,18 +179,12 @@ class LocalFileSystemExtension {
             // show enhancement at addon bar icon
             updateAddonbarIcon(true);
 
-            // console.log('injected tabs', this.injectedTabs, activeTab.id, this.injectedTabs.indexOf(`${activeTab.windowId}-${activeTab.id}`) === -1);
-            if (
-                this.injectedTabs.indexOf(
-                    `${activeTab.windowId}-${activeTab.id}`
-                ) === -1
-            ) {
-                // add scripts & css
-                // console.log('inject', `${activeTab.windowId}-${activeTab.id}`);
+            if (this.injectedTabs.indexOf(activeTab.id) === -1) {
+                // add scripts & css to the page (only once per tab)
+                // console.log('inject', activeTab.id);
                 this.injectCSS();
                 this.injectScripts(activeTab);
-
-                this.injectedTabs.push(`${activeTab.windowId}-${activeTab.id}`); // add id to keep track of js adding.
+                this.injectedTabs.push(activeTab.id); // add id to keep track of injection.
             }
         };
 

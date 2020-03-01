@@ -52,7 +52,8 @@
         // we could add a if case here to add tooltip disable pref.
         updateLinkTooltip();
 
-        registerEvents();
+        // console.log('register events');
+        registerEvents(); // important to have this called once per tab to avoid mulitple events on file link
     }
 
     // Get settings from addon
@@ -63,6 +64,10 @@
         sendResponse
     ) {
         switch (request.action) {
+            case 'ping': // used to test that we're having a connection to the content script
+                // console.log('ping receive');
+                sendResponse(true);
+                break;
             case 'destroy':
                 removeLinkIcons();
 
@@ -133,6 +138,7 @@
     }
 
     function openFileHandler(e) {
+        // console.log('event side content script', e);
         e.preventDefault(); // prevent default to avoid browser to launch smb://
 
         browser.runtime.sendMessage({
