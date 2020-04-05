@@ -1,6 +1,6 @@
 Changelog for Local Filesystem Links
 ====================================
-v0.99.63
+v0.99.63-1
 --------
 * FIX: Issue 125
   - Added dynamic link handling & debounced link click event handler (reduce the risk of firing multiple events)

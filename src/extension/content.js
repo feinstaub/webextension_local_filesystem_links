@@ -65,7 +65,7 @@
     ) {
         switch (request.action) {
             case 'ping': // used to test that we're having a connection to the content script
-                // console.log('ping receive');
+                console.log('ping receive');
                 sendResponse(true);
                 break;
             case 'destroy':

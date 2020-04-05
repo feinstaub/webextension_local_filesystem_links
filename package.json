@@ -1,7 +1,7 @@
 {
     "title": "Local Filesystem Links",
     "name": "alien-local-filesystem-links",
-    "version": "0.99.63",
+    "version": "0.99.63-1",
     "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
     "main": "index.js",
     "author": "austrALIENsun",
@@ -41,7 +41,6 @@
         "multiprocess": true
     },
     "dependencies": {
-        "lodash.debounce": "^4.0.8",
         "match-pattern": "0.0.2",
         "vue": "^2.5.16",
         "webextension-polyfill": "^0.2.1"
