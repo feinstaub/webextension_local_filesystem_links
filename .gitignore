@@ -53,3 +53,5 @@ node_modules
 /_pr/
 /_pt/
 /sourcecode-archive.tar.gz
+
+.env

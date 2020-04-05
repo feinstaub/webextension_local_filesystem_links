@@ -1,7 +1,7 @@
 {
     "title": "Local Filesystem Links",
     "name": "alien-local-filesystem-links",
-    "version": "0.99.62",
+    "version": "0.99.63",
     "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
     "main": "index.js",
     "author": "austrALIENsun",
@@ -10,7 +10,7 @@
         "start:web-ext": "wait-on dist/ && web-ext run -s dist/",
         "web-ext": "web-ext run -s dist/",
         "bundle": "web-ext build -s dist/ --overwrite-dest",
-        "sign": "web-ext sign",
+        "sign": "sh ./sign-bundle.sh",
         "clean": "rimraf dist",
         "dev": "npm-run-all clean --parallel watch start:web-ext",
         "watch": "webpack-cli --watch",
