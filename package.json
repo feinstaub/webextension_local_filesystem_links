@@ -41,6 +41,7 @@
         "multiprocess": true
     },
     "dependencies": {
+        "lodash.debounce": "^4.0.8",
         "match-pattern": "0.0.2",
         "vue": "^2.5.16",
         "webextension-polyfill": "^0.2.1"
