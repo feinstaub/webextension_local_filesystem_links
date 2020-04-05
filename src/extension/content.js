@@ -1,7 +1,6 @@
 'use strict';
 
 (function fileLinkAddon($) {
-    // console.log('content script started...');
     $.noConflict();
 
     var fileLinkSelectors = [
@@ -18,7 +17,8 @@
         options = {
             //enableLinkIcons: self.options.enableLinkIcons
         },
-        currentIconClass; // folder or arrow?
+        currentIconClass, // folder or arrow?
+        disconnectObserver; // function to stop observer
 
     function updateLinkTooltip() {
         var tooltipText =
@@ -35,13 +35,12 @@
      * Activates the plugin - add icon after link and starts observer if enabled
      */
     function activate() {
-        // console.log('activate', options);
         if (options.enableLinkIcons) {
             currentIconClass =
                 'aliensun-link-icon' +
                 (options.revealOpenOption == 'R' ? '-arrow' : '');
 
-            // createObserver(); // fix later, long running script issue - see issue #109
+            disconnectObserver = createObserver(); // fix later, long running script issue - see issue #109
             $container.addClass(currentIconClass);
             // console.log('added class', $container);
 
@@ -53,7 +52,8 @@
         // we could add a if case here to add tooltip disable pref.
         updateLinkTooltip();
 
-        registerEvents();
+        // console.log('register events');
+        registerEvents(); // important to have this called once per tab to avoid mulitple events on file link
     }
 
     // Get settings from addon
@@ -63,26 +63,26 @@
         sender,
         sendResponse
     ) {
-        // console.log(sender.tab ?
-        //             "from a content script:" + sender.tab.url :
-        //             "from the extension");
-        // console.log('init', sender.tab, request.data, request); // sender.tab);
         switch (request.action) {
+            case 'ping': // used to test that we're having a connection to the content script
+                // console.log('ping receive');
+                sendResponse(true);
+                break;
             case 'destroy':
-                // console.log('remove icons & click handlers');
                 removeLinkIcons();
+
                 // remove tooltips
                 $('a')
                     .filter(fileLinkSelectors.join(', '))
                     .attr('title', '');
-                // disconnect jquery-observe
-                $(fileLinkSelectors.join(', ')).disconnect();
-                $(document).disconnect();
+
+                // disconnect observer
+                disconnectObserver();
+
                 // remove click handler
                 unregisterEvents();
                 break;
             case 'init':
-                // console.log('init content script', request);
                 appTextMessages = request.data.constants.MESSAGES.USERMESSAGES;
                 options = request.data.options; // load options
 
@@ -92,10 +92,9 @@
                     );
                 }
 
-                // port = browser.runtime.connect();
-                // console.log('port open', port);
                 // now everything is ready to load
                 activate();
+
                 sendResponse({ feedback: 'initDone' });
                 break;
             default:
@@ -106,7 +105,6 @@
     function updateIcons(data) {
         options = $.extend({}, options, data);
 
-        // console.log('pref changed', data, options);
         removeLinkIcons();
         updateLinkTooltip();
 
@@ -140,26 +138,19 @@
     }
 
     function openFileHandler(e) {
+        // console.log('event side content script', e);
         e.preventDefault(); // prevent default to avoid browser to launch smb://
-        // console.log('clicked file link: ' +
-        //   this.href, options.revealOpenOption);
-        browser.runtime
-            .sendMessage({
-                // port.sendMessage({
-                action: 'open',
-                // removed decodeURIComponent because env. var. failed
-                // --> decoding needed for accents
-                message: 'hello',
-                url: decodeURIComponent(this.href), // this.href
-                reveal: options.revealOpenOption == 'O' ? false : true,
-                directOpen: options.revealOpenOption == 'D'
-            })
-            .then(function(response) {
-                // console.log(response);
-            })
-            .catch(function(error) {
-                // console.log('error', error);
-            });
+
+        browser.runtime.sendMessage({
+            // port.sendMessage({
+            action: 'open',
+            // removed decodeURIComponent because env. var. failed
+            // --> decoding needed for accents
+            message: 'hello',
+            url: decodeURIComponent(this.href), // this.href
+            reveal: options.revealOpenOption == 'O' ? false : true,
+            directOpen: options.revealOpenOption == 'D'
+        });
     }
 
     /*
@@ -170,31 +161,15 @@
 
         e.preventDefault();
 
-        // console.log('clicked icon', link, options.revealOpenOption);
-
-        // self.postMessage({
-        //     action: 'open',
-        //     // removed decodeURIComponent because env. var. failed
-        //     url: link, //decodeURIComponent(link),
-        //     reveal: options.revealOpenOption == 'O' ? true : false,
-        //     backslashReplaceRequired: true
-        // });
-        browser.runtime
-            .sendMessage({
-                // port.sendMessage({
-                action: 'open',
-                // removed decodeURIComponent because env. var. failed
-                // --> decoding needed for accents (check env. var later)
-                message: 'hello',
-                url: decodeURIComponent(link),
-                reveal: options.revealOpenOption == 'O' ? true : false
-            })
-            .then(function(response) {
-                // console.log('response');
-            })
-            .catch(function(err) {
-                // console.log('error', err);
-            });
+        browser.runtime.sendMessage({
+            // port.sendMessage({
+            action: 'open',
+            // removed decodeURIComponent because env. var. failed
+            // --> decoding needed for accents (check env. var later)
+            message: 'hello',
+            url: decodeURIComponent(link),
+            reveal: options.revealOpenOption == 'O' ? true : false
+        });
     }
 
     // -------------------------------------------------------------------------
@@ -241,9 +216,6 @@
         $container.addClass(currentIconClass);
 
         $element.each(function(index, el) {
-            // console.log('el href = ', $(el).attr('href'));
-            // console.log('icon already added?', $(el).next().
-            // is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
             if (
                 !$(el)
                     .next()
@@ -266,8 +238,6 @@
     function removeLinkIcons() {
         var $icons = $('.aliensun-link-icon, .aliensun-link-icon-arrow');
 
-        // console.log('test',$icons);
-
         $icons.remove();
     }
 
@@ -277,69 +247,70 @@
      * another one for newly added file links
      */
     function createObserver() {
-        // observe changes of file links
-        // create an observer if someone is changing an a-tag directly
-        if ($(fileLinkSelectors.join(', ')).length > 0) {
-            $(fileLinkSelectors.join(', ')).observe(
-                { attributes: true, attributeFilter: ['href'] },
-                function(/* record */) {
-                    // observe href change
-                    //console.log('changed href', $(this), $icon.attr('class'));
+        // select target of observe
+        var target = document.querySelectorAll(fileLinkSelectors.join(', '));
 
+        // Create an observer instance
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                const $changedEl = $(mutation.target)
+                    .filter('a')
+                    .filter(fileLinkSelectors.join(', '));
+
+                if (mutation.type === 'attributes') {
+                    // observed href change
                     // remove previous icon
-                    $(this)
-                        .next('.' + $icon.attr('class'))
-                        .remove();
+                    $changedEl.next('.' + $icon.attr('class')).remove();
                     // add new icons so we have the correct data at the icon
-                    updateLink($(this));
+                    updateLink($changedEl);
+                } else if (mutation.type === 'childList') {
+                    // get elements that are with-out icon - avoid multiple icons
+                    let $addedNodes = $(mutation.addedNodes).find(
+                        fileLinkSelectors.join(', ')
+                    );
+
+                    if ($addedNodes.length == 0) {
+                        // no chillds with a file link --> check added element
+                        $addedNodes = $(mutation.addedNodes).filter(
+                            fileLinkSelectors.join(', ')
+                        );
+                    }
+
+                    // Check that next element is not a file link icon
+                    const $elements = $addedNodes.filter(function() {
+                        return !$(this)
+                            .next()
+                            .is(
+                                '.aliensun-link-icon,.aliensun-link-icon-arrow'
+                            );
+                    });
+
+                    if ($elements.length > 0) {
+                        updateLink($elements);
+                    }
                 }
-            );
-        }
-
-        // observe newly added file links
-        $(document).observe('added', fileLinkSelectors.join(', '), function() {
-            // Observe if elements matching 'a[href^="file://"]' have been added
-            //
-            // there can be multiple observer callbacks attached now!!
-            // --> if you add three links you'll get three callback events
-            //     with the same elements
-            //     --> store elements in first observer,
-            //         so next observer callback detect that there is
-            //         nothing new
-            //
-            // Info:
-            // That's working but it would be better to not trigger
-            // these callbacks but I'm not sure how to fix.
-            // --> asked if it could be fixed,
-            //     see here https://github.com/kapetan/jquery-observe/issues/5
-            //
-            // Update: 09.03.2016
-            // We're getting only one observer callback for each added element.
-            // So we don't need to store the previous added node.
-
-            console.log('link added', this);
-            // console.log($(this).eq(0).html(), record); // this = addedNodes
-
-            // get elements that are with-out icon - avoid multiple icons
-            var $elements = $(this).filter(function() {
-                // console.log('filter next element', $(this).
-                //     next().
-                //     is('.aliensun-link-icon,.aliensun-link-icon-arrow'));
-                return !$(this)
-                    .next()
-                    .is('.aliensun-link-icon,.aliensun-link-icon-arrow');
             });
-
-            if ($elements.length > 0) {
-                updateLink($elements);
-            }
         });
-        // suspend not supported in FF
-        // function handleSuspend() {
-        //     console.log('Suspending event page');
-        //     // handle cleanup
-        //     $.observe.disconnect();
-        // }
-        // browser.runtime.onSuspend.addListener(handleSuspend);
+
+        // Configure the observer
+        var configAttrs = {
+            attributeFilter: ['href'] // attributes: true is implied
+        };
+
+        // start observation by passing target and config --> href changes only on existing elements
+        target.forEach(node => {
+            observer.observe(node, configAttrs);
+        });
+
+        // observe document for new elements
+        observer.observe(document, {
+            attributeFilter: ['href'],
+            childList: true,
+            subtree: true
+            // characterData: true
+        });
+
+        // return stop function so we can call it if needed
+        return () => observer.disconnect();
     }
 })(jQuery);
