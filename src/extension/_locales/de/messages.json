@@ -1,119 +1,127 @@
 {
-  "whitelist_title": {
-    "message": "Aktiviert das File link Addon für URLs in der White-list",
-    "description": "Settings title for whitelist"
-  },
-  "whitelist_description": {
-    "message": "Jede URL, die in der White-list aufgeführt ist, aktiviert Links zu lokalen Dateien auf Webseiten mit diesen Adressen. * lässt jede Url zu. Leer lässt keine Url zu. Mehrere URLs werden mit Leerzeichen getrennt. Wildcards sind zuläassig z.B. *://*.trello.com/*",
-    "description": "Settings description for whitelist"
-  },
-  "enableExecutables_title": {
-    "message": "Aktiviert Links zu lokalen ausführbaren Dateien",
-    "description": "Settings title for enable of executable files"
-  },
-  "enableExecutables_description": {
-    "message": "Wenn aktiviert, kann jedes Programm vom Addon gestartet werden. (Achtung! Eine Seite von einem Betrüger könnte das für einen Denial-Of-Service-Angriff verwenden.)",
-    "description": "Settings description for executable files"
-  },
-  "enableLinkIcons_title":  {
-    "message": "Aktiviert Link icons",
-    "description": "Settings title for enable link icons"
-  },
-  "enableLinkIcons_description": {
-    "message": "Wenn aktiviert, wird ein Link-Icon jedem lokalen File-Link hinzugefügt.",
-    "description": "Settings description for link icons"
-  },
-  "revealOpenOption_title": {
-    "message": "Standard Link-Text Klick Verhalten",
-    "description": "Settings title for default link click behaviour"
-  },
-  "revealOpenOption_description": {
-    "message": "Verändert das Standard Verhalten bei einem Klick auf einen File-link. Default = Link direkt öffnen.",
-    "description": "Settings description for default click behaviour"
-  },
-  "revealOpenOption_options_Open": {
-    "message": "Link direkt öffnen",
-    "description": "Setting open link directly"
-  },
-  "revealOpenOption_options_Reveal": {
-    "message": "Beinhaltenden Ordner öffnen",
-    "description": "Setting reveal link"
-  },
-  "revealOpenOption_options_Direct": {
-    "message": "Link direkt im Browser öffnen",
-    "description": "Setting direct open"
-  },
-  "ERROR_EXECTUBALES_NOT_ENABLED": {
-    "message": "Sie versuchen ein ausführbare Datei zu starten. Bitte prüfen Sie die Addon Einstellungen und aktivieren Sie ausführbare Dateien und versuchen Sie es erneut.",
-    "description": "Error message EXE not enabled"
-  },
-  "ERROR_BAD_LINK": {
-    "message": "Konnte Datei nicht öffnen $URL$",
-    "description": "Error message bad link",
-    "placeholders": {
-      "url" : {
-        "content" : "$1",
-        "example" : "file://"
-      }
+    "whitelist_title": {
+        "message": "Aktiviert das File link Addon für URLs in der White-list",
+        "description": "Settings title for whitelist"
+    },
+    "whitelist_description": {
+        "message": "Jede URL, die in der White-list aufgeführt ist, aktiviert Links zu lokalen Dateien auf Webseiten mit diesen Adressen. * lässt jede Url zu. Leer lässt keine Url zu. Mehrere URLs werden mit Leerzeichen getrennt. Wildcards sind zuläassig z.B. *://*.trello.com/*",
+        "description": "Settings description for whitelist"
+    },
+    "enableExecutables_title": {
+        "message": "Aktiviert Links zu lokalen ausführbaren Dateien",
+        "description": "Settings title for enable of executable files"
+    },
+    "enableExecutables_description": {
+        "message": "Wenn aktiviert, kann jedes Programm vom Addon gestartet werden. (Achtung! Eine Seite von einem Betrüger könnte das für einen Denial-Of-Service-Angriff verwenden.)",
+        "description": "Settings description for executable files"
+    },
+    "enableLinkIcons_title": {
+        "message": "Aktiviert Link icons",
+        "description": "Settings title for enable link icons"
+    },
+    "enableLinkIcons_description": {
+        "message": "Wenn aktiviert, wird ein Link-Icon jedem lokalen File-Link hinzugefügt.",
+        "description": "Settings description for link icons"
+    },
+    "revealOpenOption_title": {
+        "message": "Standard Link-Text Klick Verhalten",
+        "description": "Settings title for default link click behaviour"
+    },
+    "revealOpenOption_description": {
+        "message": "Verändert das Standard Verhalten bei einem Klick auf einen File-link. Default = Link direkt öffnen.",
+        "description": "Settings description for default click behaviour"
+    },
+    "revealOpenOption_options_Open": {
+        "message": "Link direkt öffnen",
+        "description": "Setting open link directly"
+    },
+    "revealOpenOption_options_Reveal": {
+        "message": "Beinhaltenden Ordner öffnen",
+        "description": "Setting reveal link"
+    },
+    "revealOpenOption_options_Direct": {
+        "message": "Link direkt im Browser öffnen",
+        "description": "Setting direct open"
+    },
+    "retries_on_failure_title": {
+        "message": "Wiederholungen bei Fehlern",
+        "description": "Settings title for retries on failure"
+    },
+    "retries_on_failure_description": {
+        "message": "Die Anzahl an Versuchen bevor ein Fehler angezeigt wird (z.B. wird der Fehler \"Konnte Datei nicht öffnen\" erst angezeigt wenn alle Versuche fehlgeschlagen sind)",
+        "description": "Settings description for retries on failure"
+    },
+    "ERROR_EXECTUBALES_NOT_ENABLED": {
+        "message": "Sie versuchen ein ausführbare Datei zu starten. Bitte prüfen Sie die Addon Einstellungen und aktivieren Sie ausführbare Dateien und versuchen Sie es erneut.",
+        "description": "Error message EXE not enabled"
+    },
+    "ERROR_BAD_LINK": {
+        "message": "Konnte Datei nicht öffnen $URL$",
+        "description": "Error message bad link",
+        "placeholders": {
+            "url": {
+                "content": "$1",
+                "example": "file://"
+            }
+        }
+    },
+    "INFO_CONFIG_CHANGED_SMB": {
+        "message": "Konfiguration geändert! SMB links sind jetzt aktiviert.",
+        "description": "Info message SMB configured (not used yet)"
+    },
+    "LABEL_CONTEXT_MENU_OPEN_LINK": {
+        "message": "Öffne Link",
+        "description": "Label text open link"
+    },
+    "LABEL_CONTEXT_MENU_OPEN_CONTAINING": {
+        "message": "Öffne beinhaltendes Verzeichnis",
+        "description": "Label text open containing folder"
+    },
+    "LABEL_CONTEXT_MENU_OPEN_DIRECT": {
+        "message": "Öffne im Browser",
+        "description": "Label text open in browser"
+    },
+
+    "LABEL_CONTEXT_SUB_SELECTION_TITLE": {
+        "message": "Link addon Markierung",
+        "description": "Label text selection in context menu"
+    },
+
+    "LABEL_CONTEXT_SUB_LINK_TITLE": {
+        "message": "Link addon",
+        "description": "Label text context menu item"
+    },
+
+    "LABEL_ADDONBAR_ICON_HOVER": {
+        "message": "Local link addon (aktuelles Tab: $ACTIVE$)",
+        "description": "Status icon hover text",
+        "placeholders": {
+            "active": {
+                "content": "$1",
+                "example": "active"
+            }
+        }
+    },
+
+    "LABEL_ADDONBAR_HOVER_STATE_active": {
+        "message": "aktiv",
+        "description": "Status text active hover"
+    },
+    "LABEL_ADDONBAR_HOVER_STATE_inactive": {
+        "message": "inaktiv",
+        "description": "Status text inactive hover"
+    },
+
+    "TOOLTIP_OPEN_FOLDER": {
+        "message": "Öffne Verzeichnis",
+        "description": "Tooltip text open folder"
+    },
+    "TOOLTIP_OPEN_LINK": {
+        "message": "Öffne Link",
+        "description": "Tooltip text open link"
+    },
+    "TOOLTIP_OPEN_IN_BROWSER": {
+        "message": "Öffne Link im Browser",
+        "description": "Tooltip text open in browser"
     }
-  },
-  "INFO_CONFIG_CHANGED_SMB": {
-    "message": "Konfiguration geändert! SMB links sind jetzt aktiviert.",
-    "description": "Info message SMB configured (not used yet)"
-  },
-  "LABEL_CONTEXT_MENU_OPEN_LINK": {
-    "message": "Öffne Link",
-    "description": "Label text open link"
-  },
-  "LABEL_CONTEXT_MENU_OPEN_CONTAINING": {
-    "message": "Öffne beinhaltendes Verzeichnis",
-    "description": "Label text open containing folder"
-  },
-  "LABEL_CONTEXT_MENU_OPEN_DIRECT": {
-    "message": "Öffne im Browser",
-    "description": "Label text open in browser"
-  },
-
-  "LABEL_CONTEXT_SUB_SELECTION_TITLE": {
-    "message": "Link addon Markierung",
-    "description": "Label text selection in context menu"
-  },
-
-  "LABEL_CONTEXT_SUB_LINK_TITLE": {
-    "message": "Link addon",
-    "description": "Label text context menu item"
-  },
-
-  "LABEL_ADDONBAR_ICON_HOVER": {
-    "message": "Local link addon (aktuelles Tab: $ACTIVE$)",
-    "description": "Status icon hover text",
-    "placeholders": {
-      "active" : {
-        "content" : "$1",
-        "example" : "active"
-      }
-    }
-  },
-
-  "LABEL_ADDONBAR_HOVER_STATE_active": {
-    "message": "aktiv",
-    "description": "Status text active hover"
-  },
-  "LABEL_ADDONBAR_HOVER_STATE_inactive": {
-    "message": "inaktiv",
-    "description": "Status text inactive hover"
-  },
-
-  "TOOLTIP_OPEN_FOLDER": {
-    "message": "Öffne Verzeichnis",
-    "description": "Tooltip text open folder"
-  },
-  "TOOLTIP_OPEN_LINK": {
-    "message": "Öffne Link",
-    "description": "Tooltip text open link"
-  },
-  "TOOLTIP_OPEN_IN_BROWSER": {
-    "message": "Öffne Link im Browser",
-    "description": "Tooltip text open in browser"
-  }
 }

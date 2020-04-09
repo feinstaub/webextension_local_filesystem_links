@@ -3,7 +3,7 @@ import { showInstallationTab } from './checkInstallation';
 import notify from './notify';
 import { prepareWhitelist } from './helpers/whitelist';
 
-const { defaultSettings } = CONSTANTS;
+const { defaultSettings, DELAY_BETWEEN_RETRIES } = CONSTANTS;
 
 /** Event handler methods of the extension */
 export class ExtensionEventHandlers {
@@ -12,6 +12,7 @@ export class ExtensionEventHandlers {
      */
     constructor(settings) {
         this.settings = settings;
+        this.retriesOnFailure = 0;
     }
 
     /** Global Error handler
@@ -29,6 +30,62 @@ export class ExtensionEventHandlers {
 
         // console.log('error', err);
         notify(err.name, err.message + '.' + nativeAppNotInstalled);
+    }
+
+    /**
+     * Send native message with retries
+     * @param {object} request
+     * @param {string} uri
+     */
+    static sendNativeMessage(request, uri, handler) {
+        browser.runtime
+            .sendNativeMessage(
+                // direct sending --> opens port to native app
+                'webextension_local_filesystem_links',
+                {
+                    url: uri,
+                    reveal: request.reveal,
+                    exeAllowed: handler.settings.enableExecutables
+                }
+            )
+            .then(function(response) {
+                // console.log('received response', response);
+                if (response && response.error) {
+                    if (
+                        handler.retriesOnFailure >=
+                        handler.settings.retriesOnFailure
+                    ) {
+                        const msg = browser.i18n.getMessage(
+                            response.error,
+                            window.decodeURI(response.url)
+                        );
+
+                        notify('Error', msg); // only NotFound error at the moment
+                    } else {
+                        setTimeout(() => {
+                            ExtensionEventHandlers.sendNativeMessage(
+                                request,
+                                uri,
+                                handler
+                            );
+                            handler.retriesOnFailure++;
+                        }, DELAY_BETWEEN_RETRIES);
+                    }
+                }
+            })
+            .catch(err => {
+                const nativeAppNotInstalled = err.message.includes(
+                    'disconnected port'
+                )
+                    ? ' Please check that you have installed ' +
+                      'the native app. ' +
+                      'See installation guide in addon-bar ' +
+                      'menu.'
+                    : '';
+
+                // console.log('error', err);
+                notify(err.name, err.message + '.' + nativeAppNotInstalled);
+            }); //ExtensionEventHandlers.onError(err));
     }
 
     /**
@@ -54,43 +111,12 @@ export class ExtensionEventHandlers {
                         url: window.decodeURI(uri) // illegal URL --> not priveleged to add file:// - fix later
                     });
                 } else {
-                    browser.runtime
-                        .sendNativeMessage(
-                            // direct sending --> opens port to native app
-                            'webextension_local_filesystem_links',
-                            {
-                                url: uri,
-                                reveal: request.reveal,
-                                exeAllowed: this.settings.enableExecutables
-                            }
-                        )
-                        .then(function(response) {
-                            // console.log('received response', response);
-                            if (response && response.error) {
-                                const msg = browser.i18n.getMessage(
-                                    response.error,
-                                    window.decodeURI(response.url)
-                                );
-
-                                notify('Error', msg); // only NotFound error at the moment
-                            }
-                        })
-                        .catch(err => {
-                            const nativeAppNotInstalled = err.message.includes(
-                                'disconnected port'
-                            )
-                                ? ' Please check that you have installed ' +
-                                  'the native app. ' +
-                                  'See installation guide in addon-bar ' +
-                                  'menu.'
-                                : '';
-
-                            // console.log('error', err);
-                            notify(
-                                err.name,
-                                err.message + '.' + nativeAppNotInstalled
-                            );
-                        }); //ExtensionEventHandlers.onError(err));
+                    this.retriesOnFailure = 0; // reset failure count
+                    ExtensionEventHandlers.sendNativeMessage(
+                        request,
+                        uri,
+                        this
+                    );
                 }
                 break;
             default:

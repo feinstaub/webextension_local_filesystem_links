@@ -3,12 +3,14 @@
     <label class="title" for="whitelist">{{whitelistTitle}}</label>
     <div class="container">
         <p class="description">
-        {{whitelistDescription}}
+            {{whitelistDescription}}
         </p>
-        <input id="whitelist"
-        type="text"
-        name="whitelist"
-        v-model="settings.whitelist" />
+        <input
+            id="whitelist"
+            type="text"
+            name="whitelist"
+            v-model="settings.whitelist"
+        />
     </div>
 
     <!-- <hr/> -->
@@ -16,11 +18,15 @@
     <label class="title" for="enableExe">{{enableExecutablesTitle}}</label>
     <div class="container">
         <p class="description">
-        <input id="enableExe"
-            type="checkbox"
-            name="enabelExe"
-            v-model="settings.enableExecutables"/>
-            <span @click="toggleExecutables()">{{enableExecutablesDescription}}</span>
+            <input
+                id="enableExe"
+                type="checkbox"
+                name="enabelExe"
+                v-model="settings.enableExecutables"
+            />
+            <span @click="toggleExecutables()"
+                >{{enableExecutablesDescription}}</span
+            >
         </p>
     </div>
     <!-- <hr/> -->
@@ -29,31 +35,41 @@
     <label class="title" for="enableLinkIcons">{{enableLinkIconsTitle}}</label>
     <div class="container">
         <p class="description">
-        <input id="enableLinkIcons"
-            type="checkbox"
-            name="enableLinkIcons"
-            v-model="settings.enableLinkIcons"/>
-            <span @click="toggleLinkIcon()">{{enableLinkIconsDescription}}</span>
+            <input
+                id="enableLinkIcons"
+                type="checkbox"
+                name="enableLinkIcons"
+                v-model="settings.enableLinkIcons"
+            />
+            <span @click="toggleLinkIcon()"
+                >{{enableLinkIconsDescription}}</span
+            >
         </p>
     </div>
     <!-- <hr/> -->
 
     <!-- Default link click behaviour -->
-    <label class="title" for="revealOpenOption">{{revealOpenOptionTitle}}</label>
+    <label class="title" for="revealOpenOption"
+        >{{revealOpenOptionTitle}}</label
+    >
     <div class="container">
-        <label for="revealOpenOption"><input id="revealOpenOption"
-        type="radio"
-        name="defaultClickRadio"
-        value="O"
-        v-model="settings.revealOpenOption"/>{{revealOpenOptionTexts.o}}
+        <label for="revealOpenOption"
+            ><input
+                id="revealOpenOption"
+                type="radio"
+                name="defaultClickRadio"
+                value="O"
+                v-model="settings.revealOpenOption"
+            />{{revealOpenOptionTexts.o}}
         </label>
         <label for="revealOpenOption_r">
-        <input
-            type="radio"
-            id="revealOpenOption_r"
-            name="defaultClickRadio"
-            value="R"
-            v-model="settings.revealOpenOption"/>{{revealOpenOptionTexts.r}}
+            <input
+                type="radio"
+                id="revealOpenOption_r"
+                name="defaultClickRadio"
+                value="R"
+                v-model="settings.revealOpenOption"
+            />{{revealOpenOptionTexts.r}}
         </label>
         <!--
         Disable direct open at the moment - fix later. Issue with privileges.
@@ -68,10 +84,27 @@
         v-model="settings.revealOpenOption"/>{{revealOpenOptionTexts.d}}
         </label> -->
         <p class="description">
-        {{revealOpenOptionDescription}}
+            {{revealOpenOptionDescription}}
         </p>
     </div>
+
+    <!-- Retries on failure (default = 0, faster error display) -->
+    <label class="title" for="retriesOnFailure"
+        >{{retriesOnFailureTitle}}</label
+    >
+    <div class="container">
+        <p class="description">
+            {{retriesOnFailureDescription}}
+        </p>
+        <input
+            id="retriesOnFailure"
+            type="number"
+            name="retriesOnFailure"
+            v-model="settings.retriesOnFailure"
+        />
+    </div>
+
     <p v-if="statusMsg"><strong>{{statusMsg}}</strong></p>
     <!-- <pre>{{settings}}</pre> -->
     <!-- <hr/> -->
-    </div>
+</div>

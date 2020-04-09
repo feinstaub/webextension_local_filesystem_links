@@ -1,13 +1,14 @@
 {
     "title": "Local Filesystem Links",
     "name": "alien-local-filesystem-links",
-    "version": "0.99.64",
+    "version": "0.99.65rc1",
     "description": "Scans pages for file:/// links and makes it possible to open them with the system's file browser.",
     "main": "index.js",
     "author": "austrALIENsun",
     "scripts": {
         "start": "npm run dev",
         "start:web-ext": "wait-on dist/ && web-ext run -s dist/",
+        "start:web-ext_profile": "wait-on dist/ && web-ext run -s dist/ -p \"firefox_addon\" --keep-profile-changes",
         "web-ext": "web-ext run -s dist/",
         "bundle": "web-ext build -s dist/ --overwrite-dest",
         "sign": "sh ./sign-bundle.sh",

@@ -26,6 +26,10 @@ export default withRender({
                 r: getI18n('revealOpenOption_options_Reveal'),
                 d: getI18n('revealOpenOption_options_Direct')
             },
+            retriesOnFailureTitle: getI18n('retries_on_failure_title'),
+            retriesOnFailureDescription: getI18n(
+                'retries_on_failure_description'
+            ),
             settings: defaultSettings,
             statusMsg: undefined,
             loaded: false

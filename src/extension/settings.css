@@ -1,9 +1,15 @@
-.aliensun-settings input[type="text"] {
+.aliensun-settings input[type='text'] {
     width: 100%;
     padding: 5px;
     margin-top: 16px;
 }
-.aliensun-settings input[type="radio"] {
+
+.aliensun-settings input[type='number'] {
+    padding: 5px;
+    margin-top: 16px;
+}
+
+.aliensun-settings input[type='radio'] {
     margin-bottom: 6px;
 }
 .aliensun-settings p {

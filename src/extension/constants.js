@@ -22,5 +22,8 @@ export const defaultSettings = {
     whitelist: '*',
     enableExecutables: false,
     revealOpenOption: 'O', // default = open link
-    enableLinkIcons: true
+    enableLinkIcons: true,
+    retriesOnFailure: 1 // default = one retry, error indication delayed by one retry is OK
 };
+
+export const DELAY_BETWEEN_RETRIES = 100; // ms delay between retries
