@@ -1,6 +1,6 @@
 {
     "name": "native-messaging-host",
-    "version": "0.2.2",
+    "version": "0.3.0",
     "description": "Native messaging host application for local filesystem links webextension.",
     "main": "local-link-messaging.py",
     "scripts": {
