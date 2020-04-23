@@ -3,7 +3,7 @@ Changelog for Local Filesystem Links
 v0.100.2
 -------
 * IMPROVED: Fix Issue 161
-  - Added retry on failure option (default two retries - max. delay of error display 200ms + default opening time)
+  - Added retry on failure option (default one retry - max. delay of error display 100ms + default opening time)
   
 v0.99.64
 --------
