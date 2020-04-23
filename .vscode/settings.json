@@ -1,8 +1,19 @@
 {
-  // Set the default
-  "editor.formatOnSave": false,
-  // Enable per-language
-  "[javascript]": {
-    "editor.formatOnSave": true
-  }
+    // Set the default
+    "editor.formatOnSave": false,
+    // Enable per-language
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "[python]": {
+        "editor.detectIndentation": false,
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            /** Pyformat use it's own code action to prevent confliction with other tools. */
+            "source.organizeImports.pyformat": true
+        }
+    },
+    "python.pythonPath": "native-host\\env\\Scripts\\python.exe"
 }

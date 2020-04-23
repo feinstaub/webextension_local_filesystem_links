@@ -3,4 +3,11 @@
 :: Use of this source code is governed by a BSD-style license that can be
 :: found in the LICENSE file.
 
-python "%~dp0/local-link-messaging-host.py" %*
+IF EXIST "..\env\Scripts" (
+    :: Use env
+    ..\env\Scripts\activate.bat
+    ..\env\Scripts\python "%~dp0/local-link-messaging-host.py" %*
+    ..\env\Scripts\deactivate.bat
+) ELSE (
+    python "%~dp0/local-link-messaging-host.py" %*
+)

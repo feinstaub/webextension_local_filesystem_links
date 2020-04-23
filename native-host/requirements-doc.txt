@@ -1,0 +1,9 @@
+future
+pathlib2
+pyinstaller
+pypiwin32
+
+# dev tools
+pep8
+autopep8
+pylint

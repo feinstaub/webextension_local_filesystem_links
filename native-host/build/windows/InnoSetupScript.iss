@@ -6,8 +6,8 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 
-SignTool=signtool
-#define AppVersion GetFileVersion("D:\github\webextension_local_filesystem_links\native-host\bin\win32\local-link-messaging-host\local-link-messaging-host.exe")
+;SignTool=signtool
+#define AppVersion GetFileVersion("{#SourcePath}\..\..\bin\win32\local-link-messaging-host\local-link-messaging-host.exe")
 #define AppName "Local file links Native Messaging API Host"
 
 AppId={{318A38DD-A431-42F0-BBAB-58C330AC545F}
@@ -24,11 +24,11 @@ DefaultDirName={%USERPROFILE}\{#AppName}
 DisableDirPage=yes
 DefaultGroupName=Local file links Native Messaging API Host
 DisableProgramGroupPage=yes
-OutputDir=D:\github\webextension_local_filesystem_links\native-host\bin\win32
+OutputDir={#SourcePath}\..\..\bin\win32
 OutputBaseFilename=native-app-setup
 Compression=lzma
-UninstallDisplayIcon=D:\github\webextension_local_filesystem_links\native-host\src\addon_icon_48.ico
-SetupIconFile=D:\github\webextension_local_filesystem_links\native-host\src\addon_icon_48.ico
+UninstallDisplayIcon={#SourcePath}\..\..\src\addon_icon_48.ico
+SetupIconFile={#SourcePath}\..\..\src\addon_icon_48.ico
 SolidCompression=yes
 PrivilegesRequired=lowest
 
@@ -39,9 +39,9 @@ Name: Visualc; Description: Install Visual C++ re-distributable (required for th
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "D:\github\webextension_local_filesystem_links\native-host\bin\win32\local-link-messaging-host\*"; DestDir: "{app}"
-Source: "D:\github\webextension_local_filesystem_links\native-host\src\webextension_local_filesystem_links_win.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\github\webextension_local_filesystem_links\native-host\build\windows\vcredist_x86.exe"; DestDir: "{app}"; AfterInstall: RunOtherInstaller; Tasks: Visualc; Flags: ignoreversion
+Source: "{#SourcePath}\..\..\bin\win32\local-link-messaging-host\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "{#SourcePath}\..\..\src\webextension_local_filesystem_links_win.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#SourcePath}\..\..\build\windows\vcredist_x86.exe"; DestDir: "{app}"; AfterInstall: RunOtherInstaller; Tasks: Visualc; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

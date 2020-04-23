@@ -55,3 +55,6 @@ node_modules
 /sourcecode-archive.tar.gz
 
 .env
+
+# python virtual env
+env

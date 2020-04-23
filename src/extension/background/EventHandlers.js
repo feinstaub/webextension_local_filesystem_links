@@ -65,7 +65,6 @@ export class ExtensionEventHandlers {
                             }
                         )
                         .then(function(response) {
-                            // console.log('received response', response);
                             if (response && response.error) {
                                 const msg = browser.i18n.getMessage(
                                     response.error,
@@ -85,7 +84,6 @@ export class ExtensionEventHandlers {
                                   'menu.'
                                 : '';
 
-                            // console.log('error', err);
                             notify(
                                 err.name,
                                 err.message + '.' + nativeAppNotInstalled
