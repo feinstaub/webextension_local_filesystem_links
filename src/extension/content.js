@@ -52,8 +52,7 @@
         // we could add a if case here to add tooltip disable pref.
         updateLinkTooltip();
 
-        // console.log('register events');
-        registerEvents(); // important to have this called once per tab to avoid mulitple events on file link
+        registerEvents(); // important to have this called once per tab to avoid mulitple events on file link (tracked in background script with injectedTabs)
     }
 
     // Get settings from addon
@@ -118,6 +117,8 @@
 
     // Use delegate so the click event is also avaliable at newly added links
     function registerEvents() {
+        // console.log("registering events!");
+
         $(document).on('click', fileLinkSelectors.join(', '), openFileHandler);
 
         // icon click handler
@@ -129,6 +130,7 @@
     }
 
     function unregisterEvents() {
+        // console.log("unregistering!!")
         $(document).off('click', fileLinkSelectors.join(', '), openFileHandler);
         $(document).off(
             'click',
