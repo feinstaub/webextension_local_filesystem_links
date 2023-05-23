@@ -28,7 +28,7 @@
 
         $('a')
             .filter(fileLinkSelectors.join(', '))
-            .attr('title', tooltipText);
+            .attr('title', (i, val) => val || tooltipText);
     }
 
     /*

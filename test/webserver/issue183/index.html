@@ -1,0 +1,42 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=100%, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Issue 183 - Title overwrite</title>
+    </head>
+    <body>
+        <p>
+            New functionality, add title only if there is no title available.<br />
+            Previous behavior, always overwrite the title.
+        </p>
+        <ul>
+            <li>
+                <a href="file://c:/tmp/existing_file.txt" target="_blank"
+                    >existing_file.txt (no title)</a
+                >
+            </li>
+            <li>
+                <a
+                    href="file://c:/tmp/existing_file.txt"
+                    target="_blank"
+                    title="Keep this unmodified"
+                    >existing_file.txt (with title)</a
+                >
+            </li>
+            <li>
+                <a href="file://c:/tmp/existing_file.txt" target="_blank"
+                    >existing_file.txt (no title)</a
+                >
+            </li>
+            <li>
+                <a
+                    href="file://c:/tmp/existing_file.txt"
+                    target="_blank"
+                    title="Keep this also unmodified"
+                    >existing_file.txt (with title)</a
+                >
+            </li>
+        </ul>
+    </body>
+</html>
