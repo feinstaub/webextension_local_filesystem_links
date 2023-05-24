@@ -44,7 +44,7 @@ class LocalFileSystemExtension {
 
         const updateHandler = (tabId, changeInfo, tab) => {
             if (tab.active) {
-                if (changeInfo.status === 'loading' && changeInfo.url) {
+                if (changeInfo.status && changeInfo.status === 'loading') {
                     // console.log('loading', tabId, tab.active);
                     this.removeTabFromInjectedTabs(tabId); // url changed and loading a new page - remove tabId as we need to inject the content script
                 }
@@ -52,7 +52,7 @@ class LocalFileSystemExtension {
                 // console.log('change info: ', changeInfo);
                 // console.log(this.injectedTabs);
 
-                if (changeInfo.status === 'complete') {
+                if (changeInfo.status && changeInfo.status === 'complete') {
                     // check if content script is not connected
                     browser.tabs
                         .sendMessage(tabId, { action: 'ping' })
@@ -72,6 +72,16 @@ class LocalFileSystemExtension {
         };
 
         browser.tabs.onUpdated.addListener(updateHandler);
+
+        const browserHistoryHandler = details => {
+            if (details.transitionQualifiers.includes('forward_back')) {
+                // console.log("using cached page");
+                this.injectedTabs[details.tabId] = true; // Add tabId to keep track of cached injection.
+                browser.storage.local.set({ injectedTabs: this.injectedTabs });
+            }
+        };
+
+        browser.webNavigation.onCommitted.addListener(browserHistoryHandler);
 
         // check if first installation or update
         browser.runtime.onInstalled.addListener(checkInstallation);
