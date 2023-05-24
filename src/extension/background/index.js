@@ -9,9 +9,14 @@ class LocalFileSystemExtension {
      */
     constructor() {
         this.settings = {};
-        this.injectedTabs = [];
+        this.injectedTabs = {};
         this.eventHandlers = new ExtensionEventHandlers(this.settings);
         this.addListeners();
+
+        browser.storage.local.get('injectedTabs').then(({ injectedTabs }) => {
+            // console.log("loaded tabs from local storage", injectedTabs);
+            this.injectedTabs = injectedTabs || {};
+        });
     }
 
     /** Add eventlisteners of the extension
@@ -39,30 +44,44 @@ class LocalFileSystemExtension {
 
         const updateHandler = (tabId, changeInfo, tab) => {
             if (tab.active) {
-                if (changeInfo.status === 'loading' && changeInfo.url) {
+                if (changeInfo.status && changeInfo.status === 'loading') {
                     // console.log('loading', tabId, tab.active);
                     this.removeTabFromInjectedTabs(tabId); // url changed and loading a new page - remove tabId as we need to inject the content script
                 }
 
                 // console.log('change info: ', changeInfo);
+                // console.log(this.injectedTabs);
 
-                // check if content script is not connected
-                browser.tabs
-                    .sendMessage(tabId, { action: 'ping' })
-                    .catch(() => {
-                        // console.log('no content script');
-                        this.removeTabFromInjectedTabs(tabId);
-                    })
-                    .finally(() => {
-                        if (changeInfo.status === 'complete') {
+                if (changeInfo.status && changeInfo.status === 'complete') {
+                    // check if content script is not connected
+                    browser.tabs
+                        .sendMessage(tabId, { action: 'ping' })
+                        .catch(e => {
+                            // console.log(e);
+                            // console.log('no content script');
+                            this.removeTabFromInjectedTabs(tabId);
+                        })
+                        .finally(() => {
+                            // check if we have to load the extension for the active tab
+                            // -> always runs as last action
                             // console.log('check urls in complete');
                             this.checkUrls();
-                        }
-                    });
+                        });
+                }
             }
         };
 
         browser.tabs.onUpdated.addListener(updateHandler);
+
+        const browserHistoryHandler = details => {
+            if (details.transitionQualifiers.includes('forward_back')) {
+                // console.log("using cached page");
+                this.injectedTabs[details.tabId] = true; // Add tabId to keep track of cached injection.
+                browser.storage.local.set({ injectedTabs: this.injectedTabs });
+            }
+        };
+
+        browser.webNavigation.onCommitted.addListener(browserHistoryHandler);
 
         // check if first installation or update
         browser.runtime.onInstalled.addListener(checkInstallation);
@@ -73,16 +92,17 @@ class LocalFileSystemExtension {
      * @param {integer} tabId id of tab to remove
      */
     removeTabFromInjectedTabs(id) {
-        if (this.injectedTabs.indexOf(id) !== -1) {
+        if (this.injectedTabs[id]) {
             // console.log('remove id', id);
-            this.injectedTabs.pop(id);
+            delete this.injectedTabs[id];
+            browser.storage.local.set({ injectedTabs: this.injectedTabs });
         }
     }
     /** Check the urls (if active tab is whitelisted)
      * @returns {undefined}
      */
     checkUrls() {
-        // load settingss from local storage
+        // load settings from local storage
         browser.storage.local
             .get()
             .then(settings =>
@@ -130,7 +150,7 @@ class LocalFileSystemExtension {
             .then(() => {
                 // jquery & content script loaded --> now we can send init data
                 const settings = this.settings;
-
+                // console.log("sending init to content script!!");
                 browser.tabs.sendMessage(activeTab.id, {
                     action: 'init',
                     data: {
@@ -183,12 +203,14 @@ class LocalFileSystemExtension {
             // show enhancement at addon bar icon
             updateAddonbarIcon(true);
 
-            if (this.injectedTabs.indexOf(activeTab.id) === -1) {
+            // console.log("check injected tabs", this.injectedTabs, activeTab.id)
+            if (!this.injectedTabs[activeTab.id]) {
                 // add scripts & css to the page (only once per tab)
                 // console.log('inject', activeTab.id);
                 this.injectCSS();
                 this.injectScripts(activeTab);
-                this.injectedTabs.push(activeTab.id); // add id to keep track of injection.
+                this.injectedTabs[activeTab.id] = true; // add id to keep track of injection.
+                browser.storage.local.set({ injectedTabs: this.injectedTabs });
             }
         };
 
