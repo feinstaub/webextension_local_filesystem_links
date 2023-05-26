@@ -7,4 +7,4 @@ pefile==2017.11.5
 PyInstaller==3.3.1
 pypiwin32==219
 scandir==1.6
-six==1.11.0
+six==1.16.0
