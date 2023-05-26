@@ -1,5 +1,11 @@
 Changelog for Local Filesystem Links
 ====================================
+v0.101.0
+-------
+* FIX: Multiple windows issue 125
+* IMPROVED: Title handling issue 183
+* FIX: Web-ext and all dependencies mentioned by dependabot (reconfigured dependabot from master to develop as target)
+
 v0.100.2
 -------
 * IMPROVED: Fix Issue 161
