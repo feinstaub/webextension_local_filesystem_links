@@ -23,7 +23,7 @@ updates:
       interval: "weekly"
     labels:
       - "npm dependencies (native app)"
- - package-ecosystem: "pip"
+  - package-ecosystem: "pip"
     directory: "/native-host" # Location of package manifests
     # Raise pull requests for version updates
     # to pip against the `develop` branch
