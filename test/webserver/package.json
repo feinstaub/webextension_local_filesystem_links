@@ -1,16 +1,17 @@
 {
-  "name": "test-webserver-local-link-addon",
-  "version": "0.0.1",
-  "description": "Local server for manually testing firefox local link plugin",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "copyTestFiles:win32": "xcopy test-files\\tmp\\*.* c:\\tmp\\ /s /e"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "open": "0.0.5"
-  }
+    "name": "test-webserver-local-link-addon",
+    "version": "0.0.1",
+    "description": "Local server for manually testing firefox local link plugin",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js",
+        "copyTestFiles:win32": "xcopy test-files\\tmp\\*.* c:\\tmp\\ /s /e"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "open": "^9.1.0"
+    }
 }

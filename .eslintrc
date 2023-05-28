@@ -3,8 +3,8 @@
         "prettier"
     ],
     "parserOptions": {
-        "ecmaVersion": 5,
-        "sourceType": "module",
+        "ecmaVersion": 6,
+        "sourceType": "module"
     },
     "extends": [],
     "env": {
