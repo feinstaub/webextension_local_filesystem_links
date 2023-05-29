@@ -44,7 +44,7 @@
     "dependencies": {
         "lodash.debounce": "^4.0.8",
         "match-pattern": "0.0.2",
-        "vue": "^2.5.16",
+        "vue": "^3.3.4",
         "webextension-polyfill": "^0.2.1"
     },
     "devDependencies": {
