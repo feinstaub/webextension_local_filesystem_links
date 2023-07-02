@@ -1,0 +1,113 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=100%, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Issue 203 - Open localfile without using a-tag (js api)</title>
+        <style>
+            .click-assign,
+            .click-assign-reveal,
+            .click-open {
+                cursor: pointer;
+                padding: 0.5em;
+            }
+            .click-assign:hover,
+            .click-assign-reveal:hover,
+            .click-open:hover {
+                padding: 0.5em;
+                background-color: aqua;
+            }
+        </style>
+        <script>
+            const fileLink = 'file:///C:/tmp/existing_file - Kopie.txt';
+            const folderLink = 'file:///C:/tmp/';
+
+            function assignOpen(link) {
+                window.location.assign(link);
+            }
+
+            function windowOpen(link) {
+                window.open(link);
+            }
+
+            document.addEventListener(
+                'click',
+                function(evt) {
+                    switch (evt.target.className) {
+                        case 'click-assign':
+                            assignOpen(fileLink);
+                            break;
+                        case 'click-assign-reveal':
+                            assignOpen(fileLink + '?reveal=true');
+                            break;
+                        case 'click-open':
+                            windowOpen(fileLink);
+                            break;
+                        case 'click-assign-folder':
+                            assignOpen(folderLink);
+                            break;
+                        case 'click-open-folder':
+                            windowOpen(folderLink);
+                            break;
+                    }
+                },
+                false
+            );
+        </script>
+    </head>
+    <body>
+        <p>
+            If enable with option "Enable JavaScript support", file links can be
+            opened with window.location.assign or window.open
+        </p>
+        <h1>File links</h1>
+        <ul>
+            <li>
+                <a href="#" class="click-assign"
+                    >JS event (window.location.assign)</a
+                >
+            </li>
+            <li>
+                <a href="#" class="click-assign-reveal"
+                    >JS event (window.location.assign) - reveal folder</a
+                >
+            </li>
+            <li>
+                <div class="click-assign">
+                    JS event (window.location.assign) - div element
+                </div>
+            </li>
+            <li>
+                <a href="#" class="click-open">JS event (window.open)</a>
+            </li>
+            <li>
+                <div class="click-open">
+                    JS event (window.open) - div element
+                </div>
+            </li>
+        </ul>
+        <h1>Folder links</h1>
+        <ul>
+            <li>
+                <a href="#" class="click-assign-folder"
+                    >JS event (window.location.assign) - folder</a
+                >
+            </li>
+            <li>
+                <div class="click-assign-folder">
+                    JS event (window.location.assign) - div element - folder
+                </div>
+            </li>
+            <li>
+                <a href="#" class="click-open-folder"
+                    >JS event (window.open) - folder</a
+                >
+            </li>
+            <li>
+                <div class="click-open-folder">
+                    JS event (window.open) - div element - folder
+                </div>
+            </li>
+        </ul>
+    </body>
+</html>

@@ -156,6 +156,7 @@ class LocalFileSystemExtension {
                     data: {
                         options: {
                             enableLinkIcons: settings.enableLinkIcons,
+                            enableJsSupport: settings.enableJsSupport,
                             revealOpenOption: settings.revealOpenOption
                         },
                         constants: JSON.parse(JSON.stringify(CONSTANTS)) // Parse / stringify needed in FF 54 --> otherwise constants.MESSAGES were undefined

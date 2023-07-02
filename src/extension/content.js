@@ -3,8 +3,9 @@
 (function fileLinkAddon($) {
     $.noConflict();
 
+    var protocols = ['file'];
     var fileLinkSelectors = [
-            'a[href^="file:"]'
+            `a[href^="${protocols[0]}:"]`
             /*'a[href^="smb://"]',
             'a[href^="afp://"]'*/
         ],
@@ -127,6 +128,49 @@
             "[class^='aliensun-link-icon']", // folder or arrow
             openFolderHandler
         );
+
+        // If enabled, we can use window.location.assign or window.open in a page script
+        if (options.enableJsSupport) {
+            // Firefox throws an error for JS that we can use to open the file or folder
+            // -> not perfect but works
+            window.onerror = function(message, source, lineno, colno, error) {
+                if (
+                    message.includes(`Access to '${protocols[0]}://`) && // add or ... ${protocols[1]} if we're supporting more
+                    message.includes('from script denied')
+                ) {
+                    const extractedString = message.match(/'([^']+)'/);
+                    if (extractedString && extractedString.length >= 2) {
+                        const contentWithinQuotes = extractedString[1];
+                        // Create a URL object with the given string
+                        const url = new URL(contentWithinQuotes);
+                        const reveal = !!url.searchParams.get('reveal');
+
+                        url.search = ''; // reveal already extracted - clear so we're not passing the args to the background script
+
+                        // You can perform additional actions or notify the extension about the error
+                        // No errors displayed as we're not having an error!
+                        const linkEvent = new CustomEvent('FilelinkJsEvent');
+                        if (!reveal) {
+                            openFileHandler.bind({
+                                href: url.href
+                            })(linkEvent);
+                        } else {
+                            // Open folder needs a currentTarget set at the event with data-link attribute with the url.
+                            const dummyTarget = document.createElement('div');
+                            dummyTarget.setAttribute('data-link', url.href);
+                            Object.defineProperty(linkEvent, 'currentTarget', {
+                                value: dummyTarget
+                            });
+                            openFolderHandler(linkEvent);
+                        }
+                    }
+                    return true;
+                } else {
+                    // Handle other errors
+                    console.error('Error:', message);
+                }
+            };
+        }
     }
 
     function unregisterEvents() {

@@ -23,6 +23,14 @@
         "message": "If checked there will be a link added to every local link",
         "description": "Settings description for link icons"
     },
+    "enableJsSupport_title": {
+        "message": "Enable JavaScript file link support",
+        "description": "Settings title for enable Javascript support"
+    },
+    "enableJsSupport_description": {
+        "message": "If enabled JavaScript of the web page can use `window.location.assign` or `window.open` to open any local files or folders - recommended to only activate this option on whitelisted urls.",
+        "description": "Settings description for Javascript support"
+    },
     "revealOpenOption_title": {
         "message": "Default link text click behaviour",
         "description": "Settings title for default link click behaviour"

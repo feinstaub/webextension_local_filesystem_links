@@ -46,6 +46,22 @@
             >
         </p>
     </div>
+
+    <!-- Enable JS support -->
+    <label class="title" for="enableJsSupport">{{enableJsSupportTitle}}</label>
+    <div class="container">
+        <p class="description">
+            <input
+                id="enableJsSupport"
+                type="checkbox"
+                name="enableJsSupport"
+                v-model="settings.enableJsSupport"
+            />
+            <span @click="toggleJsSupport()"
+                >{{enableJsSupportDescription}}</span
+            >
+        </p>
+    </div>
     <!-- <hr/> -->
 
     <!-- Default link click behaviour -->

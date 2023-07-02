@@ -23,6 +23,14 @@
         "message": "Wenn aktiviert, wird ein Link-Icon jedem lokalen File-Link hinzugefügt.",
         "description": "Settings description for link icons"
     },
+    "enableJsSupport_title": {
+        "message": "Aktiviert JavaScript Datei-Link Unterstützung",
+        "description": "Settings title for enable Javascript support"
+    },
+    "enableJsSupport_description": {
+        "message": "Wenn aktiviert, kann Javascript einer Webseite `window.location.assign` oder `window.open` verwenden um eine beliebige Datei oder Verzeichnis öffnen - es wird empfohlen diese Option nur unter Verwendung der Whitelist zu aktivieren.",
+        "description": "Settings description for Javascript support"
+    },
     "revealOpenOption_title": {
         "message": "Standard Link-Text Klick Verhalten",
         "description": "Settings title for default link click behaviour"

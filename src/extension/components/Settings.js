@@ -17,6 +17,8 @@ export default withRender({
             ),
             enableLinkIconsTitle: getI18n('enableLinkIcons_title'),
             enableLinkIconsDescription: getI18n('enableLinkIcons_description'),
+            enableJsSupportTitle: getI18n('enableJsSupport_title'),
+            enableJsSupportDescription: getI18n('enableJsSupport_description'),
             revealOpenOptionTitle: getI18n('revealOpenOption_title'),
             revealOpenOptionDescription: getI18n(
                 'revealOpenOption_description'
@@ -87,6 +89,9 @@ export default withRender({
         },
         toggleLinkIcon() {
             this.settings.enableLinkIcons = !this.settings.enableLinkIcons;
+        },
+        toggleJsSupport() {
+            this.settings.enableJsSupport = !this.settings.enableJsSupport;
         },
         load() {
             // return {colorSettings: defaultColor};

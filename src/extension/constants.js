@@ -23,6 +23,7 @@ export const defaultSettings = {
     enableExecutables: false,
     revealOpenOption: 'O', // default = open link
     enableLinkIcons: true,
+    enableJsSupport: false,
     retriesOnFailure: 1 // default = one retry, error indication delayed by one retry is OK
 };
 
