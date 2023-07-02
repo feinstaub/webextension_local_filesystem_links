@@ -28,7 +28,7 @@
         "description": "Settings title for enable Javascript support"
     },
     "enableJsSupport_description": {
-        "message": "Wenn aktiviert, kann Javascript einer Webseite `window.location.assign` oder `window.open` verwenden um eine beliebige Datei oder Verzeichnis öffnen - es wird empfohlen diese Option nur unter Verwendung der Whitelist zu aktivieren.",
+        "message": "Wenn aktiviert, kann Javascript einer Webseite `window.location.assign` oder `window.open` verwenden um eine beliebige Datei oder Verzeichnis zuöffnen - es wird empfohlen diese Option nur unter Verwendung der Whitelist zu aktivieren.",
         "description": "Settings description for Javascript support"
     },
     "revealOpenOption_title": {
